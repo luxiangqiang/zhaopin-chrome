@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "name": "zhaopin-chrome",
+  "description": "招聘一键发布职位",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "logo.png",
+    "default_title": "一键发布职位",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "cookies",
+    "notifications",
+    "declarativeContent",
+    "scripting"
+  ],
+  "content_scripts": [  
+    {
+      "matches": ["<all_urls>"],
+      "js": ["jquery.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://campus.iguopin.com/***"],
+      "js": ["guopin_home.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
