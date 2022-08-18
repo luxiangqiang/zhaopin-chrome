@@ -14,7 +14,8 @@
     "baseUrl": ".",
     "types": [
       "chrome",
-      "element-plus"
+      "element-plus",
+      "@types/jquery"
     ],
     "paths": {
       "@/*": [
