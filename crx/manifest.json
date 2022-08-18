@@ -18,6 +18,8 @@
     "128": "logo.png"
   },
   "permissions": [
+    "webRequest", 
+    "webRequestBlocking",
     "storage",
     "tabs",
     "activeTab",
