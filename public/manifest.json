@@ -18,6 +18,7 @@
     "128": "logo.png"
   },
   "permissions": [
+    "webRequest", 
     "storage",
     "tabs",
     "activeTab",
@@ -28,7 +29,7 @@
   ],
   "content_scripts": [  
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://campus.iguopin.com/***"],
       "js": ["jquery.js"],
       "run_at": "document_end"
     },
