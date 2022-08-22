@@ -1344,6 +1344,12 @@ function setCurrentRenderingInstance(instance) {
   currentScopeId = instance && instance.type.__scopeId || null;
   return prev;
 }
+function pushScopeId(id2) {
+  currentScopeId = id2;
+}
+function popScopeId() {
+  currentScopeId = null;
+}
 function withCtx(fn2, ctx = currentRenderingInstance, isNonScopedSlot) {
   if (!ctx)
     return fn2;
@@ -47684,4 +47690,4 @@ axios$1.isAxiosError = isAxiosError;
 axios$2.exports = axios$1;
 axios$2.exports.default = axios$1;
 var axios = axios$2.exports;
-export { Fragment as F, axios as a, resolveComponent as b, createStore as c, defineComponent as d, createElementBlock as e, createVNode as f, createTextVNode as g, createApp as h, index as i, openBlock as o, ref as r, withCtx as w };
+export { Fragment as F, _Notify as _, axios as a, reactive as b, createStore as c, defineComponent as d, resolveComponent as e, resolveDirective as f, openBlock as g, createElementBlock as h, createBaseVNode as i, createVNode as j, withCtx as k, renderList as l, createBlock as m, withDirectives as n, onMounted as o, createTextVNode as p, pushScopeId as q, ref as r, popScopeId as s, createApp as t, unref as u, index as v, watch as w };
