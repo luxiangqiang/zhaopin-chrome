@@ -20,6 +20,7 @@
   "permissions": [
     "webRequest", 
     "storage",
+    "unlimitedStorage",
     "tabs",
     "activeTab",
     "cookies",
@@ -30,11 +31,16 @@
   "content_scripts": [  
     {
       "matches": ["https://campus.iguopin.com/***"],
-      "js": ["jquery.js"],
+      "js": ["jquery.js", "common.js"],
       "run_at": "document_end"
     },
     {
-      "matches": ["https://campus.iguopin.com/***"],
+      "matches": ["https://campus.iguopin.com/index.php?m=&c=company&a=jobs_list"],
+      "js": ["job_management.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add"],
       "js": ["guopin_home.js"],
       "run_at": "document_idle"
     }
