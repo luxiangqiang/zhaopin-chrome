@@ -99,7 +99,7 @@ export interface IList {
   /**
    * 职位类别
    */
-  category: {
+  secondCategory: {
     name: string;
   };
   /**

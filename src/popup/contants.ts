@@ -11,6 +11,11 @@ export const jobColumns = [
     width: 100,
   },
   {
+    label: '性质',
+    prop: 'recruitmentTypeName',
+    width: 50,
+  },
+  {
     label: '职位编码',
     prop: 'code',
     width: 70,

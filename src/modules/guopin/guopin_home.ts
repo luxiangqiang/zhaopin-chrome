@@ -31,7 +31,7 @@ const JOB_CATEGORIES_MAP:Record<string, string[]> = {
   '环境科学/环保': ['能源/环保/农业/科研', '环境科学', '其他环境科学职位'],
   '能源/矿产/地质': ['能源/环保/农业/科研', '能源/矿产/地质勘查', '其他能源/矿产/地质勘查职位'],
   '陈列展示设计': ['广告/传媒/设计', '美术/设计', '店面/展览/展示/陈列设计 '],
-  '动画设计': ['广告/传媒/设计', '美术/设计', '多媒体/动画设计'],
+  '动画动效设计': ['广告/传媒/设计', '美术/设计', '多媒体/动画设计'],
   '工业设计': ['广告/传媒/设计', '美术/设计', '工业设计'],
   '视觉/交互设计': ['广告/传媒/设计', '美术/设计', '工业设计'],
   '产品经理': ['计算机/互联网/通信', '互联网产品/运营管理', '其他产品/运营岗位'],
@@ -162,16 +162,18 @@ const CITY_MAP:Record<string, string[]> = {
 }
 
 // 【映射】Element ID 和抢镜后端数据
-const TITLE_TO_ELEMENT_ID_MAP: Record<string, string> = {
+const TITLE_TO_ELEMENT_ID_MAP: Record<string, keyof IFormat> = {
   'jobs_name': 'title', // 职位
-  'jobs_num': 'code', // 编号
+  'jobs_num': 'code', // 编号（校招）
+  'jobs_code':'code', // 编号（社招）
   'minwage':'salaryFrom', // 最低薪资
   'minwage_inter':'salaryFrom', // 最低薪资(实习)
   'maxwage':'salaryTo',// 最高薪资
   'maxwage_inter':'salaryTo',// 最高薪资（实习）
   'salmonths': 'salmonths', // 年薪
   'amount':'amount', // 在招人数
-  'contents':'description', // 职位描述
+  'contents':'description', // 职位描述（校招）
+  'contentsdesc':'description', // 职位描述(社招)
 }
 
 // 【映射】学历字段映射
@@ -182,6 +184,7 @@ const EDUCATION_MAP:Record<string, string> = {
   '专科': '大学专科',
   '高中': '中专',
   '中专中技':'中专',
+  '中专/中技':'中专',
   '初中及以下':'其他',
   '不限':'无学历要求'
 }
@@ -193,14 +196,21 @@ const JOB_TYPE_MAP:Record<string, string> = {
   '社招': '社招'
 }
 
+// 工作经验映射
+const WORK_EXPERIENCE:Record<string, string> = {
+  "经验不限":'不限',
+  "无经验要求":'无经验',
+  "其他年限": "n 年以上",
+}
+
 /* —————————————————————————————— 公共方法 ———————————————————————————— */
 
 // 获取 job 
 const getJobLocalstory  = (type: string) => {
   return new Promise((resolve, reject)=>{
     try {
-      chrome.storage.sync.get(type, (result) => {
-        console.log('👌 Get Job Success～')
+      chrome.storage.local.get(type, (result) => {
+        console.log('👌 Get Job Success～', result, type)
         resolve(result[type]);
       });
     } catch (error) {
@@ -219,7 +229,7 @@ function enterInput(id: string ,text: string){
  * @param xpath 
  * @returns 
  */
- export const getxPathElement = (xpath:string) => {
+export const getxPathElement = (xpath:string) => {
   var result = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
   const dom: Node | null = result.iterateNext();
   if(dom){
@@ -253,11 +263,114 @@ function setWeekCount(){
   })
 }
 
+// 千/万转数字
+function formatNumber(value: string){
+  if(value.indexOf('千') !== -1){
+    return parseFloat(value) * 1000;
+  }else if(value.indexOf('万') !== -1){
+    return parseFloat(value) * 10000;
+  }else{
+    return value;
+  }
+}
+
+// 处理数据格式
+function formateData(job: IList){
+  const city = job.officeLocation.split('-')[0];
+  return {
+    title: `${job.title}—${job.company.name}—${job.code}`, // 职位名
+    code: job.code, // 职位编号
+    type: JOB_TYPE_MAP[job.recruitmentTypeName], // 招聘类型
+    salaryFrom: formatNumber(job.salaryFrom), // 最低薪资
+    salaryTo: formatNumber(job.salaryTo), // 最高薪资
+    amount: 3, // 在招人数
+    salmonths: job.salaryTimes, // 薪资月数
+    description: job.description, // 职位描述
+    category: JOB_CATEGORIES_MAP[job.secondCategory.name], // 职位类别
+    city: Object.keys(CITY_MAP).includes(city) ? CITY_MAP[city] : ['其他地区', '全国'], // 工作地区
+    education: EDUCATION_MAP[job.educationFrom], // 学历
+    specialized: ['其他', '不限'], // 专业
+    experienceFrom: job.experienceFrom, // 工作年限
+  }
+}
+
+// 清除缓存数据
+const clearJobLocalstory  = (type: string) => {
+  return new Promise((resolve, reject)=>{
+    try {
+      chrome.storage.local.remove(type,()=>{
+        console.log('🧹 Clear Job Success～');
+      })
+      resolve(1);
+    } catch (error) {
+      reject();
+    }
+  })
+}
+
+// 保存数据
+const saveJobLocalStory = (key: string, value: number | string) => {
+  return new Promise((resolve, reject)=>{
+    try {
+      chrome.storage.local.set({ [key]:  value}, function () {
+        console.log('😄 [guopin_home.js]: Save Data Success～');
+        resolve(1);
+      });
+    } catch (error) {
+      reject();
+    }
+  })
+}
+
+// 设置工作经验
+const setWorkExperience = (experienceFrom: string) => {
+  $.each($('.J_listitme'), (index, el) => {
+    console.log(el)
+    if(experienceFrom.indexOf('年') !== -1){
+      if(experienceFrom === '1年' && $(el).text() === "1年以上"){
+        el.click()
+      }else if($(el).text().indexOf(experienceFrom) !== -1){
+        el.click()
+      }
+    }else{
+      if($(el).text() === WORK_EXPERIENCE[experienceFrom]){
+        el.click()
+      }
+    }
+  })
+}
+
+// 设置专业要求
+const setSpecialized = (data: IFormat)=>{
+  $('#J_showmodal_major').click();
+  $(`li[data-title='${ data.specialized[0] }']`).click();
+  $(`li[data-code="123"]`).click();
+  // getxPathElement('/html/body/div[13]/div/div/div[2]/div[2]/div/div[2]/ul[13]/li[2]').click();
+  $('#J_btnyes_major').click();
+}
+
+// 时间格式设置
+function getNowDate(date: Date) { 
+  let year = date.getFullYear() // 年
+  let month = String(date.getMonth() + 1); // 月
+  let day = String(date.getDate()); // 日
+  // 给一位数的数据前面加 “0”
+  if (Number(month) >= 1 && Number(month) <= 9) {
+    month = "0" + month;
+  }
+  if (Number(day) >= 0 && Number(day) <= 9) {
+    day = "0" + day;
+  }
+  return year + "-" + month + "-" + day + " " + '00:00';
+}
+
 // 自动设置校招职位
-function autoSetSchoolJob(data: IFormat){
+async function autoSetSchoolJob(data: IFormat){
+
   // => 1、ID 元素自动填写
   Object.keys(TITLE_TO_ELEMENT_ID_MAP).forEach(id => {
-    enterInput(`#${ id }`, data[TITLE_TO_ELEMENT_ID_MAP[id]]);
+    const value = data[TITLE_TO_ELEMENT_ID_MAP[id]] as Exclude<IFormat[keyof IFormat], string[]>;
+    enterInput(`#${ id }`, String(value));
   })
 
   // => 2、职位性质
@@ -265,13 +378,13 @@ function autoSetSchoolJob(data: IFormat){
 
   switch(data.type){
     case '应届生':
-
-    break;
-    case '实习':
-      setWeekCount();
+    case '实习':{
+      setWeekCount(); // 设置工作周期
+      setSpecialized(data); // 设置专业要求
+    }
     break;
     case '社招':
-
+      setWorkExperience(data.experienceFrom); // 设置工作经验
     break;
   }
 
@@ -318,72 +431,90 @@ function autoSetSchoolJob(data: IFormat){
     }
   })
 
-  // => 6、设置专业要求
-  $('#J_showmodal_major').click();
-  $(`li[data-title='${ data.specialized[0] }']`).click();
-  getxPathElement('/html/body/div[13]/div/div/div[2]/div[2]/div/div[2]/ul[13]/li[2]').click();
-  $('#J_btnyes_major').click();
-
-  // => 7、所属部门
-  setTimeout(()=>{
-    $('#department').click();
+  // => 7、报名时间
+  await new Promise((resolve, reject)=>{
+    setTimeout(() => {
+      if(['社招'].includes(data.type)){
+        $('#start_date').val(getNowDate(new Date()))
+        var now = new Date()
+        var seconds = 60*60*24*30*1000;
+        var timestamp = now.getTime();
+        var newDate = timestamp+seconds;
+        $('#end_date').val(getNowDate(new Date(newDate)))
+      }else{
+        $('#starttime').click();
+        $('.laydate-btns-confirm').click();
+        $('#endtime').click();
+        $('.laydate-next-m').click();
+        $('.laydate-btns-confirm').click();
+      }
+      resolve(1)
+    }, 2000)
+  })
+  
+  // => 8、所属部门
+  await new Promise((resolve, reject)=>{
     setTimeout(()=>{
-      $("#layui-layer-iframe1").contents().find(".layui-tree-txt:contains('抢镜')").click();
-    }, 4000);
-  }, 1000)
-
-  // => 8、报名时间
-  setTimeout(()=>{
-    $('#starttime').click();
-    $('.laydate-btns-confirm').click();
-    $('#endtime').click();
-    $('.laydate-next-m').click();
-    $('.laydate-btns-confirm').click();
-  }, 2000)
+      $('#department').click();
+      const time = setInterval(()=>{
+        const dom = $("#layui-layer-iframe1").contents().find(".layui-tree-txt:contains('RPO')")
+        if(dom.length > 0){
+          dom.click();
+          clearInterval(time)
+          resolve(1)
+        }
+      }, 2000)
+    }, 1000)
+  })
 
   // 我已经阅读规则
   $('#check_protocal').click();
 }
 
-// 千/万转数字
-function formatNumber(value: string){
-  if(value.indexOf('千') !== -1){
-    return parseFloat(value) * 1000;
-  }else if(value.indexOf('万') !== -1){
-    return parseFloat(value) * 10000;
-  }else{
-    return value;
-  }
+// 单个职位发布
+const singleJobPublish = async () => {
+  const data = await getJobLocalstory('job') as IList;
+  console.log(data)
+  // 转换数据格式
+  const formate = formateData(data) as IFormat;
+  console.table(formate);
+  // 自动设置校招职位
+  await autoSetSchoolJob(formate);
+  // 发布
+  $('#J_release').click();
+  // 移除缓存数据
+  await clearJobLocalstory('job');
 }
 
-// 处理数据格式
-function formateData(job: IList){
-  const city = job.officeLocation.split('-')[0];
-  return {
-    title: `${job.title}—${job.company.name}—${job.code}`, // 职位名
-    code: job.code, // 职位编号
-    type: JOB_TYPE_MAP[job.recruitmentTypeName], // 招聘类型
-    salaryFrom: formatNumber(job.salaryFrom), // 最低薪资
-    salaryTo: formatNumber(job.salaryTo), // 最高薪资
-    amount: 3, // 在招人数
-    salmonths: job.salaryTimes, // 薪资月数
-    description: job.description, // 职位描述
-    category: JOB_CATEGORIES_MAP[job.category.name], // 职位类别
-    city: Object.keys(CITY_MAP).includes(city) ? CITY_MAP[city] : ['其他地区', '全国'], // 工作地区
-    education: EDUCATION_MAP[job.educationFrom], // 学历
-    specialized: ['其他', '不限'], // 专业
+// 批量职位发布
+const multipleJobPublish = async () => {
+  const index = await getJobLocalstory('multipleIndex') as number; // 批量发布的索引
+  const count = await getJobLocalstory('count') as number; // 批量发布的数量
+  const jobs = await getJobLocalstory('jobs') as IList[];
+  console.log(index, count, jobs, jobs[index])
+  if(index < count){
+    const formate = formateData(jobs[index]) as IFormat;
+    await autoSetSchoolJob(formate);
+    $('#J_release').click();
+    console.log('index', index + 1)
+    await saveJobLocalStory('multipleIndex', index + 1)
+  }else{
+    await clearJobLocalstory('jobs');
+    console.log('------------------- 发布失败 ---------------')
   }
 }
 
 // 初始化
 async function init(){
-  const data = await getJobLocalstory('job') as IList;
-  console.log(data)
-  // 转换数据格式
-  const formate = formateData(data) as IFormat;
-  console.log(formate)
-  // 自动设置校招职位
-  autoSetSchoolJob(formate);
+  const type = await getJobLocalstory('type');
+  switch(type){
+    case 'single':
+      singleJobPublish();
+      break;
+    case 'multiple':
+      multipleJobPublish();
+      break;
+  }
 }
 
 // 执行主流程

@@ -2,7 +2,11 @@
   <div class="contianer">
     <header class="header">
       <h2>国聘一键发布职位助手</h2>
-      <el-button class="publish-btn" type="primary" @click="publishJob">一键发布职位</el-button>
+      <el-button 
+        :disabled="multipleSelection.length === 0"
+        class="publish-btn" type="primary" @click="allPublishJob">
+        一键发布职位({{ multipleSelection.length }})
+      </el-button>
     </header>
     <el-card shadow="always">
       <el-row class="mgb">
@@ -72,7 +76,15 @@
       </el-row>
     </el-card>
     <section>
-      <el-table v-loading="loading" class="table" :data="tableData" stripe border height="300">
+      <el-table
+        v-loading="loading"
+        class="table"
+        :data="tableData"
+        stripe
+        border
+        height="300"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column type="selection" width="55" />
         <el-table-column
           v-for="item of jobColumns"
@@ -102,7 +114,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, reactive, Ref, ref, watch } from 'vue';
+import { onMounted, reactive, Ref, ref, watch } from 'vue';
 import { getJobs, getCompanyList } from '@/axios/apis/index';
 import { jobColumns } from './contants';
 import { IList } from '@/axios/apis/types';
@@ -123,9 +135,8 @@ const loading = ref<Boolean>(false);
 const tableData: Ref<IList[]> = ref([]);
 const totalCount: Ref<number> = ref(0);
 const pageNo: Ref<number> = ref(1);
-const pageSize: Ref<number> = ref(10);
+const pageSize: Ref<number> = ref(50);
 const companyOptions: Ref<IOptions[]> = ref([]);
-const jobTypes: Ref<string[]> = ref([]);
 const interviewRoomStatusOptions: Ref<IOptions[]> = ref([
   {
     label: '全部',
@@ -165,6 +176,9 @@ const query = reactive<IQuery>({
   status: '',
   opened: '',
 });
+const multipleSelection = ref<IList[]>([]);
+const SCHOOL_RECRUITMENT = 'https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add'; 
+const SOCIAL_RECRUITMENT = 'https://www.iguopin.com/index.php?m=&c=company&a=jobs_add';
 
 watch(query, () => {
   getJobData();
@@ -175,10 +189,37 @@ onMounted(() => {
   getCompanyLists();
 });
 
-// 一键发布
+// 【单个】一键发布
 const publishJob = async (job: IList) => {
-  window.open('https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add');
-  setJobLocalstory(job);
+  switch(job.recruitmentTypeName){
+    case '社招': 
+      window.open(SOCIAL_RECRUITMENT);
+    break;
+    case '校招':
+    case '实习':
+      window.open(SCHOOL_RECRUITMENT);
+    break;
+  }
+  await setJobLocalstory('job','single', job);
+};
+
+// 【批量】一键发布
+const allPublishJob = async () => {
+  const isSocial = multipleSelection.value.every(el=>el.recruitmentTypeName === '社招');
+  const isSchool = multipleSelection.value.every(el=>['校招','实习'].includes(el.recruitmentTypeName));
+  if(isSocial){
+    await setJobLocalstory('jobs','multiple', multipleSelection.value);
+    window.open(SOCIAL_RECRUITMENT);
+  }else if(isSchool){
+    await setJobLocalstory('jobs','multiple', multipleSelection.value);
+    window.open(SCHOOL_RECRUITMENT);
+  }else{
+    alert('社招和校招不能混合批量发布～');
+  }
+}
+
+const handleSelectionChange = (val: IList[]) => {
+  multipleSelection.value = val;
 };
 
 const getCurrentTab = async () => {
@@ -187,10 +228,30 @@ const getCurrentTab = async () => {
   return tab;
 };
 
-const setJobLocalstory = (job: IList) => {
-  chrome.storage.sync.set({ 'job': job }, function () {
-    console.log('😄 Save Job Success～');
-  });
+// 保存数据
+const setJobLocalstory = (key: string, type: string, data: IList | IList[]) => {
+  return new Promise((resolve, reject)=>{
+    try {
+      chrome.storage.local.set(
+        { 
+          [key]: data, 
+          'type': type, 
+          'multipleIndex': 0, 
+          'count': Array.isArray(data) ? data.length : 0
+        }, 
+        () => {
+          var error = chrome.runtime.lastError;  
+          if (error) {  
+            reject(error);
+          } 
+          resolve(1);
+          console.log('😄 Save Data Success～');
+        }
+      );
+    } catch (error) {
+      reject(error);
+    }
+  })
 };
 
 // 获取职位管理数据
@@ -262,7 +323,7 @@ const handleCurrentChange = (value: number) => {
     h2 {
       color: #292929da;
     }
-    &--right{
+    &--right {
       display: flex;
       align-items: center;
     }

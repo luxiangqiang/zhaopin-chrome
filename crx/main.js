@@ -17,7 +17,7 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-import { c as createStore, a as axios, _ as _Notify, d as defineComponent, r as ref, b as reactive, w as watch, o as onMounted, e as resolveComponent, f as resolveDirective, g as openBlock, h as createElementBlock, i as createBaseVNode, j as createVNode, k as withCtx, F as Fragment, l as renderList, m as createBlock, n as withDirectives, u as unref, p as createTextVNode, q as pushScopeId, s as popScopeId, t as createApp, v as index$1 } from "./vendor.js";
+import { c as createStore, a as axios, _ as _Notify, d as defineComponent, r as ref, b as reactive, w as watch, o as onMounted, e as resolveComponent, f as resolveDirective, g as openBlock, h as createElementBlock, i as createBaseVNode, j as createVNode, k as withCtx, l as createTextVNode, t as toDisplayString, F as Fragment, m as renderList, n as createBlock, p as withDirectives, u as unref, q as pushScopeId, s as popScopeId, v as createApp, x as index$1 } from "./vendor.js";
 const p = function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -104,7 +104,7 @@ const httpRequester = async (url, methods, data, headers) => {
   }
   return response.data;
 };
-const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbHQiOiJBX1dFQl9QQyIsImlkIjozNjc4LCJleHAiOjE2NjIyODI4MDd9.ALk3p0M70D-9hC6h3xaCSU6puDOSkUXTwy5LTorDaNM";
+const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbHQiOiJBX1dFQl9QQyIsImlkIjozNTM0LCJleHAiOjE2NjM5MjQ0OTR9.KSVOOnMAPAg_wx9nDk4cIg1elpFBrGWDsg2KJ828E3Q";
 function getJobs(data) {
   return httpRequester("/admin/v1/job/list", "get", data, { token });
 }
@@ -121,6 +121,11 @@ const jobColumns = [
     label: "\u804C\u4F4D",
     prop: "title",
     width: 100
+  },
+  {
+    label: "\u6027\u8D28",
+    prop: "recruitmentTypeName",
+    width: 50
   },
   {
     label: "\u804C\u4F4D\u7F16\u7801",
@@ -175,13 +180,12 @@ const _withScopeId = (n) => (pushScopeId("data-v-126fbd00"), n = n(), popScopeId
 const _hoisted_1 = { class: "contianer" };
 const _hoisted_2 = { class: "header" };
 const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("h2", null, "\u56FD\u8058\u4E00\u952E\u53D1\u5E03\u804C\u4F4D\u52A9\u624B", -1));
-const _hoisted_4 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03\u804C\u4F4D");
-const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "90px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
-const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u804C\u4F4D\uFF1A", -1));
-const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u5730\u533A\uFF1A", -1));
-const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u9762\u8BD5\u95F4\u72B6\u6001\uFF1A", -1));
-const _hoisted_9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "42px" } }, "\u516C\u53F8\uFF1A", -1));
-const _hoisted_10 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
+const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "90px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
+const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u804C\u4F4D\uFF1A", -1));
+const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u5730\u533A\uFF1A", -1));
+const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u9762\u8BD5\u95F4\u72B6\u6001\uFF1A", -1));
+const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "42px" } }, "\u516C\u53F8\uFF1A", -1));
+const _hoisted_9 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "App",
   setup(__props) {
@@ -189,9 +193,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const tableData = ref([]);
     const totalCount = ref(0);
     const pageNo = ref(1);
-    const pageSize = ref(10);
+    const pageSize = ref(50);
     const companyOptions = ref([]);
-    ref([]);
     const interviewRoomStatusOptions = ref([
       {
         label: "\u5168\u90E8",
@@ -231,6 +234,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       status: "",
       opened: ""
     });
+    const multipleSelection = ref([]);
+    const SCHOOL_RECRUITMENT = "https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add";
+    const SOCIAL_RECRUITMENT = "https://www.iguopin.com/index.php?m=&c=company&a=jobs_add";
     watch(query, () => {
       getJobData();
     });
@@ -239,12 +245,52 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       getCompanyLists();
     });
     const publishJob = async (job) => {
-      window.open("https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add");
-      setJobLocalstory(job);
+      switch (job.recruitmentTypeName) {
+        case "\u793E\u62DB":
+          window.open(SOCIAL_RECRUITMENT);
+          break;
+        case "\u6821\u62DB":
+        case "\u5B9E\u4E60":
+          window.open(SCHOOL_RECRUITMENT);
+          break;
+      }
+      await setJobLocalstory("job", "single", job);
     };
-    const setJobLocalstory = (job) => {
-      chrome.storage.sync.set({ "job": job }, function() {
-        console.log("\u{1F604} Save Job Success\uFF5E");
+    const allPublishJob = async () => {
+      const isSocial = multipleSelection.value.every((el) => el.recruitmentTypeName === "\u793E\u62DB");
+      const isSchool = multipleSelection.value.every((el) => ["\u6821\u62DB", "\u5B9E\u4E60"].includes(el.recruitmentTypeName));
+      if (isSocial) {
+        await setJobLocalstory("jobs", "multiple", multipleSelection.value);
+        window.open(SOCIAL_RECRUITMENT);
+      } else if (isSchool) {
+        await setJobLocalstory("jobs", "multiple", multipleSelection.value);
+        window.open(SCHOOL_RECRUITMENT);
+      } else {
+        alert("\u793E\u62DB\u548C\u6821\u62DB\u4E0D\u80FD\u6DF7\u5408\u6279\u91CF\u53D1\u5E03\uFF5E");
+      }
+    };
+    const handleSelectionChange = (val) => {
+      multipleSelection.value = val;
+    };
+    const setJobLocalstory = (key, type, data) => {
+      return new Promise((resolve, reject) => {
+        try {
+          chrome.storage.local.set({
+            [key]: data,
+            "type": type,
+            "multipleIndex": 0,
+            "count": Array.isArray(data) ? data.length : 0
+          }, () => {
+            var error = chrome.runtime.lastError;
+            if (error) {
+              reject(error);
+            }
+            resolve(1);
+            console.log("\u{1F604} Save Data Success\uFF5E");
+          });
+        } catch (error) {
+          reject(error);
+        }
       });
     };
     const getJobData = async () => {
@@ -313,15 +359,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         createBaseVNode("header", _hoisted_2, [
           _hoisted_3,
           createVNode(_component_el_button, {
+            disabled: multipleSelection.value.length === 0,
             class: "publish-btn",
             type: "primary",
-            onClick: publishJob
+            onClick: allPublishJob
           }, {
             default: withCtx(() => [
-              _hoisted_4
+              createTextVNode(" \u4E00\u952E\u53D1\u5E03\u804C\u4F4D(" + toDisplayString(multipleSelection.value.length) + ") ", 1)
             ]),
             _: 1
-          })
+          }, 8, ["disabled"])
         ]),
         createVNode(_component_el_card, { shadow: "always" }, {
           default: withCtx(() => [
@@ -329,7 +376,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               default: withCtx(() => [
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_5,
+                    _hoisted_4,
                     createVNode(_component_el_select, {
                       modelValue: query.status,
                       "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => query.status = $event),
@@ -351,7 +398,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_6,
+                    _hoisted_5,
                     createVNode(_component_el_input, {
                       class: "input-item",
                       placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D",
@@ -364,7 +411,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_7,
+                    _hoisted_6,
                     createVNode(_component_el_input, {
                       class: "input-item",
                       placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D",
@@ -382,7 +429,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               default: withCtx(() => [
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_8,
+                    _hoisted_7,
                     createVNode(_component_el_select, {
                       modelValue: query.opened,
                       "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => query.opened = $event),
@@ -405,7 +452,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_9,
+                    _hoisted_8,
                     createVNode(_component_el_select, {
                       modelValue: query.company,
                       "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => query.company = $event),
@@ -440,7 +487,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             data: tableData.value,
             stripe: "",
             border: "",
-            height: "300"
+            height: "300",
+            onSelectionChange: handleSelectionChange
           }, {
             default: withCtx(() => [
               createVNode(_component_el_table_column, {
@@ -468,7 +516,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     onClick: ($event) => publishJob(scope.row)
                   }, {
                     default: withCtx(() => [
-                      _hoisted_10
+                      _hoisted_9
                     ]),
                     _: 2
                   }, 1032, ["onClick"])
