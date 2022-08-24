@@ -25,7 +25,7 @@ const JOB_CATEGORIES_MAP = {
   "\u73AF\u5883\u79D1\u5B66/\u73AF\u4FDD": ["\u80FD\u6E90/\u73AF\u4FDD/\u519C\u4E1A/\u79D1\u7814", "\u73AF\u5883\u79D1\u5B66", "\u5176\u4ED6\u73AF\u5883\u79D1\u5B66\u804C\u4F4D"],
   "\u80FD\u6E90/\u77FF\u4EA7/\u5730\u8D28": ["\u80FD\u6E90/\u73AF\u4FDD/\u519C\u4E1A/\u79D1\u7814", "\u80FD\u6E90/\u77FF\u4EA7/\u5730\u8D28\u52D8\u67E5", "\u5176\u4ED6\u80FD\u6E90/\u77FF\u4EA7/\u5730\u8D28\u52D8\u67E5\u804C\u4F4D"],
   "\u9648\u5217\u5C55\u793A\u8BBE\u8BA1": ["\u5E7F\u544A/\u4F20\u5A92/\u8BBE\u8BA1", "\u7F8E\u672F/\u8BBE\u8BA1", "\u5E97\u9762/\u5C55\u89C8/\u5C55\u793A/\u9648\u5217\u8BBE\u8BA1\xA0"],
-  "\u52A8\u753B\u8BBE\u8BA1": ["\u5E7F\u544A/\u4F20\u5A92/\u8BBE\u8BA1", "\u7F8E\u672F/\u8BBE\u8BA1", "\u591A\u5A92\u4F53/\u52A8\u753B\u8BBE\u8BA1"],
+  "\u52A8\u753B\u52A8\u6548\u8BBE\u8BA1": ["\u5E7F\u544A/\u4F20\u5A92/\u8BBE\u8BA1", "\u7F8E\u672F/\u8BBE\u8BA1", "\u591A\u5A92\u4F53/\u52A8\u753B\u8BBE\u8BA1"],
   "\u5DE5\u4E1A\u8BBE\u8BA1": ["\u5E7F\u544A/\u4F20\u5A92/\u8BBE\u8BA1", "\u7F8E\u672F/\u8BBE\u8BA1", "\u5DE5\u4E1A\u8BBE\u8BA1"],
   "\u89C6\u89C9/\u4EA4\u4E92\u8BBE\u8BA1": ["\u5E7F\u544A/\u4F20\u5A92/\u8BBE\u8BA1", "\u7F8E\u672F/\u8BBE\u8BA1", "\u5DE5\u4E1A\u8BBE\u8BA1"],
   "\u4EA7\u54C1\u7ECF\u7406": ["\u8BA1\u7B97\u673A/\u4E92\u8054\u7F51/\u901A\u4FE1", "\u4E92\u8054\u7F51\u4EA7\u54C1/\u8FD0\u8425\u7BA1\u7406", "\u5176\u4ED6\u4EA7\u54C1/\u8FD0\u8425\u5C97\u4F4D"],
@@ -155,13 +155,15 @@ const CITY_MAP = {
 const TITLE_TO_ELEMENT_ID_MAP = {
   "jobs_name": "title",
   "jobs_num": "code",
+  "jobs_code": "code",
   "minwage": "salaryFrom",
   "minwage_inter": "salaryFrom",
   "maxwage": "salaryTo",
   "maxwage_inter": "salaryTo",
   "salmonths": "salmonths",
   "amount": "amount",
-  "contents": "description"
+  "contents": "description",
+  "contentsdesc": "description"
 };
 const EDUCATION_MAP = {
   "\u535A\u58EB": "\u535A\u58EB\u7814\u7A76\u751F",
@@ -170,6 +172,7 @@ const EDUCATION_MAP = {
   "\u4E13\u79D1": "\u5927\u5B66\u4E13\u79D1",
   "\u9AD8\u4E2D": "\u4E2D\u4E13",
   "\u4E2D\u4E13\u4E2D\u6280": "\u4E2D\u4E13",
+  "\u4E2D\u4E13/\u4E2D\u6280": "\u4E2D\u4E13",
   "\u521D\u4E2D\u53CA\u4EE5\u4E0B": "\u5176\u4ED6",
   "\u4E0D\u9650": "\u65E0\u5B66\u5386\u8981\u6C42"
 };
@@ -178,11 +181,16 @@ const JOB_TYPE_MAP = {
   "\u5B9E\u4E60": "\u5B9E\u4E60",
   "\u793E\u62DB": "\u793E\u62DB"
 };
+const WORK_EXPERIENCE = {
+  "\u7ECF\u9A8C\u4E0D\u9650": "\u4E0D\u9650",
+  "\u65E0\u7ECF\u9A8C\u8981\u6C42": "\u65E0\u7ECF\u9A8C",
+  "\u5176\u4ED6\u5E74\u9650": "n \u5E74\u4EE5\u4E0A"
+};
 const getJobLocalstory = (type) => {
   return new Promise((resolve, reject) => {
     try {
-      chrome.storage.sync.get(type, (result) => {
-        console.log("\u{1F44C} Get Job Success\uFF5E");
+      chrome.storage.local.get(type, (result) => {
+        console.log("\u{1F44C} Get Job Success\uFF5E", result, type);
         resolve(result[type]);
       });
     } catch (error) {
@@ -193,15 +201,6 @@ const getJobLocalstory = (type) => {
 function enterInput(id, text) {
   $(id).val(text);
 }
-const getxPathElement = (xpath) => {
-  var result = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
-  const dom = result.iterateNext();
-  if (dom) {
-    return $(dom);
-  } else {
-    throw Error("\u{1F645} xPath: \u83B7\u53D6\u4E0D\u5230\u8BE5 dom \u8282\u70B9");
-  }
-};
 function getSecondJobDom(title) {
   let result = null;
   const JSecondJob = $(".modal_body_box > .item:nth-child(2) ul");
@@ -222,16 +221,107 @@ function setWeekCount() {
     }
   });
 }
-function autoSetSchoolJob(data) {
+function formatNumber(value) {
+  if (value.indexOf("\u5343") !== -1) {
+    return parseFloat(value) * 1e3;
+  } else if (value.indexOf("\u4E07") !== -1) {
+    return parseFloat(value) * 1e4;
+  } else {
+    return value;
+  }
+}
+function formateData(job) {
+  const city = job.officeLocation.split("-")[0];
+  return {
+    title: `${job.title}\u2014${job.company.name}\u2014${job.code}`,
+    code: job.code,
+    type: JOB_TYPE_MAP[job.recruitmentTypeName],
+    salaryFrom: formatNumber(job.salaryFrom),
+    salaryTo: formatNumber(job.salaryTo),
+    amount: 3,
+    salmonths: job.salaryTimes,
+    description: job.description,
+    category: JOB_CATEGORIES_MAP[job.secondCategory.name],
+    city: Object.keys(CITY_MAP).includes(city) ? CITY_MAP[city] : ["\u5176\u4ED6\u5730\u533A", "\u5168\u56FD"],
+    education: EDUCATION_MAP[job.educationFrom],
+    specialized: ["\u5176\u4ED6", "\u4E0D\u9650"],
+    experienceFrom: job.experienceFrom
+  };
+}
+const clearJobLocalstory = (type) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.remove(type, () => {
+        console.log("\u{1F9F9} Clear Job Success\uFF5E");
+      });
+      resolve(1);
+    } catch (error) {
+      reject();
+    }
+  });
+};
+const saveJobLocalStory = (key, value) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.set({ [key]: value }, function() {
+        console.log("\u{1F604} [guopin_home.js]: Save Data Success\uFF5E");
+        resolve(1);
+      });
+    } catch (error) {
+      reject();
+    }
+  });
+};
+const setWorkExperience = (experienceFrom) => {
+  $.each($(".J_listitme"), (index, el) => {
+    console.log(el);
+    if (experienceFrom.indexOf("\u5E74") !== -1) {
+      if (experienceFrom === "1\u5E74" && $(el).text() === "1\u5E74\u4EE5\u4E0A") {
+        el.click();
+      } else if ($(el).text().indexOf(experienceFrom) !== -1) {
+        el.click();
+      }
+    } else {
+      if ($(el).text() === WORK_EXPERIENCE[experienceFrom]) {
+        el.click();
+      }
+    }
+  });
+};
+const setSpecialized = (data) => {
+  $("#J_showmodal_major").click();
+  $(`li[data-title='${data.specialized[0]}']`).click();
+  $(`li[data-code="123"]`).click();
+  $("#J_btnyes_major").click();
+};
+function getNowDate(date) {
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1);
+  let day = String(date.getDate());
+  if (Number(month) >= 1 && Number(month) <= 9) {
+    month = "0" + month;
+  }
+  if (Number(day) >= 0 && Number(day) <= 9) {
+    day = "0" + day;
+  }
+  return year + "-" + month + "-" + day + " 00:00";
+}
+async function autoSetSchoolJob(data) {
   Object.keys(TITLE_TO_ELEMENT_ID_MAP).forEach((id) => {
-    enterInput(`#${id}`, data[TITLE_TO_ELEMENT_ID_MAP[id]]);
+    const value = data[TITLE_TO_ELEMENT_ID_MAP[id]];
+    enterInput(`#${id}`, String(value));
   });
   $(`.J_radioitme_jobs:contains(${data.type})`).click();
   switch (data.type) {
     case "\u5E94\u5C4A\u751F":
-      break;
     case "\u5B9E\u4E60":
-      setWeekCount();
+      {
+        setWeekCount();
+        setSpecialized(data);
+      }
+      break;
+    case "\u793E\u62DB":
+      setWorkExperience(data.experienceFrom);
       break;
   }
   $("#J_showmodal_jobs").click();
@@ -271,56 +361,74 @@ function autoSetSchoolJob(data) {
       el.click();
     }
   });
-  $("#J_showmodal_major").click();
-  $(`li[data-title='${data.specialized[0]}']`).click();
-  getxPathElement("/html/body/div[13]/div/div/div[2]/div[2]/div/div[2]/ul[13]/li[2]").click();
-  $("#J_btnyes_major").click();
-  setTimeout(() => {
-    $("#department").click();
+  await new Promise((resolve, reject) => {
     setTimeout(() => {
-      $("#layui-layer-iframe1").contents().find(".layui-tree-txt:contains('\u62A2\u955C')").click();
-    }, 4e3);
-  }, 1e3);
-  setTimeout(() => {
-    $("#starttime").click();
-    $(".laydate-btns-confirm").click();
-    $("#endtime").click();
-    $(".laydate-next-m").click();
-    $(".laydate-btns-confirm").click();
-  }, 2e3);
+      if (["\u793E\u62DB"].includes(data.type)) {
+        $("#start_date").val(getNowDate(new Date()));
+        var now = new Date();
+        var seconds = 60 * 60 * 24 * 30 * 1e3;
+        var timestamp = now.getTime();
+        var newDate = timestamp + seconds;
+        $("#end_date").val(getNowDate(new Date(newDate)));
+      } else {
+        $("#starttime").click();
+        $(".laydate-btns-confirm").click();
+        $("#endtime").click();
+        $(".laydate-next-m").click();
+        $(".laydate-btns-confirm").click();
+      }
+      resolve(1);
+    }, 2e3);
+  });
+  await new Promise((resolve, reject) => {
+    setTimeout(() => {
+      $("#department").click();
+      const time = setInterval(() => {
+        const dom = $("#layui-layer-iframe1").contents().find(".layui-tree-txt:contains('RPO')");
+        if (dom.length > 0) {
+          dom.click();
+          clearInterval(time);
+          resolve(1);
+        }
+      }, 2e3);
+    }, 1e3);
+  });
   $("#check_protocal").click();
 }
-function formatNumber(value) {
-  if (value.indexOf("\u5343") !== -1) {
-    return parseFloat(value) * 1e3;
-  } else if (value.indexOf("\u4E07") !== -1) {
-    return parseFloat(value) * 1e4;
-  } else {
-    return value;
-  }
-}
-function formateData(job) {
-  const city = job.officeLocation.split("-")[0];
-  return {
-    title: `${job.title}\u2014${job.company.name}\u2014${job.code}`,
-    code: job.code,
-    type: JOB_TYPE_MAP[job.recruitmentTypeName],
-    salaryFrom: formatNumber(job.salaryFrom),
-    salaryTo: formatNumber(job.salaryTo),
-    amount: 3,
-    salmonths: job.salaryTimes,
-    description: job.description,
-    category: JOB_CATEGORIES_MAP[job.category.name],
-    city: Object.keys(CITY_MAP).includes(city) ? CITY_MAP[city] : ["\u5176\u4ED6\u5730\u533A", "\u5168\u56FD"],
-    education: EDUCATION_MAP[job.educationFrom],
-    specialized: ["\u5176\u4ED6", "\u4E0D\u9650"]
-  };
-}
-async function init() {
+const singleJobPublish = async () => {
   const data = await getJobLocalstory("job");
   console.log(data);
   const formate = formateData(data);
-  console.log(formate);
-  autoSetSchoolJob(formate);
+  console.table(formate);
+  await autoSetSchoolJob(formate);
+  $("#J_release").click();
+  await clearJobLocalstory("job");
+};
+const multipleJobPublish = async () => {
+  const index = await getJobLocalstory("multipleIndex");
+  const count = await getJobLocalstory("count");
+  const jobs = await getJobLocalstory("jobs");
+  console.log(index, count, jobs, jobs[index]);
+  if (index < count) {
+    const formate = formateData(jobs[index]);
+    await autoSetSchoolJob(formate);
+    $("#J_release").click();
+    console.log("index", index + 1);
+    await saveJobLocalStory("multipleIndex", index + 1);
+  } else {
+    await clearJobLocalstory("jobs");
+    console.log("------------------- \u53D1\u5E03\u5931\u8D25 ---------------");
+  }
+};
+async function init() {
+  const type = await getJobLocalstory("type");
+  switch (type) {
+    case "single":
+      singleJobPublish();
+      break;
+    case "multiple":
+      multipleJobPublish();
+      break;
+  }
 }
 init();

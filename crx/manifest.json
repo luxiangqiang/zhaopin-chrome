@@ -30,17 +30,26 @@
   ],
   "content_scripts": [  
     {
-      "matches": ["https://campus.iguopin.com/***"],
+      "matches": [
+        "https://campus.iguopin.com/***", 
+        "https://www.iguopin.com/***"
+      ],
       "js": ["jquery.js", "common.js"],
       "run_at": "document_end"
     },
     {
-      "matches": ["https://campus.iguopin.com/index.php?m=&c=company&a=jobs_list"],
+      "matches": [
+        "https://campus.iguopin.com/index.php?m=&c=company&a=jobs_list&type=1",
+        "https://www.iguopin.com/index.php?m=&c=company&a=jobs_list&type=1"
+      ],
       "js": ["job_management.js"],
       "run_at": "document_end"
     },
     {
-      "matches": ["https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add"],
+      "matches": [
+        "https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add",
+        "https://www.iguopin.com/index.php?m=&c=company&a=jobs_add"
+      ],
       "js": ["guopin_home.js"],
       "run_at": "document_idle"
     }

@@ -10,5 +10,6 @@ export interface IFormat {
   category: string[];
   city: string[];
   education: string;
-  specialized: string[]
+  specialized: string[];
+  experienceFrom: string;
 }
