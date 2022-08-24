@@ -2,15 +2,21 @@
   width: 737px;
   padding: 15px;
 }
-.contianer header[data-v-126fbd00] {
+.contianer .header[data-v-126fbd00] {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-.contianer header h2[data-v-126fbd00] {
+.contianer .header h2[data-v-126fbd00] {
   color: #292929da;
 }
-.contianer header .publish-btn[data-v-126fbd00] {
+.contianer .header--right[data-v-126fbd00] {
+  display: flex;
+  align-items: center;
+}
+.contianer .header .publish-btn[data-v-126fbd00] {
   height: 35px;
+  margin-left: 12px;
 }
 .contianer .mgb[data-v-126fbd00] {
   margin-bottom: 10px;

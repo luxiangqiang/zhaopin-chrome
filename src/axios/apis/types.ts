@@ -97,6 +97,16 @@ export interface IPublishedBy {
 
 export interface IList {
   /**
+   * 职位类别
+   */
+  secondCategory: {
+    name: string;
+  };
+  /**
+   * 职位编号
+   */
+  code: string;
+  /**
    * 公司
    */
   company:{
@@ -204,4 +214,8 @@ export interface IList {
    * 累计投递人数
    */
   totalCandidateCount: number;
+  /**
+   * 职位描述
+   */
+  description: string; 
 }

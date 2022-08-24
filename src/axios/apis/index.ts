@@ -1,7 +1,7 @@
 import { httpRequester } from "@/axios/axios";
 import { IListRequest, IListResponse } from './types'
 
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbHQiOiJBX1dFQl9QQyIsImlkIjozNjc4LCJleHAiOjE2NjIyODI4MDd9.ALk3p0M70D-9hC6h3xaCSU6puDOSkUXTwy5LTorDaNM'
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbHQiOiJBX1dFQl9QQyIsImlkIjozNTM0LCJleHAiOjE2NjM5MjQ0OTR9.KSVOOnMAPAg_wx9nDk4cIg1elpFBrGWDsg2KJ828E3Q'
 
 // 获取职位列表
 export function getJobs(data: IListRequest) {
