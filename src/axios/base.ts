@@ -1,2 +1,2 @@
 
-export const BASE_URL = 'http://qa-api.reta-inc.com';
+export const BASE_URL = 'https://a.reta-inc.com';
