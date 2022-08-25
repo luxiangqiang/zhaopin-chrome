@@ -3,27 +3,27 @@ export const jobColumns = [
   {
     label: '公司',
     prop: 'companyName',
-    width: 200,
+    width: 150,
   },
   {
     label: '职位',
     prop: 'title',
-    width: 100,
+    width: 120,
+  },
+  {
+    label: '编码',
+    prop: 'code',
+    width: 80,
   },
   {
     label: '性质',
     prop: 'recruitmentTypeName',
-    width: 50,
-  },
-  {
-    label: '职位编码',
-    prop: 'code',
     width: 70,
   },
   {
-    label: '地区',
-    prop: 'officeLocation',
-    width: 100,
+    label: '客户经理',
+    prop: 'hiringManager',
+    width: 90,
   },
   {
     label: '当前状态',
@@ -43,6 +43,11 @@ export const jobColumns = [
   {
     label: '累计投递人数',
     prop: 'totalCandidateCount',
+    width: 100,
+  },
+  {
+    label: '地区',
+    prop: 'officeLocation',
     width: 100,
   },
   {
