@@ -1,14 +1,15 @@
-import { httpRequester } from "@/axios/axios";
-import { IListRequest, IListResponse } from './types'
+import axios from "@/axios/https";
+import { IListRequest, IListResponse, ILoginRes } from './types';
 
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwbHQiOiJBX1dFQl9QQyIsImlkIjozNTM0LCJleHAiOjE2NjM5MjQ0OTR9.KSVOOnMAPAg_wx9nDk4cIg1elpFBrGWDsg2KJ828E3Q'
-
-// 获取职位列表
-export function getJobs(data: IListRequest) {
-  return httpRequester("/admin/v1/job/list", 'get', data, {token}) as Promise<{ data: IListResponse }>;
+// 登陆
+export async function login(data: { email: string; password: string }) {
+  return await axios.post<ILoginRes>('/qj/v1/auth/token/login/email', data);
 }
-
+// 获取职位列表
+export async function getJobs(data: IListRequest) {
+  return await axios.get<IListResponse>("/admin/v1/job/list", data);
+}
 // 获取公司列表
-export function getCompanyList(params: { type: string; companyIds: string }) {
-  return httpRequester("/admin/v1/op/platform/filter", 'get', params, {token}) as Promise<{ data: { id: number; name: string }[] }>;
+export async function getCompanyList(params: { type: string; companyIds: string }) {
+  return await axios.get<{ id: number; name: string }[]>("/admin/v1/op/platform/filter", params );
 }

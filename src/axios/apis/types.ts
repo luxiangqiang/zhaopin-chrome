@@ -1,10 +1,28 @@
+export interface ILoginUserInfo {
+  avatar: string;
+  birthday: null | string;
+  bizTypes: number;
+  email: string;
+  id: number;
+  isMale: null | boolean | number;
+  mobile: null | number;
+  name: string;
+  nickname: string;
+  username: string;
+}
+export interface ILoginRes {
+  suId?: number;
+  authToken: string;
+  nickname: string;
+  userInfo: ILoginUserInfo;
+}
 export interface IListRequest {
   pageNo: number;
   pageSize: number;
   name?: string;
   uid?: number;
   strCompanyIds?: string;
-  companyId?:number;
+  companyId?: number;
   jobIds?: string;
   extras?: string;
 }
@@ -17,10 +35,9 @@ export interface IListResponse {
   list: IList[];
 }
 
-
 /**
-* 直面vo
-*/
+ * 直面vo
+ */
 export interface IInterview {
   /**
    * 职类列表
@@ -66,8 +83,8 @@ export interface IJob {
 }
 
 /**
-* 发布人
-*/
+ * 发布人
+ */
 export interface IPublishedBy {
   /**
    * 头像地址，头像地址
@@ -109,9 +126,10 @@ export interface IList {
   /**
    * 公司
    */
-  company:{
-    name: string
-  }
+  company: {
+    name: string;
+    followerName: string;
+  };
   directInterview: IInterview;
   /**
    * 最低学历，最低学历
@@ -172,7 +190,7 @@ export interface IList {
   /**
    * 招聘类型编码
    */
-  recruitmentType:     string;
+  recruitmentType: string;
   recruitmentTypeName: string;
   /**
    * 薪水描述，薪水描述
@@ -217,5 +235,5 @@ export interface IList {
   /**
    * 职位描述
    */
-  description: string; 
+  description: string;
 }
