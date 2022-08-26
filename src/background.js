@@ -1,15 +1,26 @@
 import message from '@/utils/api';
-
 globalThis.message = message;
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('【🚀 发布职位】插件已安装完成～ ')
-
+  console.log('【🚀 发布职位】插件已安装完成～')
+  chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
+    console.log(req);
+  })
 });
 
-// var popup = chrome.extension.getViews({ type: "popup" })[0]
-// popup.GetMessageFromBackground("给我的兄弟popup点东西~")
-
-function GetMessageFromPopup(data){
-  console.log("popup给我的东西~",data)
+const notification = () => {
+  chrome.notifications.create(
+    'notify_alert1', // notifyId
+    {
+      type: "basic", 
+      iconUrl: chrome.runtime.getURL('logo.png'), 
+      title: "更新完成！", 
+      message: "请查看页面数据是否已更新。"
+    }, 
+    function(notifyId){
+      console.log(notifyId, JSON.stringify(chrome.runtime.lastError));
+      //不用移除该消息，否者不会显示
+      // chrome.notifications.clear(notifyId, function(){ });
+    }
+  );
 }

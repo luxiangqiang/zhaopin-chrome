@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, onMounted } from 'vue';
-import { login } from '@/axios/apis/index';
+import { login, sendMonitorMessage } from '@/axios/apis/index';
 import { useRouter } from "vue-router";
 import { getLocalstoryToken } from '@/utils/index';
 import type { FormInstance, FormRules } from 'element-plus';
@@ -69,7 +69,7 @@ const rules = reactive<FormRules>({
 onMounted(async () => {
   const token = await getLocalstoryToken();
   if(token){
-    router.push({ name: "popup" });
+    router.push({ name: "home" });
   }else{
     router.push({ path: "/" });
   }
@@ -104,9 +104,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           email: `${form.email}@reta-inc.com`,
           password: form.password,
         });
+        sendMonitorMessage(`【监控报警-账号登陆】：${ form.email } 账号已登陆～`)
         await saveToken(data.authToken);
         router.push({
-          name: "popup"
+          name: "home"
         })
       } catch (error) {
         console.log('🙅 登陆失败', error);

@@ -28,7 +28,6 @@ export default defineConfig(({ command, mode }) => {
         input: {
           main: resolve(__dirname, 'src/popup.html'),
           background: resolve(__dirname, 'src/background.js'),
-          contants: resolve(__dirname, 'src/contants/guopin/contants.js'),
           common: resolve(__dirname, 'src/modules/common.ts'),
           job_management: resolve(__dirname, 'src/modules/guopin/job_management.ts'),
           guopin_home: resolve(__dirname, 'src/modules/guopin/guopin_home.ts'),
