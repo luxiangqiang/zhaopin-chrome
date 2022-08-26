@@ -274,7 +274,6 @@ const saveJobLocalStory = (key, value) => {
 };
 const setWorkExperience = (experienceFrom) => {
   $.each($(".J_listitme"), (index, el) => {
-    console.log(el);
     if (experienceFrom.indexOf("\u5E74") !== -1) {
       if (experienceFrom === "1\u5E74" && $(el).text() === "1\u5E74\u4EE5\u4E0A") {
         el.click();
@@ -289,10 +288,10 @@ const setWorkExperience = (experienceFrom) => {
   });
 };
 const setSpecialized = (data) => {
-  $("#J_showmodal_major").click();
-  $(`li[data-title='${data.specialized[0]}']`).click();
-  $(`li[data-code="123"]`).click();
-  $("#J_btnyes_major").click();
+  $("#J_showmodal_major").trigger("click");
+  $(`li[data-title='${data.specialized[0]}']`).trigger("click");
+  $(`li[data-code="123"]`).trigger("click");
+  $("#J_btnyes_major").trigger("click");
 };
 function getNowDate(date) {
   let year = date.getFullYear();

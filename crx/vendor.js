@@ -7439,6 +7439,7 @@ function extractChangingRecords(to, from) {
 function useRouter() {
   return inject(routerKey);
 }
+var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
 var freeGlobal$1 = freeGlobal;
 var freeSelf = typeof self == "object" && self && self.Object === Object && self;
@@ -17414,7 +17415,6 @@ const ElButton = withInstall(Button, {
   ButtonGroup
 });
 const ElButtonGroup$1 = withNoopInstall(ButtonGroup);
-var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var dayjs_min = { exports: {} };
 (function(module2, exports2) {
   !function(t, e) {
@@ -56238,4 +56238,4 @@ Store.prototype._withCommit = function _withCommit(fn2) {
   this._committing = committing;
 };
 Object.defineProperties(Store.prototype, prototypeAccessors);
-export { Fragment as F, createRouter as a, createStore as b, createWebHashHistory as c, createBlock as d, createApp as e, defineComponent as f, ref as g, reactive as h, installer as i, onMounted as j, createElementBlock as k, createVNode as l, createTextVNode as m, popScopeId as n, openBlock as o, pushScopeId as p, createBaseVNode as q, resolveComponent as r, watch as s, toDisplayString as t, useRouter as u, withDirectives as v, withCtx as w, resolveDirective as x, renderList as y, unref as z };
+export { ElNotification as E, Fragment as F, createRouter as a, createStore as b, createWebHashHistory as c, createBlock as d, createApp as e, defineComponent as f, ref as g, reactive as h, installer as i, onMounted as j, createElementBlock as k, createVNode as l, createTextVNode as m, popScopeId as n, openBlock as o, pushScopeId as p, createBaseVNode as q, resolveComponent as r, watch as s, toDisplayString as t, useRouter as u, withDirectives as v, withCtx as w, resolveDirective as x, renderList as y, unref as z };

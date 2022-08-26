@@ -224,21 +224,6 @@ function enterInput(id: string ,text: string){
   $(id).val(text)
 }
 
-/**
- * 功能：通过 xPath 获取 dom 元素
- * @param xpath 
- * @returns 
- */
-export const getxPathElement = (xpath:string) => {
-  var result = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
-  const dom: Node | null = result.iterateNext();
-  if(dom){
-    return $(dom);
-  }else{
-    throw Error('🙅 xPath: 获取不到该 dom 节点')
-  }
-}
-
 // 获取【职位类别】二级 dom
 function getSecondJobDom(title: string) : HTMLElement | null {
   let result = null;
@@ -325,7 +310,6 @@ const saveJobLocalStory = (key: string, value: number | string) => {
 // 设置工作经验
 const setWorkExperience = (experienceFrom: string) => {
   $.each($('.J_listitme'), (index, el) => {
-    console.log(el)
     if(experienceFrom.indexOf('年') !== -1){
       if(experienceFrom === '1年' && $(el).text() === "1年以上"){
         el.click()
@@ -342,11 +326,10 @@ const setWorkExperience = (experienceFrom: string) => {
 
 // 设置专业要求
 const setSpecialized = (data: IFormat)=>{
-  $('#J_showmodal_major').click();
-  $(`li[data-title='${ data.specialized[0] }']`).click();
-  $(`li[data-code="123"]`).click();
-  // getxPathElement('/html/body/div[13]/div/div/div[2]/div[2]/div/div[2]/ul[13]/li[2]').click();
-  $('#J_btnyes_major').click();
+  $('#J_showmodal_major').trigger('click');
+  $(`li[data-title='${ data.specialized[0] }']`).trigger('click');
+  $(`li[data-code="123"]`).trigger('click');
+  $('#J_btnyes_major').trigger('click');
 }
 
 // 时间格式设置

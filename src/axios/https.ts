@@ -1,6 +1,7 @@
 import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
-import { BASE_URL } from './base';
+import { BASE_URL, DINGDING_URL } from './base';
 import { getLocalstoryToken } from '@/utils/index';
+import { ElNotification } from 'element-plus'
 
 export interface IErrorMsgDetails {
   fieldName: string;
@@ -14,7 +15,10 @@ export interface AjaxResponse<T> {
   errors?: IErrorMsgDetails[];
   data: T;
 }
-
+interface IMonitorMessage {
+  errcode: number; 
+  errmsg: string 
+}
 interface IDefauleHeader{
   platform: string;
   token?:string;
@@ -26,8 +30,19 @@ const defaultHeaders:IDefauleHeader = {
 }
 const getToken = async (header: IDefauleHeader) => {
   const token = await getLocalstoryToken();
-  console.log(token)
   header.token = token as string;
+}
+// 错误处理
+const ErrorHandler = <T>(data: AjaxResponse<T>) => {
+  const { success, message } = data;
+  if(!success){
+    ElNotification({
+      title: '错误',
+      message: message,
+      type: 'error',
+    })
+    return;
+  }
 }
 
 export default {
@@ -40,6 +55,7 @@ export default {
         params: data,
         headers: Object.assign({},defaultHeaders, headers)
       }).then((data: AxiosResponse<AjaxResponse<T>>) => {
+        ErrorHandler<T>(data.data)
         resolve(data.data);
       }, reject)
     }) as Promise<AjaxResponse<T>>;
@@ -53,8 +69,20 @@ export default {
         data: data,
         headers: Object.assign({},defaultHeaders, headers)
       }).then((data: AxiosResponse<AjaxResponse<T>>) => {
+        ErrorHandler<T>(data.data)
         resolve(data.data);
       }, reject);
     }) as Promise<AjaxResponse<T>>;
+  },
+  monitor: async (data: any) => {
+    return new Promise((resolve, reject) => {
+      axios({ 
+        url: DINGDING_URL,
+        method: 'POST', 
+        data: data
+      }).then(( data: AxiosResponse<{ data: IMonitorMessage }>) => {
+        resolve(data);
+      }, reject);
+    })
   }
 }

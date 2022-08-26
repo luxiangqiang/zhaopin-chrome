@@ -13,3 +13,13 @@ export async function getJobs(data: IListRequest) {
 export async function getCompanyList(params: { type: string; companyIds: string }) {
   return await axios.get<{ id: number; name: string }[]>("/admin/v1/op/platform/filter", params );
 }
+// 监控报警
+export async function sendMonitorMessage(content: string) {
+  const message = {
+    "msgtype": "text",
+    "text": {
+      "content": content
+    }
+  }
+  return await axios.monitor(message);
+}
