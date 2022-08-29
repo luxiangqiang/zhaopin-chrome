@@ -19,11 +19,26 @@ const getJobLocalstory = (type) => {
     }
   });
 };
+const zeroFill = (i) => {
+  if (i >= 0 && i <= 9) {
+    return "0" + i;
+  } else {
+    return i;
+  }
+};
+const getNowDate = (date) => {
+  let year = date.getFullYear();
+  let month = zeroFill(date.getMonth() + 1);
+  let day = zeroFill(date.getDate());
+  let hour = zeroFill(date.getHours());
+  let minute = zeroFill(date.getMinutes());
+  return year + "-" + month + "-" + day + ` ${hour}:${minute}`;
+};
 async function init() {
   const index = await getJobLocalstory("multipleIndex");
   const count = await getJobLocalstory("count");
   console.log(index, count);
-  if (index !== count) {
+  if (index < count) {
     let publishJobDom = null;
     if ($('a[type="button"]').first().text().indexOf("\u53D1\u5E03\u793E\u62DB\u804C\u4F4D") !== -1) {
       publishJobDom = getxPathElement("/html/body/div[2]/div[1]/div[2]/a[2]");
@@ -31,6 +46,16 @@ async function init() {
       publishJobDom = getxPathElement("/html/body/div[3]/div[2]/div[3]/a[2]");
     }
     publishJobDom.click();
+  }
+  if (index === count) {
+    chrome.runtime.sendMessage({
+      result: "\u5BFC\u5165\u6210\u529F!",
+      reason: null,
+      count,
+      index: index + 1,
+      time: getNowDate(new Date())
+    }, (res) => {
+    });
   }
 }
 init();

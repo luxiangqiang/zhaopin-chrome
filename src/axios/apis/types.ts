@@ -25,6 +25,7 @@ export interface IListRequest {
   companyId?: number;
   jobIds?: string;
   extras?: string;
+  excludeOurCompany?: number;
 }
 
 export interface IListResponse {

@@ -200,10 +200,29 @@ const JOB_TYPE_MAP:Record<string, string> = {
 const WORK_EXPERIENCE:Record<string, string> = {
   "经验不限":'不限',
   "无经验要求":'无经验',
-  "其他年限": "n 年以上",
 }
 
 /* —————————————————————————————— 公共方法 ———————————————————————————— */
+
+// 获取元素错误处理
+async function $$(select: string, errorText: string) {
+  const JDom = $(select);
+  if(JDom.length > 0){
+    return JDom
+  }else{
+    // const index = await getJobLocalstory('multipleIndex') as unknown as number; // 批量发布的索引
+    // const count = await getJobLocalstory('count') as unknown as number; // 批量发布的职位数量
+    // chrome.runtime.sendMessage({
+    //   result:'程序报错',
+    //   reason: `填写【${ errorText }】失败！`,
+    //   count: count,
+    //   index: index + 1,
+    //   time: getNowDate(new Date()),
+    // }, res => {
+    // })
+    return null;
+  }
+}
 
 // 获取 job 
 const getJobLocalstory  = (type: string) => {
@@ -220,23 +239,9 @@ const getJobLocalstory  = (type: string) => {
 }
 
 // input 输入文字
-function enterInput(id: string ,text: string){
-  $(id).val(text)
-}
-
-/**
- * 功能：通过 xPath 获取 dom 元素
- * @param xpath 
- * @returns 
- */
-export const getxPathElement = (xpath:string) => {
-  var result = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
-  const dom: Node | null = result.iterateNext();
-  if(dom){
-    return $(dom);
-  }else{
-    throw Error('🙅 xPath: 获取不到该 dom 节点')
-  }
+async function enterInput(id: string ,text: string){
+  const jdom = await $$(id, text);
+  jdom!.val(text);
 }
 
 // 获取【职位类别】二级 dom
@@ -325,7 +330,6 @@ const saveJobLocalStory = (key: string, value: number | string) => {
 // 设置工作经验
 const setWorkExperience = (experienceFrom: string) => {
   $.each($('.J_listitme'), (index, el) => {
-    console.log(el)
     if(experienceFrom.indexOf('年') !== -1){
       if(experienceFrom === '1年' && $(el).text() === "1年以上"){
         el.click()
@@ -342,11 +346,10 @@ const setWorkExperience = (experienceFrom: string) => {
 
 // 设置专业要求
 const setSpecialized = (data: IFormat)=>{
-  $('#J_showmodal_major').click();
-  $(`li[data-title='${ data.specialized[0] }']`).click();
-  $(`li[data-code="123"]`).click();
-  // getxPathElement('/html/body/div[13]/div/div/div[2]/div[2]/div/div[2]/ul[13]/li[2]').click();
-  $('#J_btnyes_major').click();
+  $('#J_showmodal_major').trigger('click');
+  $(`li[data-title='${ data.specialized[0] }']`).trigger('click');
+  $(`li[data-code="123"]`).trigger('click');
+  $('#J_btnyes_major').trigger('click');
 }
 
 // 时间格式设置
@@ -366,7 +369,6 @@ function getNowDate(date: Date) {
 
 // 自动设置校招职位
 async function autoSetSchoolJob(data: IFormat){
-
   // => 1、ID 元素自动填写
   Object.keys(TITLE_TO_ELEMENT_ID_MAP).forEach(id => {
     const value = data[TITLE_TO_ELEMENT_ID_MAP[id]] as Exclude<IFormat[keyof IFormat], string[]>;
@@ -374,7 +376,7 @@ async function autoSetSchoolJob(data: IFormat){
   })
 
   // => 2、职位性质
-  $(`.J_radioitme_jobs:contains(${data.type})`).click();
+  $(`.J_radioitme_jobs:contains(${data.type})`).trigger('click');
 
   switch(data.type){
     case '应届生':
@@ -389,10 +391,10 @@ async function autoSetSchoolJob(data: IFormat){
   }
 
   // => 3、设置职位（弹窗）
-  $('#J_showmodal_jobs').click();
+  $('#J_showmodal_jobs').trigger('click');
   data.category.map((title, index)=>{
     if(index === 0){
-      $(`label[name='${ title }']`).click()
+      $(`label[name='${ title }']`).trigger('click');
     }else if(index === 1){
       const targetEle = getSecondJobDom(title);
       if(targetEle){
@@ -401,28 +403,28 @@ async function autoSetSchoolJob(data: IFormat){
         throw Error('🙅 没有获取职位 DOM 元素')
       }
     }else{
-      $(`label[data-title='${ title }']`).click()
+      $(`label[data-title='${ title }']`).trigger('click');
     }
   })
 
   // => 4、设置工作地区（弹窗）
-  $("div[data-title='请选择工作地区']").click();
+  $("div[data-title='请选择工作地区']").trigger('click');
   data.city.map((targetCity, index) => {
     if(index === 0){
       $.each($('.list_nav li'),(index, province)=>{
         if($(province).text() === targetCity){
-          $(province).click()
+          $(province).trigger('click');
         }
       })
     }else{
       $.each($('.J_list_city'), (index, city) => {
         if($(city).text() === targetCity){
-          $(city).click()
+          $(city).trigger('click');
         }
       })
     }
   })
-  $('#J_btnyes_city').click();
+  $('#J_btnyes_city').trigger('click');
 
   // => 5、设置学历要求（下拉框）
   $.each($('.J_listitme'), (index, el) => {
@@ -442,11 +444,11 @@ async function autoSetSchoolJob(data: IFormat){
         var newDate = timestamp+seconds;
         $('#end_date').val(getNowDate(new Date(newDate)))
       }else{
-        $('#starttime').click();
-        $('.laydate-btns-confirm').click();
-        $('#endtime').click();
-        $('.laydate-next-m').click();
-        $('.laydate-btns-confirm').click();
+        $('#starttime').trigger('click');
+        $('.laydate-btns-confirm').trigger('click');
+        $('#endtime').trigger('click');
+        $('.laydate-next-m').trigger('click');
+        $('.laydate-btns-confirm').trigger('click');
       }
       resolve(1)
     }, 2000)
@@ -455,11 +457,11 @@ async function autoSetSchoolJob(data: IFormat){
   // => 8、所属部门
   await new Promise((resolve, reject)=>{
     setTimeout(()=>{
-      $('#department').click();
+      $('#department').trigger('click');
       const time = setInterval(()=>{
         const dom = $("#layui-layer-iframe1").contents().find(".layui-tree-txt:contains('RPO')")
         if(dom.length > 0){
-          dom.click();
+          dom.trigger('click');
           clearInterval(time)
           resolve(1)
         }
@@ -468,7 +470,7 @@ async function autoSetSchoolJob(data: IFormat){
   })
 
   // 我已经阅读规则
-  $('#check_protocal').click();
+  $('#check_protocal').trigger('click');
 }
 
 // 单个职位发布
@@ -481,7 +483,7 @@ const singleJobPublish = async () => {
   // 自动设置校招职位
   await autoSetSchoolJob(formate);
   // 发布
-  $('#J_release').click();
+  $('#J_release').trigger('click');
   // 移除缓存数据
   await clearJobLocalstory('job');
 }
@@ -491,16 +493,13 @@ const multipleJobPublish = async () => {
   const index = await getJobLocalstory('multipleIndex') as number; // 批量发布的索引
   const count = await getJobLocalstory('count') as number; // 批量发布的数量
   const jobs = await getJobLocalstory('jobs') as IList[];
-  console.log(index, count, jobs, jobs[index])
   if(index < count){
     const formate = formateData(jobs[index]) as IFormat;
     await autoSetSchoolJob(formate);
-    $('#J_release').click();
-    console.log('index', index + 1)
+    $('#J_release').trigger('click');
     await saveJobLocalStory('multipleIndex', index + 1)
   }else{
     await clearJobLocalstory('jobs');
-    console.log('------------------- 发布失败 ---------------')
   }
 }
 
