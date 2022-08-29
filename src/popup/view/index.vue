@@ -11,7 +11,7 @@
     <el-card shadow="always">
       <el-row class="mgb">
         <el-col :span="8">
-          <span style="width: 90px">招聘状态：</span>
+          <span style="width: 70px">招聘状态：</span>
           <el-select v-model="query.status" placeholder="请选择招聘状态">
             <el-option
               v-for="item in recruitmentStatusOptions"
@@ -31,25 +31,25 @@
           ></el-input>
         </el-col>
         <el-col :span="7">
-          <span class="filter-text">地区：</span>
+          <span class="filter-text">编码: </span>
           <el-input
             class="input-item"
-            placeholder="请输入职位"
-            v-model="query.city"
+            placeholder="请输入职位编码"
+            v-model="query.code"
             clearable
           ></el-input>
         </el-col>
       </el-row>
-      <el-row class="row">
+       <el-row class="row">
         <el-col :span="8">
-          <span style="width: 100px">面试间状态：</span>
+          <span style="width: 70px">招聘性质：</span>
           <el-select
-            v-model="query.opened"
+            v-model="query.recruitmentType"
             class="interview-room-status"
-            placeholder="请选择面试间状态"
+            placeholder="请输入招聘性质"
           >
             <el-option
-              v-for="item in interviewRoomStatusOptions"
+              v-for="item in recruitmentTypeOptions"
               :key="item.value + 'status'"
               :label="item.label"
               :value="item.value"
@@ -57,7 +57,7 @@
           </el-select>
         </el-col>
         <el-col :span="7">
-          <span style="width: 42px">公司：</span>
+          <span style="width: 44px">公司：</span>
           <el-select
             v-model="query.company"
             multiple
@@ -91,7 +91,9 @@
           :prop="item.prop"
           :label="item.label"
           :width="item.width"
-        />
+        >
+
+        </el-table-column>
         <el-table-column fixed="right" label="操作" :width="'100px'" class="operate" align="center">
           <template v-slot="scope">
             <el-button type="text" size="small" @click="publishJob(scope.row)">一键发布</el-button>
@@ -126,9 +128,10 @@ interface IOptions {
 interface IQuery {
   company: string;
   job: string;
-  city: string;
+  code: string;
   status: string;
   opened: string;
+  recruitmentType: string;
 }
 
 const loading = ref<Boolean>(false);
@@ -137,22 +140,22 @@ const totalCount: Ref<number> = ref(0);
 const pageNo: Ref<number> = ref(1);
 const pageSize: Ref<number> = ref(50);
 const companyOptions: Ref<IOptions[]> = ref([]);
-const interviewRoomStatusOptions: Ref<IOptions[]> = ref([
+const recruitmentTypeOptions: Ref<IOptions[]> = ref([
   {
     label: '全部',
     value: '',
   },
   {
-    label: '已开启',
-    value: '1',
+    label: '社招',
+    value: 'SOCIAL',
   },
   {
-    label: '待开启',
-    value: '-1',
+    label: '校招',
+    value: 'ON_CAMPUS',
   },
   {
-    label: '已关闭',
-    value: '0',
+    label: '实习',
+    value: 'PRACTICE',
   },
 ]);
 const recruitmentStatusOptions: Ref<IOptions[]> = ref([
@@ -172,9 +175,10 @@ const recruitmentStatusOptions: Ref<IOptions[]> = ref([
 const query = reactive<IQuery>({
   company: '',
   job: '',
-  city: '',
+  code: '',
   status: '',
   opened: '',
+  recruitmentType: ''
 });
 const multipleSelection = ref<IList[]>([]);
 const SCHOOL_RECRUITMENT = 'https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add'; 
@@ -262,6 +266,7 @@ const getJobData = async () => {
   const params = {
     pageNo: pageNo.value,
     pageSize: pageSize.value,
+    excludeOurCompany: 1,
     ...temp,
   };
   try {

@@ -18,7 +18,7 @@ var __spreadValues = (a, b) => {
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 import { _ as _export_sfc, a as getJobs, b as getCompanyList } from "./main.js";
-import { f as defineComponent, g as ref, h as reactive, s as watch, j as onMounted, k as createElementBlock, q as createBaseVNode, l as createVNode, w as withCtx, v as withDirectives, d as createBlock, r as resolveComponent, x as resolveDirective, o as openBlock, m as createTextVNode, t as toDisplayString, F as Fragment, y as renderList, z as unref, p as pushScopeId, n as popScopeId } from "./vendor.js";
+import { g as defineComponent, h as ref, j as reactive, v as watch, k as onMounted, l as createElementBlock, s as createBaseVNode, m as createVNode, w as withCtx, x as withDirectives, e as createBlock, r as resolveComponent, y as resolveDirective, o as openBlock, n as createTextVNode, t as toDisplayString, F as Fragment, A as renderList, B as unref, p as pushScopeId, q as popScopeId } from "./vendor.js";
 const jobColumns = [
   {
     label: "\u516C\u53F8",
@@ -86,11 +86,11 @@ const _withScopeId = (n) => (pushScopeId("data-v-045a1f8e"), n = n(), popScopeId
 const _hoisted_1 = { class: "contianer" };
 const _hoisted_2 = { class: "header" };
 const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "header--title" }, "\u56FD\u8058\u4E00\u952E\u53D1\u5E03\u804C\u4F4D\u52A9\u624B", -1));
-const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "90px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
+const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "70px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
 const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u804C\u4F4D\uFF1A", -1));
-const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u5730\u533A\uFF1A", -1));
-const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u9762\u8BD5\u95F4\u72B6\u6001\uFF1A", -1));
-const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "42px" } }, "\u516C\u53F8\uFF1A", -1));
+const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u7F16\u7801: ", -1));
+const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "70px" } }, "\u62DB\u8058\u6027\u8D28\uFF1A", -1));
+const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "44px" } }, "\u516C\u53F8\uFF1A", -1));
 const _hoisted_9 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "index",
@@ -101,22 +101,22 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const pageNo = ref(1);
     const pageSize = ref(50);
     const companyOptions = ref([]);
-    const interviewRoomStatusOptions = ref([
+    const recruitmentTypeOptions = ref([
       {
         label: "\u5168\u90E8",
         value: ""
       },
       {
-        label: "\u5DF2\u5F00\u542F",
-        value: "1"
+        label: "\u793E\u62DB",
+        value: "SOCIAL"
       },
       {
-        label: "\u5F85\u5F00\u542F",
-        value: "-1"
+        label: "\u6821\u62DB",
+        value: "ON_CAMPUS"
       },
       {
-        label: "\u5DF2\u5173\u95ED",
-        value: "0"
+        label: "\u5B9E\u4E60",
+        value: "PRACTICE"
       }
     ]);
     const recruitmentStatusOptions = ref([
@@ -136,9 +136,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const query = reactive({
       company: "",
       job: "",
-      city: "",
+      code: "",
       status: "",
-      opened: ""
+      opened: "",
+      recruitmentType: ""
     });
     const multipleSelection = ref([]);
     const SCHOOL_RECRUITMENT = "https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add";
@@ -212,7 +213,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       });
       const params = __spreadValues({
         pageNo: pageNo.value,
-        pageSize: pageSize.value
+        pageSize: pageSize.value,
+        excludeOurCompany: 1
       }, temp);
       try {
         const { data } = await getJobs(params);
@@ -321,9 +323,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     _hoisted_6,
                     createVNode(_component_el_input, {
                       class: "input-item",
-                      placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D",
-                      modelValue: query.city,
-                      "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => query.city = $event),
+                      placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D\u7F16\u7801",
+                      modelValue: query.code,
+                      "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => query.code = $event),
                       clearable: ""
                     }, null, 8, ["modelValue"])
                   ]),
@@ -338,13 +340,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   default: withCtx(() => [
                     _hoisted_7,
                     createVNode(_component_el_select, {
-                      modelValue: query.opened,
-                      "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => query.opened = $event),
+                      modelValue: query.recruitmentType,
+                      "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => query.recruitmentType = $event),
                       class: "interview-room-status",
-                      placeholder: "\u8BF7\u9009\u62E9\u9762\u8BD5\u95F4\u72B6\u6001"
+                      placeholder: "\u8BF7\u8F93\u5165\u62DB\u8058\u6027\u8D28"
                     }, {
                       default: withCtx(() => [
-                        (openBlock(true), createElementBlock(Fragment, null, renderList(interviewRoomStatusOptions.value, (item) => {
+                        (openBlock(true), createElementBlock(Fragment, null, renderList(recruitmentTypeOptions.value, (item) => {
                           return openBlock(), createBlock(_component_el_option, {
                             key: item.value + "status",
                             label: item.label,

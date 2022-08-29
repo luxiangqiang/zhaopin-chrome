@@ -8,7 +8,7 @@ PACKAGE_VERSION=$(cat crx/manifest.json \
   | sed 's/[",]//g' \
   | tr -d '[[:space:]]')
 
-zipPath="../zips/test_${PACKAGE_VERSION}.zip"
+zipPath="../zips/job_${PACKAGE_VERSION}.zip"
 
 echo $zipPath
 
