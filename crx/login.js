@@ -1,8 +1,7 @@
-import { g as getLocalstoryToken, l as login$1 } from "./index.js";
-import { f as defineComponent, g as ref, h as reactive, j as onMounted, k as createElementBlock, l as createVNode, w as withCtx, u as useRouter, r as resolveComponent, o as openBlock, m as createTextVNode, t as toDisplayString, p as pushScopeId, n as popScopeId, q as createBaseVNode } from "./vendor.js";
-import { _ as _export_sfc } from "./main.js";
+import { _ as _export_sfc, g as getLocalstoryToken, l as login$1, s as sendMonitorMessage } from "./main.js";
+import { g as defineComponent, h as ref, j as reactive, k as onMounted, l as createElementBlock, m as createVNode, w as withCtx, u as useRouter, r as resolveComponent, o as openBlock, n as createTextVNode, t as toDisplayString, p as pushScopeId, q as popScopeId, s as createBaseVNode } from "./vendor.js";
 var login_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId = (n) => (pushScopeId("data-v-6ce85d28"), n = n(), popScopeId(), n);
+const _withScopeId = (n) => (pushScopeId("data-v-710ad960"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "container" };
 const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "login-title" }, "\u8D26\u53F7\u767B\u9646", -1));
 const _hoisted_3 = /* @__PURE__ */ createTextVNode("\u767B\u5F55");
@@ -32,7 +31,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     onMounted(async () => {
       const token = await getLocalstoryToken();
       if (token) {
-        router.push({ name: "popup" });
+        router.push({ name: "home" });
       } else {
         router.push({ path: "/" });
       }
@@ -63,9 +62,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               email: `${form.email}@reta-inc.com`,
               password: form.password
             });
+            sendMonitorMessage(`\u3010\u76D1\u63A7\u62A5\u8B66-\u8D26\u53F7\u767B\u9646\u3011\uFF1A${form.email} \u8D26\u53F7\u5DF2\u767B\u9646\uFF5E`);
             await saveToken(data.authToken);
             router.push({
-              name: "popup"
+              name: "home"
             });
           } catch (error) {
             console.log("\u{1F645} \u767B\u9646\u5931\u8D25", error);
@@ -165,5 +165,5 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var login = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-6ce85d28"]]);
+var login = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-710ad960"]]);
 export { login as default };

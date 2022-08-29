@@ -1,4 +1,4 @@
-import { c as createWebHashHistory, a as createRouter, b as createStore, d as createBlock, o as openBlock, r as resolveComponent, e as createApp, i as installer } from "./vendor.js";
+import { c as createWebHashHistory, a as createRouter, b as axios$1, E as ElNotification, d as createStore, e as createBlock, o as openBlock, r as resolveComponent, f as createApp, i as installer, z as zhCn } from "./vendor.js";
 const p = function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -78,12 +78,12 @@ const routes = [
   {
     path: "/",
     name: "login",
-    component: () => __vitePreload(() => import("./login.js"), true ? ["login.js","login.css","index.js","vendor.js"] : void 0)
+    component: () => __vitePreload(() => import("./login.js"), true ? ["login.js","login.css","vendor.js"] : void 0)
   },
   {
-    path: "/popup",
-    name: "popup",
-    component: () => __vitePreload(() => import("./popup.js"), true ? ["popup.js","popup.css","index.js","vendor.js"] : void 0)
+    path: "/home",
+    name: "home",
+    component: () => __vitePreload(() => import("./index.js"), true ? ["index.js","index.css","vendor.js"] : void 0)
   }
 ];
 const options = {
@@ -91,6 +91,103 @@ const options = {
   routes
 };
 const router = createRouter(options);
+const BASE_URL = "http://qa-api.reta-inc.com/";
+const DINGDING_URL = "https://oapi.dingtalk.com/robot/send?access_token=4b5c35cb0da73bff59ae79cfeffcaa24093bd4713b48f23ab0a48d9435c4b318";
+const getLocalstoryToken = async () => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.get("token", (result) => {
+        resolve(result["token"]);
+        console.log("\u{1F604} Get Token Success\uFF5E");
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+const defaultHeaders = {
+  platform: "A_WEB_PC"
+};
+const getToken = async (header) => {
+  const token = await getLocalstoryToken();
+  header.token = token;
+};
+const ErrorHandler = (data) => {
+  const { success, message } = data;
+  if (!success) {
+    ElNotification({
+      title: "\u9519\u8BEF",
+      message,
+      type: "error"
+    });
+    return;
+  }
+};
+var axios = {
+  get: async (url, data, headers) => {
+    await getToken(defaultHeaders);
+    return new Promise((resolve, reject) => {
+      axios$1({
+        url: BASE_URL + url,
+        method: "GET",
+        params: data,
+        headers: Object.assign({}, defaultHeaders, headers)
+      }).then((data2) => {
+        ErrorHandler(data2.data);
+        resolve(data2.data);
+      }, reject);
+    });
+  },
+  post: async (url, data, headers) => {
+    await getToken(defaultHeaders);
+    return new Promise((resolve, reject) => {
+      axios$1({
+        url: BASE_URL + url,
+        method: "POST",
+        data,
+        headers: Object.assign({}, defaultHeaders, headers)
+      }).then((data2) => {
+        ErrorHandler(data2.data);
+        resolve(data2.data);
+      }, reject);
+    });
+  },
+  monitor: async (data) => {
+    return new Promise((resolve, reject) => {
+      axios$1({
+        url: DINGDING_URL,
+        method: "POST",
+        data
+      }).then((data2) => {
+        resolve(data2);
+      }, reject);
+    });
+  }
+};
+async function login(data) {
+  return await axios.post("/qj/v1/auth/token/login/email", data);
+}
+async function getJobs(data) {
+  return await axios.get("/admin/v1/job/list", data);
+}
+async function getCompanyList(params) {
+  return await axios.get("/admin/v1/op/platform/filter", params);
+}
+async function sendMonitorMessage(content) {
+  const message = {
+    "msgtype": "text",
+    "text": {
+      "content": content
+    }
+  };
+  return await axios.monitor(message);
+}
+var monitor = {
+  install: (app2) => {
+    app2.provide("$monitor", sendMonitorMessage);
+    app2.config.globalProperties["$monitor"] = sendMonitorMessage;
+  }
+};
 var index = "";
 var store = createStore({
   state() {
@@ -132,5 +229,5 @@ function _sfc_render(_ctx, _cache) {
 }
 var App = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
 const app = createApp(App);
-app.use(installer, { size: "mini" }).use(store).use(router).mount("#app");
-export { _export_sfc as _ };
+app.use(installer, { size: "mini", locale: zhCn }).use(store).use(router).use(monitor).mount("#app");
+export { _export_sfc as _, getJobs as a, getCompanyList as b, getLocalstoryToken as g, login as l, sendMonitorMessage as s };

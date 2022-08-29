@@ -1,11 +1,11 @@
-.container[data-v-6ce85d28] {
+.container[data-v-710ad960] {
   width: 737px;
   height: 500px;
   background-size: cover;
   background-image: url('./background.png');
   opacity: 0.9;
 }
-.container .login-box[data-v-6ce85d28] {
+.container .login-box[data-v-710ad960] {
   width: 500px;
   height: auto;
   position: absolute;
@@ -14,13 +14,13 @@
   transform: translate(-50%, -50%);
   border-radius: 12px;
 }
-.container .login-box .login-title[data-v-6ce85d28] {
+.container .login-box .login-title[data-v-710ad960] {
   font-size: 16px;
 }
-.container .login-box .password[data-v-6ce85d28] {
+.container .login-box .password[data-v-710ad960] {
   margin-top: 25px;
 }
-.container .login-box .login-btn[data-v-6ce85d28] {
+.container .login-box .login-btn[data-v-710ad960] {
   padding-left: 50px;
   padding-right: 50px;
   margin: 20px 10px;
