@@ -183,9 +183,16 @@ const JOB_TYPE_MAP = {
 };
 const WORK_EXPERIENCE = {
   "\u7ECF\u9A8C\u4E0D\u9650": "\u4E0D\u9650",
-  "\u65E0\u7ECF\u9A8C\u8981\u6C42": "\u65E0\u7ECF\u9A8C",
-  "\u5176\u4ED6\u5E74\u9650": "n \u5E74\u4EE5\u4E0A"
+  "\u65E0\u7ECF\u9A8C\u8981\u6C42": "\u65E0\u7ECF\u9A8C"
 };
+async function $$(select, errorText) {
+  const JDom = $(select);
+  if (JDom.length > 0) {
+    return JDom;
+  } else {
+    return null;
+  }
+}
 const getJobLocalstory = (type) => {
   return new Promise((resolve, reject) => {
     try {
@@ -198,8 +205,9 @@ const getJobLocalstory = (type) => {
     }
   });
 };
-function enterInput(id, text) {
-  $(id).val(text);
+async function enterInput(id, text) {
+  const jdom = await $$(id);
+  jdom.val(text);
 }
 function getSecondJobDom(title) {
   let result = null;
@@ -310,7 +318,7 @@ async function autoSetSchoolJob(data) {
     const value = data[TITLE_TO_ELEMENT_ID_MAP[id]];
     enterInput(`#${id}`, String(value));
   });
-  $(`.J_radioitme_jobs:contains(${data.type})`).click();
+  $(`.J_radioitme_jobs:contains(${data.type})`).trigger("click");
   switch (data.type) {
     case "\u5E94\u5C4A\u751F":
     case "\u5B9E\u4E60":
@@ -323,10 +331,10 @@ async function autoSetSchoolJob(data) {
       setWorkExperience(data.experienceFrom);
       break;
   }
-  $("#J_showmodal_jobs").click();
+  $("#J_showmodal_jobs").trigger("click");
   data.category.map((title, index) => {
     if (index === 0) {
-      $(`label[name='${title}']`).click();
+      $(`label[name='${title}']`).trigger("click");
     } else if (index === 1) {
       const targetEle = getSecondJobDom(title);
       if (targetEle) {
@@ -335,26 +343,26 @@ async function autoSetSchoolJob(data) {
         throw Error("\u{1F645} \u6CA1\u6709\u83B7\u53D6\u804C\u4F4D DOM \u5143\u7D20");
       }
     } else {
-      $(`label[data-title='${title}']`).click();
+      $(`label[data-title='${title}']`).trigger("click");
     }
   });
-  $("div[data-title='\u8BF7\u9009\u62E9\u5DE5\u4F5C\u5730\u533A']").click();
+  $("div[data-title='\u8BF7\u9009\u62E9\u5DE5\u4F5C\u5730\u533A']").trigger("click");
   data.city.map((targetCity, index) => {
     if (index === 0) {
       $.each($(".list_nav li"), (index2, province) => {
         if ($(province).text() === targetCity) {
-          $(province).click();
+          $(province).trigger("click");
         }
       });
     } else {
       $.each($(".J_list_city"), (index2, city) => {
         if ($(city).text() === targetCity) {
-          $(city).click();
+          $(city).trigger("click");
         }
       });
     }
   });
-  $("#J_btnyes_city").click();
+  $("#J_btnyes_city").trigger("click");
   $.each($(".J_listitme"), (index, el) => {
     if ($(el).text() === data.education) {
       el.click();
@@ -370,29 +378,29 @@ async function autoSetSchoolJob(data) {
         var newDate = timestamp + seconds;
         $("#end_date").val(getNowDate(new Date(newDate)));
       } else {
-        $("#starttime").click();
-        $(".laydate-btns-confirm").click();
-        $("#endtime").click();
-        $(".laydate-next-m").click();
-        $(".laydate-btns-confirm").click();
+        $("#starttime").trigger("click");
+        $(".laydate-btns-confirm").trigger("click");
+        $("#endtime").trigger("click");
+        $(".laydate-next-m").trigger("click");
+        $(".laydate-btns-confirm").trigger("click");
       }
       resolve(1);
     }, 2e3);
   });
   await new Promise((resolve, reject) => {
     setTimeout(() => {
-      $("#department").click();
+      $("#department").trigger("click");
       const time = setInterval(() => {
         const dom = $("#layui-layer-iframe1").contents().find(".layui-tree-txt:contains('RPO')");
         if (dom.length > 0) {
-          dom.click();
+          dom.trigger("click");
           clearInterval(time);
           resolve(1);
         }
       }, 2e3);
     }, 1e3);
   });
-  $("#check_protocal").click();
+  $("#check_protocal").trigger("click");
 }
 const singleJobPublish = async () => {
   const data = await getJobLocalstory("job");
@@ -400,23 +408,20 @@ const singleJobPublish = async () => {
   const formate = formateData(data);
   console.table(formate);
   await autoSetSchoolJob(formate);
-  $("#J_release").click();
+  $("#J_release").trigger("click");
   await clearJobLocalstory("job");
 };
 const multipleJobPublish = async () => {
   const index = await getJobLocalstory("multipleIndex");
   const count = await getJobLocalstory("count");
   const jobs = await getJobLocalstory("jobs");
-  console.log(index, count, jobs, jobs[index]);
   if (index < count) {
     const formate = formateData(jobs[index]);
     await autoSetSchoolJob(formate);
-    $("#J_release").click();
-    console.log("index", index + 1);
+    $("#J_release").trigger("click");
     await saveJobLocalStory("multipleIndex", index + 1);
   } else {
     await clearJobLocalstory("jobs");
-    console.log("------------------- \u53D1\u5E03\u5931\u8D25 ---------------");
   }
 };
 async function init() {

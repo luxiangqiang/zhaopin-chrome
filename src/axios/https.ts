@@ -2,7 +2,6 @@ import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { BASE_URL, DINGDING_URL } from './base';
 import { getLocalstoryToken } from '@/utils/index';
 import { ElNotification } from 'element-plus'
-
 export interface IErrorMsgDetails {
   fieldName: string;
   message: string;

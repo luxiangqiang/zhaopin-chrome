@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 const { resolve } = path;
 
 // 服务器地址
-const SERVER_URL = process.env.VUE_APP_PROXY_API_TARGET;
+// const SERVER_URL = process.env.VUE_APP_PROXY_API_TARGET;
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -20,7 +20,7 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     build: {
-      minify: false,
+      minify: false, // "terser"
       outDir: path.resolve('./crx'),
       assetsDir: './', 
       rollupOptions: {
