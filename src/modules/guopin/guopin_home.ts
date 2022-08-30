@@ -240,8 +240,7 @@ const getJobLocalstory  = (type: string) => {
 
 // input 输入文字
 async function enterInput(id: string ,text: string){
-  const jdom = await $$(id, text);
-  jdom!.val(text);
+  $(id).val(text);
 }
 
 // 获取【职位类别】二级 dom
@@ -499,7 +498,7 @@ const multipleJobPublish = async () => {
     $('#J_release').trigger('click');
     await saveJobLocalStory('multipleIndex', index + 1)
   }else{
-    await clearJobLocalstory('jobs');
+    // await clearJobLocalstory('jobs');
   }
 }
 

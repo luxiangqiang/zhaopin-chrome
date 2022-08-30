@@ -185,14 +185,6 @@ const WORK_EXPERIENCE = {
   "\u7ECF\u9A8C\u4E0D\u9650": "\u4E0D\u9650",
   "\u65E0\u7ECF\u9A8C\u8981\u6C42": "\u65E0\u7ECF\u9A8C"
 };
-async function $$(select, errorText) {
-  const JDom = $(select);
-  if (JDom.length > 0) {
-    return JDom;
-  } else {
-    return null;
-  }
-}
 const getJobLocalstory = (type) => {
   return new Promise((resolve, reject) => {
     try {
@@ -206,8 +198,7 @@ const getJobLocalstory = (type) => {
   });
 };
 async function enterInput(id, text) {
-  const jdom = await $$(id);
-  jdom.val(text);
+  $(id).val(text);
 }
 function getSecondJobDom(title) {
   let result = null;
@@ -420,8 +411,6 @@ const multipleJobPublish = async () => {
     await autoSetSchoolJob(formate);
     $("#J_release").trigger("click");
     await saveJobLocalStory("multipleIndex", index + 1);
-  } else {
-    await clearJobLocalstory("jobs");
   }
 };
 async function init() {
