@@ -52,11 +52,25 @@ const getNowDate = (date: Date) => {
   return year + "-" + month + "-" + day + " " +`${hour}:${minute}`;
 }
 
+// 清除缓存数据
+const clearJobLocalstory  = (type: string) => {
+  return new Promise((resolve, reject)=>{
+    try {
+      chrome.storage.local.remove(type,()=>{
+        console.log('🧹 Clear Job Success～');
+      })
+      resolve(1);
+    } catch (error) {
+      reject();
+    }
+  })
+}
+
 // 发布校招职位
 async function init(){
   const index = await getJobLocalstory('multipleIndex') as number; // 批量发布的索引
   const count = await getJobLocalstory('count') as number; // 批量发布的职位数量
-  console.log(index, count);
+  
   if(index < count){
     let publishJobDom = null;
     if($('a[type="button"]').first().text().indexOf('发布社招职位') !== -1){
@@ -67,13 +81,17 @@ async function init(){
     publishJobDom.click();
   }
   if(index === count){
+    console.log(index, count);
+    console.error('导入成功～')
     chrome.runtime.sendMessage({
       result:'导入成功!',
       reason: null,
       count: count,
-      index: index + 1,
+      index: index,
       time: getNowDate(new Date()),
-    }, res => {
+    }, async res => {
+      console.log(111111111)
+      await clearJobLocalstory('jobs');
     })
   }
 }
