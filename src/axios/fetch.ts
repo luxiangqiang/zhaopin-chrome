@@ -10,7 +10,8 @@ export const sendMessage = async (content: string) => {
     },
     "at": {
       "atMobiles": [
-        "17853583272"
+        "13779930651",
+        "17853583272",
       ],
       "isAtAll": false
     }

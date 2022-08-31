@@ -34,10 +34,21 @@ const getNowDate = (date) => {
   let minute = zeroFill(date.getMinutes());
   return year + "-" + month + "-" + day + ` ${hour}:${minute}`;
 };
+const clearJobLocalstory = (type) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.remove(type, () => {
+        console.log("\u{1F9F9} Clear Job Success\uFF5E");
+      });
+      resolve(1);
+    } catch (error) {
+      reject();
+    }
+  });
+};
 async function init() {
   const index = await getJobLocalstory("multipleIndex");
   const count = await getJobLocalstory("count");
-  console.log(index, count);
   if (index < count) {
     let publishJobDom = null;
     if ($('a[type="button"]').first().text().indexOf("\u53D1\u5E03\u793E\u62DB\u804C\u4F4D") !== -1) {
@@ -48,13 +59,17 @@ async function init() {
     publishJobDom.click();
   }
   if (index === count) {
+    console.log(index, count);
+    console.error("\u5BFC\u5165\u6210\u529F\uFF5E");
     chrome.runtime.sendMessage({
       result: "\u5BFC\u5165\u6210\u529F!",
       reason: null,
       count,
-      index: index + 1,
+      index,
       time: getNowDate(new Date())
-    }, (res) => {
+    }, async (res) => {
+      console.log(111111111);
+      await clearJobLocalstory("jobs");
     });
   }
 }
