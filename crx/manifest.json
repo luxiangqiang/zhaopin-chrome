@@ -54,6 +54,9 @@
       "run_at": "document_idle"
     }
   ],
+  "externally_connectable": {
+    "matches": ["*://*.iguopin.com/*"]
+  },
   "host_permissions": [
     "*://*/*"
   ],

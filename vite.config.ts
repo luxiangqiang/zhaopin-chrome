@@ -20,7 +20,7 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     build: {
-      minify: false, // "terser"
+      minify: false, // 
       outDir: path.resolve('./crx'),
       assetsDir: './', 
       rollupOptions: {
