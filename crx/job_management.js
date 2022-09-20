@@ -62,13 +62,13 @@ async function init() {
     console.log(index, count);
     console.error("\u5BFC\u5165\u6210\u529F\uFF5E");
     chrome.runtime.sendMessage({
+      channel: "NOTIFICATION",
       result: "\u5BFC\u5165\u6210\u529F!",
       reason: null,
       count,
       index,
       time: getNowDate(new Date())
     }, async (res) => {
-      console.log(111111111);
       await clearJobLocalstory("jobs");
     });
   }

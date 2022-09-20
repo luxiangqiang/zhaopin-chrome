@@ -1,4 +1,4 @@
-import { c as createWebHashHistory, a as createRouter, b as axios$1, E as ElNotification, d as createStore, e as createBlock, o as openBlock, r as resolveComponent, f as createApp, i as installer, z as zhCn } from "./vendor.js";
+import { c as createWebHashHistory, a as createRouter, b as axios$1, E as ElNotification, d as createStore, e as createBlock, o as openBlock, r as resolveComponent, f as createApp, g as ElementPlusIconsVue, i as installer, z as zhCn } from "./vendor.js";
 const p = function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -83,7 +83,12 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: () => __vitePreload(() => import("./index.js"), true ? ["index.js","index.css","vendor.js"] : void 0)
+    component: () => __vitePreload(() => import("./index.js"), true ? ["index.js","index.css","vendor.js","contants.js"] : void 0)
+  },
+  {
+    path: "/collect-resumes",
+    name: "collect-resumes",
+    component: () => __vitePreload(() => import("./collect-resumes.js"), true ? ["collect-resumes.js","collect-resumes.css","contants.js","vendor.js"] : void 0)
   }
 ];
 const options = {
@@ -91,7 +96,7 @@ const options = {
   routes
 };
 const router = createRouter(options);
-const BASE_URL = "https://a.reta-inc.com";
+const BASE_URL = "http://qa-api.reta-inc.com/";
 const DINGDING_URL = "https://oapi.dingtalk.com/robot/send?access_token=4b5c35cb0da73bff59ae79cfeffcaa24093bd4713b48f23ab0a48d9435c4b318";
 const getLocalstoryToken = async () => {
   return new Promise((resolve, reject) => {
@@ -104,6 +109,34 @@ const getLocalstoryToken = async () => {
       reject(error);
     }
   });
+};
+const getLocalstory = (type) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.get(type, (result) => {
+        console.log(`\u2705 Get ${type} Success\uFF5E`, result[type]);
+        resolve(result[type]);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+const clearLocalstory = (type) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.remove(type, () => {
+        console.log(`\u{1F9F9} Clear ${type} Success\uFF5E`);
+      });
+      resolve(1);
+    } catch (error) {
+      reject();
+    }
+  });
+};
+const setBadgeText = (text = "0", color = "#eb524a") => {
+  chrome.action.setBadgeText({ text });
+  chrome.action.setBadgeBackgroundColor({ color });
 };
 const defaultHeaders = {
   platform: "A_WEB_PC"
@@ -182,6 +215,9 @@ async function sendMonitorMessage(content) {
   };
   return await axios.monitor(message);
 }
+async function postResumeList(params) {
+  return await axios.post("/admin/v1/resume/unify-collect", params);
+}
 var monitor = {
   install: (app2) => {
     app2.provide("$monitor", sendMonitorMessage);
@@ -229,5 +265,8 @@ function _sfc_render(_ctx, _cache) {
 }
 var App = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
 const app = createApp(App);
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component);
+}
 app.use(installer, { size: "mini", locale: zhCn }).use(store).use(router).use(monitor).mount("#app");
-export { _export_sfc as _, getJobs as a, getCompanyList as b, getLocalstoryToken as g, login as l, sendMonitorMessage as s };
+export { _export_sfc as _, getJobs as a, getCompanyList as b, getLocalstory as c, clearLocalstory as d, setBadgeText as e, getLocalstoryToken as g, login as l, postResumeList as p, sendMonitorMessage as s };

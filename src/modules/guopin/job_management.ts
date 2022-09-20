@@ -84,13 +84,13 @@ async function init(){
     console.log(index, count);
     console.error('导入成功～')
     chrome.runtime.sendMessage({
+      channel: 'NOTIFICATION',
       result:'导入成功!',
       reason: null,
       count: count,
       index: index,
       time: getNowDate(new Date()),
     }, async res => {
-      console.log(111111111)
       await clearJobLocalstory('jobs');
     })
   }
