@@ -17,6 +17,11 @@ const routes: RouteRecordRaw[] = [
     name: 'home',
     component: () => import('@/popup/view/index.vue'),
   },
+  {
+    path: '/collect-resumes',
+    name: 'collect-resumes',
+    component: () => import('@/popup/view/collect-resumes.vue'),
+  },
 ];
 
 const options: RouterOptions = {

@@ -1,5 +1,5 @@
 import axios from "@/axios/https";
-import { IListRequest, IListResponse, ILoginRes } from './types';
+import { IListRequest, IListResponse, ILoginRes, ICollectResume } from './types';
 
 // 登陆
 export async function login(data: { email: string; password: string }) {
@@ -22,4 +22,9 @@ export async function sendMonitorMessage(content: string) {
     }
   }
   return await axios.monitor(message);
+}
+
+// 简历统收 
+export async function postResumeList(params:ICollectResume) {
+  return await axios.post("/admin/v1/resume/unify-collect", params );
 }

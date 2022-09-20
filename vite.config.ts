@@ -20,7 +20,7 @@ export default defineConfig(({ command, mode }) => {
       }
     },
     build: {
-      minify: false, // 
+      minify: false, 
       outDir: path.resolve('./crx'),
       assetsDir: './', 
       rollupOptions: {
@@ -30,6 +30,9 @@ export default defineConfig(({ command, mode }) => {
           background: resolve(__dirname, 'src/background.js'),
           job_management: resolve(__dirname, 'src/modules/guopin/job_management.ts'),
           guopin_home: resolve(__dirname, 'src/modules/guopin/guopin_home.ts'),
+          social_recruitment: resolve(__dirname, 'src/modules/guopin/social_recruitment.ts'),
+          school_recruitment: resolve(__dirname, 'src/modules/guopin/school_recruitment.ts'),
+          resume_home: resolve(__dirname, 'src/modules/guopin/resume_home.ts'),
           jquery: resolve(__dirname, 'src/utils/jquery.js'),
         },
         output: {

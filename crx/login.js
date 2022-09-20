@@ -1,5 +1,5 @@
 import { _ as _export_sfc, g as getLocalstoryToken, l as login$1, s as sendMonitorMessage } from "./main.js";
-import { g as defineComponent, h as ref, j as reactive, k as onMounted, l as createElementBlock, m as createVNode, w as withCtx, u as useRouter, r as resolveComponent, o as openBlock, n as createTextVNode, t as toDisplayString, p as pushScopeId, q as popScopeId, s as createBaseVNode } from "./vendor.js";
+import { h as defineComponent, j as ref, k as reactive, l as onMounted, m as createElementBlock, n as createVNode, w as withCtx, u as useRouter, r as resolveComponent, o as openBlock, p as createTextVNode, t as toDisplayString, q as pushScopeId, s as popScopeId, v as createBaseVNode } from "./vendor.js";
 var login_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-710ad960"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "container" };

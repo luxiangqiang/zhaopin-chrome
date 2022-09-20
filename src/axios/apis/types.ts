@@ -238,3 +238,319 @@ export interface IList {
    */
   description: string;
 }
+
+
+
+
+
+/**
+* 优势
+*/
+export interface IAdvantage {
+  summary: string;
+}
+
+/**
+* 基础
+*/
+export interface IBasic {
+  /**
+   * 生日
+   */
+  birth: string;
+  /**
+   * 邮箱
+   */
+  email: string;
+  /**
+   * 求职角色
+   */
+  jobRole: string;
+  /**
+   * 求职状态
+   */
+  jobState: string;
+  /**
+   * 地区
+   */
+  location: string;
+  /**
+   * 电话
+   */
+  mobile: string;
+  /**
+   * 姓名
+   */
+  name: string;
+  /**
+   * 照片媒体ID
+   */
+  photoMediaId: number;
+  /**
+   * 政治面貌
+   */
+  politicalStatus: string;
+  /**
+   * 性别
+   */
+  sex: number;
+  /**
+   * 行业
+   */
+  vocation: string;
+  /**
+   * 参加工作时间
+   */
+  workStart: string;
+}
+
+export interface ICertificates {
+  /**
+   * 证书名称
+   */
+  certificate: string;
+  /**
+   * 日期
+   */
+  date: string;
+}
+
+export interface IEdus {
+  /**
+   * 学历
+   */
+  education: string;
+  /**
+   * 教育ID
+   */
+  eduId: number | null;
+  /**
+   * 结束时间
+   */
+  end: string;
+  /**
+   * 学校
+   */
+  school: string;
+  /**
+   * 专业
+   */
+  speciality: string;
+  /**
+   * 开始时间
+   */
+  start: string;
+  /**
+   * 详细介绍
+   */
+  summary: string;
+}
+
+export interface IForwards {
+  /**
+   * 意向ID
+   */
+  forwardId: number | null;
+  /**
+   * 工作性质
+   */
+  jobType: string;
+  /**
+   * 地区
+   */
+  location: string;
+  /**
+   * 薪资 (最小)
+   */
+  salaryFrom: string;
+  /**
+   * 薪资 (最大)
+   */
+  salaryTo: string;
+  /**
+   * 职位
+   */
+  title: string;
+  /**
+   * 行业
+   */
+  vocation: string;
+}
+
+export interface IProjects {
+  /**
+   * 公司
+   */
+  company: string;
+  /**
+   * 结束时间
+   */
+  end: string;
+  /**
+   * 项目名称
+   */
+  projectName: string;
+  /**
+   * 职责
+   */
+  responsibilities: string;
+  /**
+   * 开始时间
+   */
+  start: number;
+  /**
+   * 详细描述
+   */
+  summary: string;
+  /**
+   * 职位
+   */
+  title: string;
+}
+
+export interface ITrainings {
+  /**
+   * 证书
+   */
+  certificate: string;
+  /**
+   * 课程
+   */
+  course: string;
+  /**
+   * 结束时间
+   */
+  end: string;
+  /**
+   * 机构
+   */
+  institution: string;
+  /**
+   * 开始时间
+   */
+  start: string;
+  /**
+   * 详细描述
+   */
+  summary: string;
+  /**
+   * 培训名称
+   */
+  trainingName: string;
+}
+
+export interface IWorks {
+  /**
+   * 公司
+   */
+  company: string;
+  /**
+   * 工作时间
+   */
+  duration: string;
+  /**
+   * 结束时间
+   */
+  end: string;
+  /**
+   * 工作性质
+   */
+  jobType: string;
+  /**
+   * 地区
+   */
+  location: string;
+  /**
+   * 薪资
+   */
+  salary: string;
+  /**
+   * 技能
+   */
+  skills: string[];
+  /**
+   * 开始时间
+   */
+  start: string;
+  /**
+   * 详细描述
+   */
+  summary: string;
+  /**
+   * 岗位
+   */
+  title: string;
+  /**
+   * 行业
+   */
+  vocation: string;
+  /**
+   * 工作ID
+   */
+  workId: number | null;
+}
+
+
+/**
+* 简历表单
+*
+* ResumeFormDTO
+*/
+export interface ResumeFormDTO {
+  /**
+   * 优势
+   */
+  advantage: IAdvantage;
+  /**
+   * 基础
+   */
+  basic: IBasic;
+  /**
+   * 证书
+   */
+  certificates: ICertificates[];
+  /**
+   * 教育
+   */
+  edus: IEdus[];
+  /**
+   * 意向
+   */
+  forwards: IForwards[];
+  /**
+   * 项目
+   */
+  projects: IProjects[];
+  /**
+   * 培训
+   */
+  trainings: ITrainings[];
+  /**
+   * 工作
+   */
+  works: IWorks[];
+}
+
+
+export interface IResume {
+  /**
+   * 简历表单
+   */
+  form: ResumeFormDTO;
+  /**
+   * 主题
+   */
+  subject: string;
+}
+
+export interface ICollectResume {
+  /**
+   * 渠道，GUOPIN: 国聘
+   * C_24365: 24365
+   */
+  channel: string;
+  /**
+   * 简历明细列表
+   */
+  items: IResume[];
+}

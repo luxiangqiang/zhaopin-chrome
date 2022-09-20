@@ -1,5 +1,5 @@
 // 职位列表
-export const jobColumns = [
+export const JOB_COLUMNS = [
   {
     label: '公司',
     prop: 'companyName',
@@ -61,3 +61,37 @@ export const jobColumns = [
     width: 140,
   },
 ];
+
+// 收集简历
+export const COLLECT_RESUME_COLUMN = [
+  {
+    label: '姓名',
+    prop: 'name',
+    width: 100,
+  },
+  {
+    label: '电话',
+    prop: 'mobile',
+    width: 140,
+  },
+  {
+    label: '性别',
+    prop: 'sex',
+    width: 100,
+  },
+  {
+    label: '应聘岗位',
+    prop: 'title',
+    width: 200,
+  },
+  {
+    label: '期望地区',
+    prop: 'location',
+    width: 100,
+  },
+  {
+    label: '邮箱',
+    prop: 'email',
+    width: 120,
+  }
+]

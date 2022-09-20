@@ -17,84 +17,26 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+import { h as defineComponent, j as ref, k as reactive, x as watch, l as onMounted, m as createElementBlock, n as createVNode, w as withCtx, v as createBaseVNode, y as withDirectives, e as createBlock, r as resolveComponent, A as resolveDirective, o as openBlock, F as Fragment, B as renderList, C as unref, p as createTextVNode, t as toDisplayString, q as pushScopeId, s as popScopeId, u as useRouter } from "./vendor.js";
 import { _ as _export_sfc, a as getJobs, b as getCompanyList } from "./main.js";
-import { g as defineComponent, h as ref, j as reactive, v as watch, k as onMounted, l as createElementBlock, s as createBaseVNode, m as createVNode, w as withCtx, x as withDirectives, e as createBlock, r as resolveComponent, y as resolveDirective, o as openBlock, n as createTextVNode, t as toDisplayString, F as Fragment, A as renderList, B as unref, p as pushScopeId, q as popScopeId } from "./vendor.js";
-const jobColumns = [
-  {
-    label: "\u516C\u53F8",
-    prop: "companyName",
-    width: 150
-  },
-  {
-    label: "\u804C\u4F4D",
-    prop: "title",
-    width: 120
-  },
-  {
-    label: "\u7F16\u7801",
-    prop: "code",
-    width: 80
-  },
-  {
-    label: "\u6027\u8D28",
-    prop: "recruitmentTypeName",
-    width: 70
-  },
-  {
-    label: "\u5BA2\u6237\u7ECF\u7406",
-    prop: "hiringManager",
-    width: 90
-  },
-  {
-    label: "\u5F53\u524D\u72B6\u6001",
-    prop: "statusName",
-    width: 70
-  },
-  {
-    label: "\u9762\u8BD5\u95F4\u72B6\u6001",
-    prop: "openedDesc",
-    width: 90
-  },
-  {
-    label: "\u804C\u4F4D\u5728\u7EBF\u5929\u6570",
-    prop: "onlineDays",
-    width: 100
-  },
-  {
-    label: "\u7D2F\u8BA1\u6295\u9012\u4EBA\u6570",
-    prop: "totalCandidateCount",
-    width: 100
-  },
-  {
-    label: "\u5730\u533A",
-    prop: "officeLocation",
-    width: 100
-  },
-  {
-    label: "\u53D1\u5E03\u4EBA",
-    prop: "name",
-    width: 60
-  },
-  {
-    label: "\u53D1\u5E03\u65F6\u95F4",
-    prop: "publishedAt",
-    width: 140
-  }
-];
+import { J as JOB_COLUMNS } from "./contants.js";
 var index_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-045a1f8e"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "contianer" };
-const _hoisted_2 = { class: "header" };
-const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "header--title" }, "\u56FD\u8058\u4E00\u952E\u53D1\u5E03\u804C\u4F4D\u52A9\u624B", -1));
-const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "70px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
-const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u804C\u4F4D\uFF1A", -1));
-const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u7F16\u7801: ", -1));
-const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "70px" } }, "\u62DB\u8058\u6027\u8D28\uFF1A", -1));
-const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "44px" } }, "\u516C\u53F8\uFF1A", -1));
-const _hoisted_9 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
+const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("header", null, [
+  /* @__PURE__ */ createBaseVNode("div", null, "\u56FD\u8058\u7F51\u7EDF\u6536\u53D1\u5C0F\u52A9\u624B")
+], -1));
+const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
+const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u804C\u4F4D\uFF1A", -1));
+const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u7F16\u7801\uFF1A", -1));
+const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u6027\u8D28\uFF1A", -1));
+const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u516C\u53F8\uFF1A", -1));
+const _hoisted_8 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
+const _hoisted_9 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u7EDF\u6536 ");
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "index",
   setup(__props) {
+    const router = useRouter();
     const loading = ref(false);
     const tableData = ref([]);
     const totalCount = ref(0);
@@ -151,6 +93,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       getJobData();
       getCompanyLists();
     });
+    const oneClickCollection = async () => {
+      router.push({ name: "collect-resumes" });
+    };
     const publishJob = async (job) => {
       switch (job.recruitmentTypeName) {
         case "\u793E\u62DB":
@@ -253,7 +198,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       getJobData();
     };
     return (_ctx, _cache) => {
-      const _component_el_button = resolveComponent("el-button");
       const _component_el_option = resolveComponent("el-option");
       const _component_el_select = resolveComponent("el-select");
       const _component_el_col = resolveComponent("el-col");
@@ -261,31 +205,19 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       const _component_el_row = resolveComponent("el-row");
       const _component_el_card = resolveComponent("el-card");
       const _component_el_table_column = resolveComponent("el-table-column");
+      const _component_el_button = resolveComponent("el-button");
       const _component_el_table = resolveComponent("el-table");
       const _component_el_pagination = resolveComponent("el-pagination");
       const _directive_loading = resolveDirective("loading");
       return openBlock(), createElementBlock("div", _hoisted_1, [
-        createBaseVNode("header", _hoisted_2, [
-          _hoisted_3,
-          createVNode(_component_el_button, {
-            disabled: multipleSelection.value.length === 0,
-            class: "publish-btn",
-            type: "primary",
-            onClick: allPublishJob
-          }, {
-            default: withCtx(() => [
-              createTextVNode(" \u4E00\u952E\u53D1\u5E03\u804C\u4F4D(" + toDisplayString(multipleSelection.value.length) + ") ", 1)
-            ]),
-            _: 1
-          }, 8, ["disabled"])
-        ]),
-        createVNode(_component_el_card, { shadow: "always" }, {
+        _hoisted_2,
+        createVNode(_component_el_card, null, {
           default: withCtx(() => [
-            createVNode(_component_el_row, { class: "mgb" }, {
+            createVNode(_component_el_row, null, {
               default: withCtx(() => [
                 createVNode(_component_el_col, { span: 8 }, {
                   default: withCtx(() => [
-                    _hoisted_4,
+                    _hoisted_3,
                     createVNode(_component_el_select, {
                       modelValue: query.status,
                       "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => query.status = $event),
@@ -307,7 +239,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_5,
+                    _hoisted_4,
                     createVNode(_component_el_input, {
                       class: "input-item",
                       placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D",
@@ -320,7 +252,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_6,
+                    _hoisted_5,
                     createVNode(_component_el_input, {
                       class: "input-item",
                       placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D\u7F16\u7801",
@@ -338,7 +270,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               default: withCtx(() => [
                 createVNode(_component_el_col, { span: 8 }, {
                   default: withCtx(() => [
-                    _hoisted_7,
+                    _hoisted_6,
                     createVNode(_component_el_select, {
                       modelValue: query.recruitmentType,
                       "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => query.recruitmentType = $event),
@@ -361,7 +293,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_8,
+                    _hoisted_7,
                     createVNode(_component_el_select, {
                       modelValue: query.company,
                       "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => query.company = $event),
@@ -392,11 +324,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         }),
         createBaseVNode("section", null, [
           withDirectives((openBlock(), createBlock(_component_el_table, {
-            class: "table",
             data: tableData.value,
             stripe: "",
             border: "",
-            height: "300",
+            height: "332",
             onSelectionChange: handleSelectionChange
           }, {
             default: withCtx(() => [
@@ -404,7 +335,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 type: "selection",
                 width: "55"
               }),
-              (openBlock(true), createElementBlock(Fragment, null, renderList(unref(jobColumns), (item) => {
+              (openBlock(true), createElementBlock(Fragment, null, renderList(unref(JOB_COLUMNS), (item) => {
                 return openBlock(), createBlock(_component_el_table_column, {
                   prop: item.prop,
                   label: item.label,
@@ -425,7 +356,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     onClick: ($event) => publishJob(scope.row)
                   }, {
                     default: withCtx(() => [
-                      _hoisted_9
+                      _hoisted_8
                     ]),
                     _: 2
                   }, 1032, ["onClick"])
@@ -436,18 +367,43 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             _: 1
           }, 8, ["data"])), [
             [_directive_loading, loading.value]
-          ]),
+          ])
+        ]),
+        createBaseVNode("footer", null, [
           createVNode(_component_el_pagination, {
             class: "pagination",
             background: "",
-            layout: "total, sizes, prev, pager, next",
+            layout: "prev, pager, next, total",
             total: totalCount.value,
             onSizeChange: handleSizeChange,
             onCurrentChange: handleCurrentChange,
             "current-page": pageNo.value,
             "page-sizes": [10, 20, 30, 40, 50, 100],
             "page-size": pageSize.value
-          }, null, 8, ["total", "current-page", "page-size"])
+          }, null, 8, ["total", "current-page", "page-size"]),
+          createBaseVNode("div", null, [
+            createVNode(_component_el_button, {
+              class: "publish-btn",
+              type: "primary",
+              onClick: oneClickCollection
+            }, {
+              default: withCtx(() => [
+                _hoisted_9
+              ]),
+              _: 1
+            }),
+            createVNode(_component_el_button, {
+              disabled: multipleSelection.value.length === 0,
+              class: "publish-btn",
+              type: "primary",
+              onClick: allPublishJob
+            }, {
+              default: withCtx(() => [
+                createTextVNode(" \u4E00\u952E\u53D1\u5E03\u804C\u4F4D(" + toDisplayString(multipleSelection.value.length) + ") ", 1)
+              ]),
+              _: 1
+            }, 8, ["disabled"])
+          ])
         ])
       ]);
     };

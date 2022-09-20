@@ -26,7 +26,8 @@
     "cookies",
     "notifications",
     "declarativeContent",
-    "scripting"
+    "scripting",
+    "background"
   ],
   "content_scripts": [  
     {
@@ -34,8 +35,8 @@
         "https://campus.iguopin.com/***", 
         "https://www.iguopin.com/***"
       ],
-      "js": ["jquery.js", "common.js"],
-      "run_at": "document_end"
+      "js": ["jquery.js"],
+      "run_at": "document_idle"
     },
     {
       "matches": [
@@ -43,7 +44,7 @@
         "https://www.iguopin.com/index.php?m=&c=company&a=jobs_list&type=1"
       ],
       "js": ["job_management.js"],
-      "run_at": "document_end"
+      "run_at": "document_idle"
     },
     {
       "matches": [
@@ -51,6 +52,29 @@
         "https://www.iguopin.com/index.php?m=&c=company&a=jobs_add"
       ],
       "js": ["guopin_home.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.iguopin.com/index.php?m=Home****",
+        "https://www.iguopin.com/index.php?m=&c=company****"
+      ],
+      "js": ["social_recruitment.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://campus.iguopin.com/index.php?m=&c=company&a=jobs_apply&is_reply=0&state=-1&open=1&datestart****"
+      ],
+      "js": ["school_recruitment.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.iguopin.com/index.php?m=&c=resume****",
+        "https://campus.iguopin.com/index.php?m=&c=resume****"
+      ],
+      "js": ["resume_home.js"],
       "run_at": "document_idle"
     }
   ],
