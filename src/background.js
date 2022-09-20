@@ -1,28 +1,41 @@
 import { sendMessage } from "@/axios/fetch";
 
-chrome.runtime.onInstalled.addListener(() => {
+// 简历临时存储
+const resumeList = [];
+
+// 保存数据
+const saveResumesLocalStory = (key, value) => {
+  return new Promise((resolve, reject)=>{
+    try {
+      chrome.storage.local.set({ [key]:  value}, function () {
+        console.log('✅ [background.js]: Save Resumes Success～');
+        resolve(1);
+      });
+    } catch (error) {
+      reject();
+    }
+  })
+}
+
+chrome.runtime.onInstalled.addListener(async () => {
   console.log('【🚀 发布职位】插件已安装完成～')
-  // sendMessage(`### 国聘职位助手 \n\n > 导入结果： **全部成功！** \n\n  导入时间： **8:10** \n\n  > 成功数量: **10** 条 \n\n > 失败数量: **0** 条 \n\n @17853583272`)
+
   chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
-    console.log('触发通知～')
-    sendMessage(`### 国聘职位助手 \n\n > 导入结果： **${ req.result }** \n\n > 导入时间： **${ req.time }** \n\n  > 成功数量: **${ req.index }** 条 \n\n > 失败数量: **${ req.count - req.index }** 条 \n\n 失败原因：**${ req.reason || '暂无'}** @13779930651`)
+    switch(req.channel){
+      case "RESUME_DATA":
+        resumeList.push(req.message);
+        console.error(resumeList);
+        saveResumesLocalStory('resumes', resumeList)
+        chrome.action.setBadgeText({text: String(resumeList.length) });
+        chrome.action.setBadgeBackgroundColor({color: '#eb524a'})
+        break;
+      case "NOTIFICATION":
+        sendMessage(`### 国聘职位助手 \n\n > 导入结果： **${ req.result }** \n\n > 导入时间： **${ req.time }** \n\n  > 成功数量: **${ req.index }** 条 \n\n > 失败数量: **${ req.count - req.index }** 条 \n\n 失败原因：**${ req.reason || '暂无'}** @13779930651`)
+        break;
+      case "CLEAR_RESUME_LIST":
+        resumeList.length = 0;
+        break;
+    }
     return true;
   })
 });
-
-// const notification = () => {
-//   chrome.notifications.create(
-//     'notify_alert1', // notifyId
-//     {
-//       type: "basic", 
-//       iconUrl: chrome.runtime.getURL('logo.png'), 
-//       title: "更新完成！", 
-//       message: "请查看页面数据是否已更新。"
-//     }, 
-//     function(notifyId){
-//       console.log(notifyId, JSON.stringify(chrome.runtime.lastError));
-//       //不用移除该消息，否者不会显示
-//       // chrome.notifications.clear(notifyId, function(){ });
-//     }
-//   );
-// }

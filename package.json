@@ -10,6 +10,7 @@
     "zip": "sh shell/zip.sh"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "2.0.9",
     "@types/lodash-es": "^4.17.3",
     "axios": "0.27.2",
     "clipboard": "^2.0.6",
@@ -27,6 +28,7 @@
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
     "babel-plugin-import": "1.13.3",
+    "dayjs": "1.11.5",
     "jquery": "3.6.0",
     "less": "^3.12.2",
     "less-loader": "^5.0.0",
