@@ -1,17 +1,12 @@
 <template>
   <div class="contianer">
-    <header class="header">
-      <div class="header--title">国聘一键发布职位助手</div>
-      <el-button 
-        :disabled="multipleSelection.length === 0"
-        class="publish-btn" type="primary" @click="allPublishJob">
-        一键发布职位({{ multipleSelection.length }})
-      </el-button>
+    <header>
+      <div>国聘网统收发小助手</div>
     </header>
-    <el-card shadow="always">
-      <el-row class="mgb">
+    <el-card>
+      <el-row>
         <el-col :span="8">
-          <span style="width: 70px">招聘状态：</span>
+          <span style="width: 100px">招聘状态：</span>
           <el-select v-model="query.status" placeholder="请选择招聘状态">
             <el-option
               v-for="item in recruitmentStatusOptions"
@@ -31,7 +26,7 @@
           ></el-input>
         </el-col>
         <el-col :span="7">
-          <span class="filter-text">编码: </span>
+          <span class="filter-text">编码：</span>
           <el-input
             class="input-item"
             placeholder="请输入职位编码"
@@ -40,9 +35,9 @@
           ></el-input>
         </el-col>
       </el-row>
-       <el-row class="row">
+      <el-row class="row">
         <el-col :span="8">
-          <span style="width: 70px">招聘性质：</span>
+          <span style="width: 100px">招聘性质：</span>
           <el-select
             v-model="query.recruitmentType"
             class="interview-room-status"
@@ -57,7 +52,7 @@
           </el-select>
         </el-col>
         <el-col :span="7">
-          <span style="width: 44px">公司：</span>
+          <span class="filter-text">公司：</span>
           <el-select
             v-model="query.company"
             multiple
@@ -78,21 +73,19 @@
     <section>
       <el-table
         v-loading="loading"
-        class="table"
         :data="tableData"
         stripe
         border
-        height="300"
+        height="332"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
         <el-table-column
-          v-for="item of jobColumns"
+          v-for="item of JOB_COLUMNS"
           :prop="item.prop"
           :label="item.label"
           :width="item.width"
         >
-
         </el-table-column>
         <el-table-column fixed="right" label="操作" :width="'100px'" class="operate" align="center">
           <template v-slot="scope">
@@ -100,10 +93,12 @@
           </template>
         </el-table-column>
       </el-table>
+    </section>
+    <footer>
       <el-pagination
         class="pagination"
         background
-        layout="total, sizes, prev, pager, next"
+        layout="prev, pager, next, total"
         :total="totalCount"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -111,14 +106,23 @@
         :page-sizes="[10, 20, 30, 40, 50, 100]"
         :page-size="pageSize"
       />
-    </section>
+      <div>
+        <el-button class="publish-btn" type="primary" @click="oneClickCollection"> 一键统收 </el-button>
+        <el-button 
+          :disabled="multipleSelection.length === 0"
+          class="publish-btn" type="primary" @click="allPublishJob">
+          一键发布职位({{ multipleSelection.length }})
+        </el-button>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from "vue-router";
 import { onMounted, reactive, Ref, ref, watch } from 'vue';
 import { getJobs, getCompanyList } from '@/axios/apis/index';
-import { jobColumns } from './contants';
+import { JOB_COLUMNS } from './contants';
 import { IList } from '@/axios/apis/types';
 
 interface IOptions {
@@ -134,6 +138,7 @@ interface IQuery {
   recruitmentType: string;
 }
 
+const router = useRouter();
 const loading = ref<Boolean>(false);
 const tableData: Ref<IList[]> = ref([]);
 const totalCount: Ref<number> = ref(0);
@@ -192,6 +197,11 @@ onMounted(() => {
   getJobData();
   getCompanyLists();
 });
+
+// 一键统收
+const oneClickCollection = async () => {
+  router.push({name: 'collect-resumes'});
+}
 
 // 【单个】一键发布
 const publishJob = async (job: IList) => {
@@ -313,14 +323,26 @@ const handleCurrentChange = (value: number) => {
 </script>
 
 <style lang="less" scoped>
+/deep/.el-pagination__total{
+  color: #fff;
+  margin-left: 10px;
+}
+/deep/.el-card__body{
+  padding: 15px;
+}
 .contianer {
   width: 737px;
-  padding: 15px;
-  .header {
+  height: 558px;
+  padding: 0 15px 15px;
+  background: url('@/assets/images/background.png') no-repeat;
+  opacity: 0.9;
+  header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 13px;
+    font-size: 22px;
+    font-weight: 500;
+    padding: 15px 0;
+    color: #1d2129db;
+    justify-content: center;
 
     &--title{
       font-size: 18px;
@@ -336,26 +358,44 @@ const handleCurrentChange = (value: number) => {
       margin-left: 12px;
     }
   }
-  .mgb {
-    margin-bottom: 10px;
+  .el-card {
+    border-radius: 8px;
+  }
+  .el-table{
+    margin-top: 10px;
+    overflow: auto;
+    border-radius: 8px;
+  }
+  .row{
+    margin-top: 10px;
   }
   .el-col {
     display: flex;
     align-items: center;
-    margin-right: 10px;
+    margin-right: 6px;
+    font-size: 14px;
+    & > span{
+      color: #4E5969;
+    }
     .filter-text {
-      width: 50px;
+      width: 60px;
       text-align: end;
     }
   }
-  .table {
-    margin-top: 20px;
-    overflow: auto;
-  }
-  .el-pagination {
+  footer {
     display: flex;
-    justify-content: end;
-    margin-top: 8px;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: space-between;
+    .el-pagination {
+      display: flex;
+      justify-content: end;
+      margin-top: 8px;
+    }
+    .el-button{
+      margin-top: 6px;
+    }
   }
+  
 }
 </style>

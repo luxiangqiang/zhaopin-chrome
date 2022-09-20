@@ -1,44 +1,74 @@
-.contianer[data-v-045a1f8e] {
-  width: 737px;
+
+[data-v-045a1f8e] .el-pagination__total {
+  color: #fff;
+  margin-left: 10px;
+}
+[data-v-045a1f8e] .el-card__body {
   padding: 15px;
 }
-.contianer .header[data-v-045a1f8e] {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 13px;
+.contianer[data-v-045a1f8e] {
+  width: 737px;
+  height: 558px;
+  padding: 0 15px 15px;
+  background: url('./background.png') no-repeat;
+  opacity: 0.9;
 }
-.contianer .header--title[data-v-045a1f8e] {
+.contianer header[data-v-045a1f8e] {
+  display: flex;
+  font-size: 22px;
+  font-weight: 500;
+  padding: 15px 0;
+  color: #1d2129db;
+  justify-content: center;
+}
+.contianer header--title[data-v-045a1f8e] {
   font-size: 18px;
   font-weight: 500;
   color: #292929da;
 }
-.contianer .header--right[data-v-045a1f8e] {
+.contianer header--right[data-v-045a1f8e] {
   display: flex;
   align-items: center;
 }
-.contianer .header .publish-btn[data-v-045a1f8e] {
+.contianer header .publish-btn[data-v-045a1f8e] {
   height: 35px;
   margin-left: 12px;
 }
-.contianer .mgb[data-v-045a1f8e] {
-  margin-bottom: 10px;
+.contianer .el-card[data-v-045a1f8e] {
+  border-radius: 8px;
+}
+.contianer .el-table[data-v-045a1f8e] {
+  margin-top: 10px;
+  overflow: auto;
+  border-radius: 8px;
+}
+.contianer .row[data-v-045a1f8e] {
+  margin-top: 10px;
 }
 .contianer .el-col[data-v-045a1f8e] {
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 6px;
+  font-size: 14px;
+}
+.contianer .el-col > span[data-v-045a1f8e] {
+  color: #4E5969;
 }
 .contianer .el-col .filter-text[data-v-045a1f8e] {
-  width: 50px;
+  width: 60px;
   text-align: end;
 }
-.contianer .table[data-v-045a1f8e] {
-  margin-top: 20px;
-  overflow: auto;
+.contianer footer[data-v-045a1f8e] {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  justify-content: space-between;
 }
-.contianer .el-pagination[data-v-045a1f8e] {
+.contianer footer .el-pagination[data-v-045a1f8e] {
   display: flex;
   justify-content: end;
   margin-top: 8px;
+}
+.contianer footer .el-button[data-v-045a1f8e] {
+  margin-top: 6px;
 }
