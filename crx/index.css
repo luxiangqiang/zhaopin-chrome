@@ -14,12 +14,23 @@
   opacity: 0.9;
 }
 .contianer header[data-v-045a1f8e] {
+  position: relative;
   display: flex;
   font-size: 22px;
   font-weight: 500;
   padding: 15px 0;
   color: #1d2129db;
   justify-content: center;
+}
+.contianer header .full-screen[data-v-045a1f8e] {
+  position: absolute;
+  right: -6px;
+  top: 8px;
+  cursor: pointer;
+}
+.contianer header .full-screen img[data-v-045a1f8e] {
+  width: 32px;
+  height: 32px;
 }
 .contianer header--title[data-v-045a1f8e] {
   font-size: 18px;

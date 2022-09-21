@@ -1,15 +1,29 @@
+
+[data-v-710ad960] .el-card__body {
+  padding: 20px 40px;
+}
 .container[data-v-710ad960] {
-  width: 737px;
-  height: 500px;
+  position: relative;
+  width: 768px;
+  height: 572px;
   background-size: cover;
   background-image: url('./background.png');
   opacity: 0.9;
 }
-.container .login-box[data-v-710ad960] {
-  width: 500px;
-  height: auto;
+.container .full-screen[data-v-710ad960] {
   position: absolute;
-  top: 50%;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+.container .full-screen img[data-v-710ad960] {
+  width: 32px;
+  height: 32px;
+}
+.container .login-box[data-v-710ad960] {
+  width: 550px;
+  position: absolute;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 12px;
@@ -21,6 +35,8 @@
   margin-top: 25px;
 }
 .container .login-box .login-btn[data-v-710ad960] {
+  width: 375px;
+  height: 48px;
   padding-left: 50px;
   padding-right: 50px;
   margin: 20px 10px;

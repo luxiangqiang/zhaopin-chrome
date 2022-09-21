@@ -1,6 +1,6 @@
 
 async function init() {
-  console.error($('.resume_receive .td3 > a'))
+  const resumeCount = $('.resume_receive .td3 > a').length;
   $.each($('.resume_receive .td3 > a'), (index, el) => {
     setTimeout(()=>{
       el.click();
@@ -14,7 +14,7 @@ async function init() {
       }
     })
     window.close();
-  }, 50000);
+  }, resumeCount * 1000);
 }
 
 init();

@@ -15,7 +15,7 @@ var __spreadValues = (a, b) => {
   return a;
 };
 import { C as COLLECT_RESUME_COLUMN } from "./contants.js";
-import { h as defineComponent, j as ref, l as onMounted, D as dayjs, G as computed, m as createElementBlock, n as createVNode, w as withCtx, v as createBaseVNode, t as toDisplayString, C as unref, y as withDirectives, e as createBlock, H as ElTable, I as ElMessage, E as ElNotification, r as resolveComponent, A as resolveDirective, o as openBlock, F as Fragment, B as renderList, J as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, u as useRouter } from "./vendor.js";
+import { h as defineComponent, j as ref, l as onMounted, D as dayjs, G as computed, m as createElementBlock, p as createVNode, w as withCtx, n as createBaseVNode, t as toDisplayString, u as unref, A as withDirectives, e as createBlock, H as ElTable, I as ElMessage, E as ElNotification, r as resolveComponent, B as resolveDirective, o as openBlock, F as Fragment, C as renderList, J as createCommentVNode, v as pushScopeId, x as popScopeId, s as createTextVNode, q as useRouter } from "./vendor.js";
 import { _ as _export_sfc, c as getLocalstory, d as clearLocalstory, e as setBadgeText, p as postResumeList } from "./main.js";
 var collectResumes_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-413caf2c"), n = n(), popScopeId(), n);

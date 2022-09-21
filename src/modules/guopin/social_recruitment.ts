@@ -1,5 +1,6 @@
 
 async function init() {
+  const resumeCount = $('.J_allListBox > td:nth-child(4) > a').length;
   $.each($('.J_allListBox > td:nth-child(4) > a'), (index, el) => {
     setTimeout(()=>{
       el.click()
@@ -13,7 +14,7 @@ async function init() {
       }
     })
     window.close();
-  }, 25000);
+  }, resumeCount * 500);
 }
 
 init();
