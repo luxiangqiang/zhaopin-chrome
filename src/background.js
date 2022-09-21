@@ -17,14 +17,11 @@ const saveResumesLocalStory = (key, value) => {
   })
 }
 
-chrome.runtime.onInstalled.addListener(async () => {
-  console.log('【🚀 发布职位】插件已安装完成～')
-
+function onMessage(){
   chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
     switch(req.channel){
       case "RESUME_DATA":
         resumeList.push(req.message);
-        console.error(resumeList);
         saveResumesLocalStory('resumes', resumeList)
         chrome.action.setBadgeText({text: String(resumeList.length) });
         chrome.action.setBadgeBackgroundColor({color: '#74b9ff'})
@@ -36,6 +33,15 @@ chrome.runtime.onInstalled.addListener(async () => {
         resumeList.length = 0;
         break;
     }
-    return true;
   })
+}
+
+chrome.runtime.onInstalled.addListener(async () => {
+  console.log('【🚀 发布职位】插件已安装完成～')
+  onMessage();
 });
+
+
+
+
+

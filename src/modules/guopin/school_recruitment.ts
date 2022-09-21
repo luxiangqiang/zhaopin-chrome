@@ -10,10 +10,12 @@ async function init() {
   setTimeout(()=>{
     $.each($('.qspage > a'), (index, el) => {
       if($(el).text() === "下一页"){
-        window.open($(el).attr('href'));
+        if($(el).attr('href') && $(el).attr('href') !== ''){
+          window.open($(el).attr('href'));
+        }
       }
     })
-    window.close();
+    // window.close();
   }, resumeCount * 1000);
 }
 
