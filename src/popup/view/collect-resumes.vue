@@ -137,7 +137,7 @@ const handlerRefresh = async () => {
   })
 }
 
-// 设置
+// 窗口模式
 const handlerSetting = async () => {
   let url = chrome.runtime.getURL("popup.html");
   let tab = await chrome.windows.create({ 

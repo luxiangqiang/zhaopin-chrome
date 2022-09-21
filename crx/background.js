@@ -51,7 +51,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         console.error(resumeList);
         saveResumesLocalStory("resumes", resumeList);
         chrome.action.setBadgeText({ text: String(resumeList.length) });
-        chrome.action.setBadgeBackgroundColor({ color: "#eb524a" });
+        chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
         break;
       case "NOTIFICATION":
         sendMessage(`### \u56FD\u8058\u804C\u4F4D\u52A9\u624B 

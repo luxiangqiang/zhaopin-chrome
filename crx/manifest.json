@@ -8,14 +8,14 @@
     "type": "module"
   },
   "action": {
-    "default_icon": "logo.png",
+    "default_icon": "logo2.png",
     "default_title": "一键发布职位",
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "logo.png",
-    "48": "logo.png",
-    "128": "logo.png"
+    "16": "logo2.png",
+    "48": "logo2.png",
+    "128": "logo2.png"
   },
   "permissions": [
     "webRequest", 
