@@ -1,15 +1,19 @@
 <template>
   <div class="container">
+    <div class="full-screen" @click="handlerFullScreen">
+      <img :src="fullScreen" alt="fullScreen">
+    </div>
     <el-card class="login-box">
       <template #header>
         <div class="login-title">账号登陆</div>
       </template>
-      <el-form ref="ruleFormRef" :model="form" :rules="rules" status-icon label-width="100px">
-        <el-form-item label="企业邮箱:" prop="email">
+      <el-form ref="ruleFormRef" :model="form" :rules="rules" status-icon label-width="60px">
+        <el-form-item label="邮箱:" prop="email">
           <el-input
             v-model="form.email"
             name="email"
-            label="企业邮箱"
+            label="邮箱"
+            size="large"
             placeholder="请输入企业邮箱登录"
           >
             <template #append>{{ emailSuffix }}</template>
@@ -23,6 +27,7 @@
             type="password"
             name="password"
             label="密码"
+            size="large"
             placeholder="请输入密码"
           ></el-input>
         </el-form-item>
@@ -30,6 +35,7 @@
           <el-button 
             type="primary" 
             class="login-btn"
+            round
             @click="submitForm(ruleFormRef)"
           >登录</el-button>
         </el-row>
@@ -44,6 +50,7 @@ import { login, sendMonitorMessage } from '@/axios/apis/index';
 import { useRouter } from "vue-router";
 import { getLocalstoryToken } from '@/utils/index';
 import type { FormInstance, FormRules } from 'element-plus';
+import fullScreen from '@/assets/images/full-screen.png';
 
 const router = useRouter();
 const emailSuffix = '@reta-inc.com';
@@ -74,6 +81,17 @@ onMounted(async () => {
     router.push({ path: "/" });
   }
 })
+
+// 全屏
+const handlerFullScreen = async () => {
+  let url = chrome.runtime.getURL("popup.html");
+  let tab = await chrome.windows.create({ 
+    url: url,
+    width: 768,
+    height: 685,
+    left: 500,
+  });
+}
 
 const saveToken = (token: string) => {
   return new Promise((resolve, reject)=>{
@@ -120,17 +138,30 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped lang="less">
+/deep/.el-card__body{
+  padding: 20px 40px;
+}
 .container {
-  width: 737px;
-  height: 500px;
+  position: relative;
+  width: 768px;
+  height: 572px;
   background-size: cover;
   background-image: url('@/assets/images/background.png');
   opacity: 0.9;
-  .login-box {
-    width: 500px;
-    height: auto;
+  .full-screen{
     position: absolute;
-    top: 50%;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    img{
+      width: 32px;
+      height: 32px;
+    }
+  }
+  .login-box {
+    width: 550px;
+    position: absolute;
+    top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 12px;
@@ -141,6 +172,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       margin-top: 25px;
     }
     .login-btn {
+      width: 375px;
+      height: 48px;
       padding-left: 50px;
       padding-right: 50px;
       margin: 20px 10px;

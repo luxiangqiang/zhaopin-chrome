@@ -80,7 +80,7 @@ export const clearLocalstory = (type: string) => {
 }
 
 // SetBadgeText
-export const setBadgeText = (text='0', color='#eb524a') => {
+export const setBadgeText = (text='0', color='#74b9ff') => {
   chrome.action.setBadgeText({text: text});
   chrome.action.setBadgeBackgroundColor({color: color});
 }
