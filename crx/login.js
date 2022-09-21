@@ -1,10 +1,12 @@
 import { _ as _export_sfc, g as getLocalstoryToken, l as login$1, s as sendMonitorMessage } from "./main.js";
-import { h as defineComponent, j as ref, k as reactive, l as onMounted, m as createElementBlock, n as createVNode, w as withCtx, u as useRouter, r as resolveComponent, o as openBlock, p as createTextVNode, t as toDisplayString, q as pushScopeId, s as popScopeId, v as createBaseVNode } from "./vendor.js";
+import { h as defineComponent, j as ref, k as reactive, l as onMounted, m as createElementBlock, n as createBaseVNode, u as unref, p as createVNode, w as withCtx, q as useRouter, r as resolveComponent, o as openBlock, s as createTextVNode, t as toDisplayString, v as pushScopeId, x as popScopeId } from "./vendor.js";
+import { f as fullScreen } from "./full-screen.js";
 var login_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-710ad960"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "container" };
-const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "login-title" }, "\u8D26\u53F7\u767B\u9646", -1));
-const _hoisted_3 = /* @__PURE__ */ createTextVNode("\u767B\u5F55");
+const _hoisted_2 = ["src"];
+const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "login-title" }, "\u8D26\u53F7\u767B\u9646", -1));
+const _hoisted_4 = /* @__PURE__ */ createTextVNode("\u767B\u5F55");
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "login",
   setup(__props) {
@@ -36,6 +38,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         router.push({ path: "/" });
       }
     });
+    const handlerFullScreen = async () => {
+      let url = chrome.runtime.getURL("popup.html");
+      await chrome.windows.create({
+        url,
+        width: 768,
+        height: 685,
+        left: 500
+      });
+    };
     const saveToken = (token) => {
       return new Promise((resolve, reject) => {
         try {
@@ -83,9 +94,18 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       const _component_el_form = resolveComponent("el-form");
       const _component_el_card = resolveComponent("el-card");
       return openBlock(), createElementBlock("div", _hoisted_1, [
+        createBaseVNode("div", {
+          class: "full-screen",
+          onClick: handlerFullScreen
+        }, [
+          createBaseVNode("img", {
+            src: unref(fullScreen),
+            alt: "fullScreen"
+          }, null, 8, _hoisted_2)
+        ]),
         createVNode(_component_el_card, { class: "login-box" }, {
           header: withCtx(() => [
-            _hoisted_2
+            _hoisted_3
           ]),
           default: withCtx(() => [
             createVNode(_component_el_form, {
@@ -94,11 +114,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               model: form,
               rules,
               "status-icon": "",
-              "label-width": "100px"
+              "label-width": "60px"
             }, {
               default: withCtx(() => [
                 createVNode(_component_el_form_item, {
-                  label: "\u4F01\u4E1A\u90AE\u7BB1:",
+                  label: "\u90AE\u7BB1:",
                   prop: "email"
                 }, {
                   default: withCtx(() => [
@@ -106,7 +126,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       modelValue: form.email,
                       "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => form.email = $event),
                       name: "email",
-                      label: "\u4F01\u4E1A\u90AE\u7BB1",
+                      label: "\u90AE\u7BB1",
+                      size: "large",
                       placeholder: "\u8BF7\u8F93\u5165\u4F01\u4E1A\u90AE\u7BB1\u767B\u5F55"
                     }, {
                       append: withCtx(() => [
@@ -131,6 +152,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       type: "password",
                       name: "password",
                       label: "\u5BC6\u7801",
+                      size: "large",
                       placeholder: "\u8BF7\u8F93\u5165\u5BC6\u7801"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -145,10 +167,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     createVNode(_component_el_button, {
                       type: "primary",
                       class: "login-btn",
+                      round: "",
                       onClick: _cache[2] || (_cache[2] = ($event) => submitForm(ruleFormRef.value))
                     }, {
                       default: withCtx(() => [
-                        _hoisted_3
+                        _hoisted_4
                       ]),
                       _: 1
                     })

@@ -27,7 +27,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         console.error(resumeList);
         saveResumesLocalStory('resumes', resumeList)
         chrome.action.setBadgeText({text: String(resumeList.length) });
-        chrome.action.setBadgeBackgroundColor({color: '#eb524a'})
+        chrome.action.setBadgeBackgroundColor({color: '#74b9ff'})
         break;
       case "NOTIFICATION":
         sendMessage(`### 国聘职位助手 \n\n > 导入结果： **${ req.result }** \n\n > 导入时间： **${ req.time }** \n\n  > 成功数量: **${ req.index }** 条 \n\n > 失败数量: **${ req.count - req.index }** 条 \n\n 失败原因：**${ req.reason || '暂无'}** @13779930651`)

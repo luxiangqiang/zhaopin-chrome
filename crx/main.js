@@ -78,12 +78,12 @@ const routes = [
   {
     path: "/",
     name: "login",
-    component: () => __vitePreload(() => import("./login.js"), true ? ["login.js","login.css","vendor.js"] : void 0)
+    component: () => __vitePreload(() => import("./login.js"), true ? ["login.js","login.css","vendor.js","full-screen.js"] : void 0)
   },
   {
     path: "/home",
     name: "home",
-    component: () => __vitePreload(() => import("./index.js"), true ? ["index.js","index.css","vendor.js","contants.js"] : void 0)
+    component: () => __vitePreload(() => import("./index.js"), true ? ["index.js","index.css","vendor.js","contants.js","full-screen.js"] : void 0)
   },
   {
     path: "/collect-resumes",
@@ -96,7 +96,7 @@ const options = {
   routes
 };
 const router = createRouter(options);
-const BASE_URL = "http://qa-api.reta-inc.com/";
+const BASE_URL = "https://a.reta-inc.com";
 const DINGDING_URL = "https://oapi.dingtalk.com/robot/send?access_token=4b5c35cb0da73bff59ae79cfeffcaa24093bd4713b48f23ab0a48d9435c4b318";
 const getLocalstoryToken = async () => {
   return new Promise((resolve, reject) => {
@@ -134,7 +134,7 @@ const clearLocalstory = (type) => {
     }
   });
 };
-const setBadgeText = (text = "0", color = "#eb524a") => {
+const setBadgeText = (text = "0", color = "#74b9ff") => {
   chrome.action.setBadgeText({ text });
   chrome.action.setBadgeBackgroundColor({ color });
 };

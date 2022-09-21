@@ -2,6 +2,9 @@
   <div class="contianer">
     <header>
       <div>国聘网统收发小助手</div>
+      <div class="full-screen" @click="handlerFullScreen">
+        <img :src="fullScreen" alt="fullScreen">
+      </div>
     </header>
     <el-card>
       <el-row>
@@ -124,6 +127,7 @@ import { onMounted, reactive, Ref, ref, watch } from 'vue';
 import { getJobs, getCompanyList } from '@/axios/apis/index';
 import { JOB_COLUMNS } from './contants';
 import { IList } from '@/axios/apis/types';
+import fullScreen from '@/assets/images/full-screen.png';
 
 interface IOptions {
   label: string;
@@ -295,6 +299,17 @@ const getJobData = async () => {
   }
 };
 
+// 全屏
+const handlerFullScreen = async () => {
+  let url = chrome.runtime.getURL("popup.html");
+  let tab = await chrome.windows.create({ 
+    url: url,
+    width: 768,
+    height: 685,
+    left: 500,
+  });
+}
+
 // 获取公司列表
 const getCompanyLists = async () => {
   loading.value = true;
@@ -337,13 +352,23 @@ const handleCurrentChange = (value: number) => {
   background: url('@/assets/images/background.png') no-repeat;
   opacity: 0.9;
   header {
+    position: relative;
     display: flex;
     font-size: 22px;
     font-weight: 500;
     padding: 15px 0;
     color: #1d2129db;
     justify-content: center;
-
+    .full-screen{
+      position: absolute;
+      right: -6px;
+      top: 8px;
+      cursor: pointer;
+      img{
+        width: 32px;
+        height: 32px;
+      }
+    }
     &--title{
       font-size: 18px;
       font-weight: 500;
