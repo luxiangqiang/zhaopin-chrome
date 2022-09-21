@@ -110,8 +110,8 @@ onMounted(async () => {
   timeRange.value = [dayBefore, dayAfter];
 
   const resumes = await getLocalstory('resumes') as IResume[];
-  resumeList.value = resumes;
-  tableData.value = resumes.map((el: IResume) =>({
+  resumeList.value = resumes || [];
+  tableData.value = resumeList.value.map((el: IResume) =>({
     subject: el.subject,
     ...el.form.basic,
     ...el.form.forwards[0]
@@ -124,8 +124,8 @@ const resumeCount = computed(() => tableData.value.length)
 const handlerRefresh = async () => {
   loading.value = true;
   const resumes = await getLocalstory('resumes') as IResume[];
-  resumeList.value = resumes;
-  tableData.value = resumes.map((el: IResume) =>({
+  resumeList.value = resumes || [];
+  tableData.value = resumeList.value.map((el: IResume) =>({
     subject: el.subject,
     ...el.form.basic,
     ...el.form.forwards[0]
@@ -260,7 +260,7 @@ const handlerback = () => {
       font-size: 22px;
       font-weight: 500;
       padding: 15px 0;
-      color: #1d2129db;
+      color: #fff;
     }
     .resume-count{
       display: flex;

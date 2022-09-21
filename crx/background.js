@@ -42,13 +42,11 @@ const saveResumesLocalStory = (key, value) => {
     }
   });
 };
-chrome.runtime.onInstalled.addListener(async () => {
-  console.log("\u3010\u{1F680} \u53D1\u5E03\u804C\u4F4D\u3011\u63D2\u4EF6\u5DF2\u5B89\u88C5\u5B8C\u6210\uFF5E");
+function onMessage() {
   chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
     switch (req.channel) {
       case "RESUME_DATA":
         resumeList.push(req.message);
-        console.error(resumeList);
         saveResumesLocalStory("resumes", resumeList);
         chrome.action.setBadgeText({ text: String(resumeList.length) });
         chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
@@ -70,6 +68,9 @@ chrome.runtime.onInstalled.addListener(async () => {
         resumeList.length = 0;
         break;
     }
-    return true;
   });
+}
+chrome.runtime.onInstalled.addListener(async () => {
+  console.log("\u3010\u{1F680} \u53D1\u5E03\u804C\u4F4D\u3011\u63D2\u4EF6\u5DF2\u5B89\u88C5\u5B8C\u6210\uFF5E");
+  onMessage();
 });
