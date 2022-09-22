@@ -269,4 +269,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 app.use(installer, { size: "mini", locale: zhCn }).use(store).use(router).use(monitor).mount("#app");
-export { _export_sfc as _, getJobs as a, getCompanyList as b, getLocalstory as c, clearLocalstory as d, setBadgeText as e, getLocalstoryToken as g, login as l, postResumeList as p, sendMonitorMessage as s };
+export { _export_sfc as _, getJobs as a, getCompanyList as b, getLocalstory as c, clearLocalstory as d, getLocalstoryToken as g, login as l, postResumeList as p, setBadgeText as s };

@@ -41,7 +41,7 @@
         </el-row>
       </el-form>
     </el-card>
-    <div class="statement">特此声明：本产品仅为辅助工具，禁止用于商业用途，如用做商业用途，与本人无关!</div>
+    <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途，如用做商业用途，与本人无关!</div>
   </div>
 </template>
 

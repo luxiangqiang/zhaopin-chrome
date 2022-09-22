@@ -25,14 +25,15 @@ var index_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-045a1f8e"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "contianer" };
 const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", null, "\u56FD\u8058\u7F51\u7EDF\u6536\u53D1\u5C0F\u52A9\u624B", -1));
-const _hoisted_3 = ["src"];
-const _hoisted_4 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
-const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u804C\u4F4D\uFF1A", -1));
-const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u7F16\u7801\uFF1A", -1));
-const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u6027\u8D28\uFF1A", -1));
-const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u516C\u53F8\uFF1A", -1));
-const _hoisted_9 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
-const _hoisted_10 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u7EDF\u6536 ");
+const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u7279\u6B64\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u4EC5\u4F9B\u5B66\u4E60\u4F7F\u7528\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014\uFF0C\u5982\u7528\u505A\u5546\u4E1A\u7528\u9014\uFF0C\u4E0E\u672C\u4EBA\u65E0\u5173!", -1));
+const _hoisted_4 = ["src"];
+const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
+const _hoisted_6 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u804C\u4F4D\uFF1A", -1));
+const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u7F16\u7801\uFF1A", -1));
+const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u6027\u8D28\uFF1A", -1));
+const _hoisted_9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u516C\u53F8\uFF1A", -1));
+const _hoisted_10 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
+const _hoisted_11 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u7EDF\u6536 ");
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "index",
   setup(__props) {
@@ -221,6 +222,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       return openBlock(), createElementBlock("div", _hoisted_1, [
         createBaseVNode("header", null, [
           _hoisted_2,
+          _hoisted_3,
           createBaseVNode("div", {
             class: "full-screen",
             onClick: handlerFullScreen
@@ -228,7 +230,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             createBaseVNode("img", {
               src: unref(fullScreen),
               alt: "fullScreen"
-            }, null, 8, _hoisted_3)
+            }, null, 8, _hoisted_4)
           ])
         ]),
         createVNode(_component_el_card, null, {
@@ -237,7 +239,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               default: withCtx(() => [
                 createVNode(_component_el_col, { span: 8 }, {
                   default: withCtx(() => [
-                    _hoisted_4,
+                    _hoisted_5,
                     createVNode(_component_el_select, {
                       modelValue: query.status,
                       "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => query.status = $event),
@@ -259,7 +261,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_5,
+                    _hoisted_6,
                     createVNode(_component_el_input, {
                       class: "input-item",
                       placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D",
@@ -272,7 +274,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_6,
+                    _hoisted_7,
                     createVNode(_component_el_input, {
                       class: "input-item",
                       placeholder: "\u8BF7\u8F93\u5165\u804C\u4F4D\u7F16\u7801",
@@ -290,7 +292,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               default: withCtx(() => [
                 createVNode(_component_el_col, { span: 8 }, {
                   default: withCtx(() => [
-                    _hoisted_7,
+                    _hoisted_8,
                     createVNode(_component_el_select, {
                       modelValue: query.recruitmentType,
                       "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => query.recruitmentType = $event),
@@ -313,7 +315,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 createVNode(_component_el_col, { span: 7 }, {
                   default: withCtx(() => [
-                    _hoisted_8,
+                    _hoisted_9,
                     createVNode(_component_el_select, {
                       modelValue: query.company,
                       "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => query.company = $event),
@@ -376,7 +378,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     onClick: ($event) => publishJob(scope.row)
                   }, {
                     default: withCtx(() => [
-                      _hoisted_9
+                      _hoisted_10
                     ]),
                     _: 2
                   }, 1032, ["onClick"])
@@ -408,7 +410,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               onClick: oneClickCollection
             }, {
               default: withCtx(() => [
-                _hoisted_10
+                _hoisted_11
               ]),
               _: 1
             }),
