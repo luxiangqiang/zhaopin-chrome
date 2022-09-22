@@ -41,6 +41,7 @@
         </el-row>
       </el-form>
     </el-card>
+    <div class="statement">特此声明：本产品仅为辅助工具，禁止用于商业用途，如用做商业用途，与本人无关!</div>
   </div>
 </template>
 
@@ -122,7 +123,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           email: `${form.email}@reta-inc.com`,
           password: form.password,
         });
-        sendMonitorMessage(`【监控报警-账号登陆】：${ form.email } 账号已登陆～`)
+        // sendMonitorMessage(`【监控报警-账号登陆】：${ form.email } 账号已登陆～`)
         await saveToken(data.authToken);
         router.push({
           name: "home"
@@ -178,6 +179,12 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       padding-right: 50px;
       margin: 20px 10px;
     }
+  }
+  .statement {
+    position: absolute;
+    bottom: 8px;
+    left: 23%;
+    color: #fff;
   }
 }
 </style>
