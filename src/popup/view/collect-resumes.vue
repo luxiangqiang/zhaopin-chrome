@@ -2,6 +2,7 @@
   <div class="container">
     <header>
       <div>国聘网统收发小助手</div>
+      <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途，如用做商业用途，与本人无关!</div>
     </header>
     <el-card>
       <el-row>
@@ -255,12 +256,20 @@ const handlerback = () => {
     background: url('@/assets/images/background.png') no-repeat;
     opacity: 0.9;
     header {
+      position: relative;
       display: flex;
       justify-content: center;
       font-size: 22px;
       font-weight: 500;
       padding: 15px 0;
       color: #fff;
+      .statement {
+        font-size: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 12%;
+        color: #fff;
+      }
     }
     .resume-count{
       display: flex;

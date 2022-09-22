@@ -2,6 +2,7 @@
   <div class="contianer">
     <header>
       <div>国聘网统收发小助手</div>
+       <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途，如用做商业用途，与本人无关!</div>
       <div class="full-screen" @click="handlerFullScreen">
         <img :src="fullScreen" alt="fullScreen">
       </div>
@@ -359,6 +360,13 @@ const handleCurrentChange = (value: number) => {
     padding: 15px 0;
     color: #fff;
     justify-content: center;
+    .statement {
+      position: absolute;
+      bottom: 0;
+      left: 12%;
+      color: #fff;
+      font-size: 12px;
+    }
     .full-screen{
       position: absolute;
       right: -6px;
