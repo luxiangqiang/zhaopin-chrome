@@ -357,7 +357,7 @@ const handleCurrentChange = (value: number) => {
     font-size: 22px;
     font-weight: 500;
     padding: 15px 0;
-    color: #1d2129db;
+    color: #fff;
     justify-content: center;
     .full-screen{
       position: absolute;

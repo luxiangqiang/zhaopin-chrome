@@ -7,6 +7,7 @@ const _hoisted_1 = { class: "container" };
 const _hoisted_2 = ["src"];
 const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "login-title" }, "\u8D26\u53F7\u767B\u9646", -1));
 const _hoisted_4 = /* @__PURE__ */ createTextVNode("\u767B\u5F55");
+const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u7279\u6B64\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014\uFF0C\u5982\u7528\u505A\u5546\u4E1A\u7528\u9014\uFF0C\u4E0E\u672C\u4EBA\u65E0\u5173!", -1));
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "login",
   setup(__props) {
@@ -183,7 +184,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             }, 8, ["model", "rules"])
           ]),
           _: 1
-        })
+        }),
+        _hoisted_5
       ]);
     };
   }

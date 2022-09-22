@@ -8,10 +8,11 @@ async function init() {
   setTimeout(() => {
     $.each($(".qspage > a"), (index, el) => {
       if ($(el).text() === "\u4E0B\u4E00\u9875") {
-        window.open($(el).attr("href"));
+        if ($(el).attr("href") && $(el).attr("href") !== "") {
+          window.open($(el).attr("href"));
+        }
       }
     });
-    window.close();
   }, resumeCount * 500);
 }
 init();
