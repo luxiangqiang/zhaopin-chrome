@@ -49,8 +49,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       const dayBefore = dayjs().subtract(1, "day").format("YYYY-MM-DD");
       timeRange.value = [dayBefore, dayAfter];
       const resumes = await getLocalstory("resumes");
-      resumeList.value = resumes;
-      tableData.value = resumes.map((el) => __spreadValues(__spreadValues({
+      resumeList.value = resumes || [];
+      tableData.value = resumeList.value.map((el) => __spreadValues(__spreadValues({
         subject: el.subject
       }, el.form.basic), el.form.forwards[0]));
     });
@@ -58,8 +58,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const handlerRefresh = async () => {
       loading.value = true;
       const resumes = await getLocalstory("resumes");
-      resumeList.value = resumes;
-      tableData.value = resumes.map((el) => __spreadValues(__spreadValues({
+      resumeList.value = resumes || [];
+      tableData.value = resumeList.value.map((el) => __spreadValues(__spreadValues({
         subject: el.subject
       }, el.form.basic), el.form.forwards[0]));
       loading.value = false;
