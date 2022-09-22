@@ -24,7 +24,7 @@ import { f as fullScreen } from "./full-screen.js";
 var index_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-045a1f8e"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "contianer" };
-const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", null, "\u56FD\u8058\u7F51\u7EDF\u6536\u53D1\u5C0F\u52A9\u624B", -1));
+const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", null, "\u62A2\u955C\u5C0F\u52A9\u624B", -1));
 const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u7279\u6B64\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u4EC5\u4F9B\u5B66\u4E60\u4F7F\u7528\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014\uFF0C\u5982\u7528\u505A\u5546\u4E1A\u7528\u9014\uFF0C\u4E0E\u672C\u4EBA\u65E0\u5173!", -1));
 const _hoisted_4 = ["src"];
 const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u72B6\u6001\uFF1A", -1));
@@ -33,7 +33,7 @@ const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBase
 const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u6027\u8D28\uFF1A", -1));
 const _hoisted_9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u516C\u53F8\uFF1A", -1));
 const _hoisted_10 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
-const _hoisted_11 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u7EDF\u6536 ");
+const _hoisted_11 = /* @__PURE__ */ createTextVNode(" \u4E00\u955C\u5230\u5E95 ");
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "index",
   setup(__props) {
