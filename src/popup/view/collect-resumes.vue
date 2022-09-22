@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header>
-      <div>国聘网统收发小助手</div>
+      <div>抢镜小助手</div>
       <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途，如用做商业用途，与本人无关!</div>
     </header>
     <el-card>
@@ -74,11 +74,11 @@
       </el-button>
       <el-button type="primary" @click="handlerCollect"> 
         <el-icon><List /></el-icon>
-        一键统收
+        一镜统收
       </el-button>
       <el-button type="primary" :disabled="multipleSelection.length === 0" @click="handlerImport"> 
         <el-icon><Promotion /></el-icon>
-        一键入库
+        一镜到底
         <span v-if="multipleSelection.length > 0">({{ multipleSelection.length }})</span>
       </el-button>
     </footer>
