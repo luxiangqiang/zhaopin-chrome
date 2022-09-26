@@ -41,13 +41,13 @@
         </el-row>
       </el-form>
     </el-card>
-    <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途，如用做商业用途，与本人无关!</div>
+    <div class="statement">免责声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途!</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref, onMounted } from 'vue';
-import { login, sendMonitorMessage } from '@/axios/apis/index';
+import { login } from '@/axios/apis/index';
 import { useRouter } from "vue-router";
 import { getLocalstoryToken } from '@/utils/index';
 import type { FormInstance, FormRules } from 'element-plus';
@@ -77,7 +77,7 @@ const rules = reactive<FormRules>({
 onMounted(async () => {
   const token = await getLocalstoryToken();
   if(token){
-    router.push({ name: "home" });
+    router.push({ name: "platform" });
   }else{
     router.push({ path: "/" });
   }
