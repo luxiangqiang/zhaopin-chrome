@@ -33,7 +33,8 @@
     {
       "matches": [
         "https://campus.iguopin.com/***", 
-        "https://www.iguopin.com/***"
+        "https://www.iguopin.com/***",
+        "https://job.ncss.cn/***"
       ],
       "js": ["jquery.js"],
       "run_at": "document_idle"
@@ -75,6 +76,27 @@
         "https://campus.iguopin.com/index.php?m=&c=resume****"
       ],
       "js": ["resume_home.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://job.ncss.cn/corp/jobs/add.html"
+      ],
+      "js": ["new_career_home.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://job.ncss.cn/corp/jobs/add_success.html"
+      ],
+      "js": ["new_career_publish.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://job.ncss.cn/corp/candidate.html?communicate"
+      ],
+      "js": ["new_career_collect.js"],
       "run_at": "document_idle"
     }
   ],

@@ -17,7 +17,7 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-import { f as defineComponent, g as ref, h as reactive, B as watch, j as onMounted, k as createElementBlock, l as createBaseVNode, u as unref, m as createVNode, w as withCtx, C as withDirectives, d as createBlock, n as useRouter, D as useRoute, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, t as toDisplayString, H as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode } from "./vendor.js";
+import { f as defineComponent, g as ref, h as reactive, B as watch, j as onMounted, k as createElementBlock, l as createBaseVNode, u as unref, m as createVNode, w as withCtx, C as withDirectives, d as createBlock, D as useRoute, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
 import { a as getJobs, b as getCompanyList } from "./index.js";
 import { G as GUOPIN_SCHOOL_RECRUITMENT, a as GUOPIN_SOCIAL_RECRUITMENT, J as JIUYEWANG_URL, b as JOB_COLUMNS } from "./contants.js";
 import { f as fullScreen } from "./full-screen.js";
@@ -34,9 +34,8 @@ const _hoisted_7 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBase
 const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { style: { "width": "100px" } }, "\u62DB\u8058\u6027\u8D28\uFF1A", -1));
 const _hoisted_9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u516C\u53F8\uFF1A", -1));
 const _hoisted_10 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
-const _hoisted_11 = /* @__PURE__ */ createTextVNode(" \u4E00\u955C\u5230\u5E95 ");
-const _hoisted_12 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u53D1\u5E03 ");
-const _hoisted_13 = { key: 0 };
+const _hoisted_11 = /* @__PURE__ */ createTextVNode(" --> ");
+const _hoisted_12 = /* @__PURE__ */ createTextVNode(" \u4E00\u955C\u5230\u5E95 ");
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "index",
   setup(__props) {
@@ -104,13 +103,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const handlerSinglePublishJob = (job) => {
       singlePublishJob.value(job);
     };
-    const handlerMultiplePublishJob = () => {
-      console.error(multiplePublishJob.value);
-      multiplePublishJob.value();
-    };
     const platformSelect = () => {
       const platform = route.query.platfrom ? String(route.query.platfrom) : "";
-      console.error(route, router);
       switch (platform) {
         case "guopin":
           singlePublishJob.value = guopinPulishJob;
@@ -166,9 +160,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         try {
           chrome.storage.local.set({
             [key]: data,
-            "type": type,
-            "multipleIndex": 0,
-            "count": Array.isArray(data) ? data.length : 0
+            type,
+            multipleIndex: 0,
+            count: Array.isArray(data) ? data.length : 0
           }, () => {
             var error = chrome.runtime.lastError;
             if (error) {
@@ -420,7 +414,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   }, 1032, ["onClick"])
                 ]),
                 _: 1
-              })
+              }),
+              _hoisted_11
             ]),
             _: 1
           }, 8, ["data"])), [
@@ -446,22 +441,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               onClick: oneClickCollection
             }, {
               default: withCtx(() => [
-                _hoisted_11
+                _hoisted_12
               ]),
               _: 1
-            }),
-            createVNode(_component_el_button, {
-              disabled: multipleSelection.value.length === 0,
-              class: "publish-btn",
-              type: "primary",
-              onClick: handlerMultiplePublishJob
-            }, {
-              default: withCtx(() => [
-                _hoisted_12,
-                multipleSelection.value.length > 0 ? (openBlock(), createElementBlock("span", _hoisted_13, "(" + toDisplayString(multipleSelection.value.length) + ")", 1)) : createCommentVNode("", true)
-              ]),
-              _: 1
-            }, 8, ["disabled"])
+            })
           ])
         ])
       ]);
