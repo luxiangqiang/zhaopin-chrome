@@ -1,7 +1,8 @@
 <template>
   <div class="contianer">
     <header>
-      <div>国聘网统收发小助手</div>
+      <div>抢镜小助手</div>
+       <div class="statement">免责声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途!</div>
       <div class="full-screen" @click="handlerFullScreen">
         <img :src="fullScreen" alt="fullScreen">
       </div>
@@ -110,7 +111,7 @@
         :page-size="pageSize"
       />
       <div>
-        <el-button class="publish-btn" type="primary" @click="oneClickCollection"> 一键统收 </el-button>
+        <el-button class="publish-btn" type="primary" @click="oneClickCollection"> 一镜到底 </el-button>
         <el-button 
           :disabled="multipleSelection.length === 0"
           class="publish-btn" type="primary" @click="allPublishJob">
@@ -359,6 +360,13 @@ const handleCurrentChange = (value: number) => {
     padding: 15px 0;
     color: #fff;
     justify-content: center;
+    .statement {
+      position: absolute;
+      bottom: 0;
+      left: 23%;
+      color: #fff;
+      font-size: 12px;
+    }
     .full-screen{
       position: absolute;
       right: -6px;

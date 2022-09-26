@@ -15,13 +15,15 @@ var __spreadValues = (a, b) => {
   return a;
 };
 import { C as COLLECT_RESUME_COLUMN } from "./contants.js";
-import { h as defineComponent, j as ref, l as onMounted, D as dayjs, G as computed, m as createElementBlock, p as createVNode, w as withCtx, n as createBaseVNode, t as toDisplayString, u as unref, A as withDirectives, e as createBlock, H as ElTable, I as ElMessage, E as ElNotification, r as resolveComponent, B as resolveDirective, o as openBlock, F as Fragment, C as renderList, J as createCommentVNode, v as pushScopeId, x as popScopeId, s as createTextVNode, q as useRouter } from "./vendor.js";
-import { _ as _export_sfc, c as getLocalstory, d as clearLocalstory, e as setBadgeText, p as postResumeList } from "./main.js";
+import { f as defineComponent, g as ref, j as onMounted, G as dayjs, H as computed, k as createElementBlock, m as createVNode, w as withCtx, l as createBaseVNode, t as toDisplayString, u as unref, C as withDirectives, d as createBlock, I as ElTable, A as ElMessage, v as ElNotification, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, J as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
+import { c as getLocalstory, d as clearLocalstory, s as setBadgeText, p as postResumeList } from "./index.js";
+import { _ as _export_sfc } from "./main.js";
 var collectResumes_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-413caf2c"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "container" };
 const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("header", null, [
-  /* @__PURE__ */ createBaseVNode("div", null, "\u56FD\u8058\u7F51\u7EDF\u6536\u53D1\u5C0F\u52A9\u624B")
+  /* @__PURE__ */ createBaseVNode("div", null, "\u62A2\u955C\u5C0F\u52A9\u624B"),
+  /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u7279\u6B64\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u4EC5\u4F9B\u5B66\u4E60\u4F7F\u7528\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014!")
 ], -1));
 const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", null, "\u9009\u62E9\u65F6\u95F4\u6BB5\uFF1A", -1));
 const _hoisted_4 = { class: "resume-count" };
@@ -30,8 +32,8 @@ const _hoisted_6 = /* @__PURE__ */ createTextVNode(" \u8FD4\u56DE\u4E0A\u7EA7 ")
 const _hoisted_7 = /* @__PURE__ */ createTextVNode(" \u7A97\u53E3\u6A21\u5F0F ");
 const _hoisted_8 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u6E05\u7A7A ");
 const _hoisted_9 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u5237\u65B0 ");
-const _hoisted_10 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u7EDF\u6536 ");
-const _hoisted_11 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u5165\u5E93 ");
+const _hoisted_10 = /* @__PURE__ */ createTextVNode(" \u4E00\u955C\u7EDF\u6536 ");
+const _hoisted_11 = /* @__PURE__ */ createTextVNode(" \u4E00\u955C\u5230\u5E95 ");
 const _hoisted_12 = { key: 0 };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "collect-resumes",

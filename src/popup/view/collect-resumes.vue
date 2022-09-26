@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <header>
-      <div>国聘网统收发小助手</div>
+      <div>抢镜小助手</div>
+      <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途!</div>
     </header>
     <el-card>
       <el-row>
@@ -58,7 +59,7 @@
       <el-button type="primary" @click="handlerback">
         <el-icon><Back /></el-icon>
         返回上级
-      </el-button>
+      </el-button> 
       <el-button type="primary" @click="handlerSetting"> 
         <el-icon><Platform /></el-icon>
         窗口模式
@@ -73,11 +74,11 @@
       </el-button>
       <el-button type="primary" @click="handlerCollect"> 
         <el-icon><List /></el-icon>
-        一键统收
+        一镜统收
       </el-button>
       <el-button type="primary" :disabled="multipleSelection.length === 0" @click="handlerImport"> 
         <el-icon><Promotion /></el-icon>
-        一键入库
+        一镜到底
         <span v-if="multipleSelection.length > 0">({{ multipleSelection.length }})</span>
       </el-button>
     </footer>
@@ -255,12 +256,20 @@ const handlerback = () => {
     background: url('@/assets/images/background.png') no-repeat;
     opacity: 0.9;
     header {
+      position: relative;
       display: flex;
       justify-content: center;
       font-size: 22px;
       font-weight: 500;
       padding: 15px 0;
       color: #fff;
+      .statement {
+        font-size: 12px;
+        position: absolute;
+        bottom: 0;
+        left: 23%;
+        color: #fff;
+      }
     }
     .resume-count{
       display: flex;
