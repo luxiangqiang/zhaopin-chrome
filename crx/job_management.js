@@ -34,18 +34,6 @@ const getNowDate = (date) => {
   let minute = zeroFill(date.getMinutes());
   return year + "-" + month + "-" + day + ` ${hour}:${minute}`;
 };
-const clearJobLocalstory = (type) => {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.remove(type, () => {
-        console.log("\u{1F9F9} Clear Job Success\uFF5E");
-      });
-      resolve(1);
-    } catch (error) {
-      reject();
-    }
-  });
-};
 async function init() {
   const index = await getJobLocalstory("multipleIndex");
   const count = await getJobLocalstory("count");
@@ -69,7 +57,6 @@ async function init() {
       index,
       time: getNowDate(new Date())
     }, async (res) => {
-      await clearJobLocalstory("jobs");
     });
   }
 }

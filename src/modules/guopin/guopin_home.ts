@@ -482,7 +482,7 @@ const singleJobPublish = async () => {
   // 自动设置校招职位
   await autoSetSchoolJob(formate);
   // 发布
-  $('#J_release').trigger('click');
+  // $('#J_release').trigger('click');
   // 移除缓存数据
   await clearJobLocalstory('job');
 }
@@ -510,7 +510,7 @@ async function init(){
       singleJobPublish();
       break;
     case 'multiple':
-      multipleJobPublish();
+      // multipleJobPublish();
       break;
   }
 }

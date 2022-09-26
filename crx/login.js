@@ -77,7 +77,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             });
             await saveToken(data.authToken);
             router.push({
-              name: "home"
+              name: "platform"
             });
           } catch (error) {
             console.log("\u{1F645} \u767B\u9646\u5931\u8D25", error);

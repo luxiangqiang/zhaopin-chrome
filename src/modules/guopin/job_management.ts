@@ -91,7 +91,7 @@ async function init(){
       index: index,
       time: getNowDate(new Date()),
     }, async res => {
-      await clearJobLocalstory('jobs');
+      // await clearJobLocalstory('jobs');
     })
   }
 }

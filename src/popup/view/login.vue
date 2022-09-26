@@ -126,7 +126,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         // sendMonitorMessage(`【监控报警-账号登陆】：${ form.email } 账号已登陆～`)
         await saveToken(data.authToken);
         router.push({
-          name: "home"
+          name: "platform"
         })
       } catch (error) {
         console.log('🙅 登陆失败', error);
