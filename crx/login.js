@@ -1,13 +1,14 @@
-import { _ as _export_sfc, g as getLocalstoryToken, l as login$1 } from "./main.js";
-import { h as defineComponent, j as ref, k as reactive, l as onMounted, m as createElementBlock, n as createBaseVNode, u as unref, p as createVNode, w as withCtx, q as useRouter, r as resolveComponent, o as openBlock, s as createTextVNode, t as toDisplayString, v as pushScopeId, x as popScopeId } from "./vendor.js";
+import { g as getLocalstoryToken, l as login$1 } from "./index.js";
+import { f as defineComponent, g as ref, h as reactive, j as onMounted, k as createElementBlock, l as createBaseVNode, u as unref, m as createVNode, w as withCtx, n as useRouter, r as resolveComponent, o as openBlock, p as createTextVNode, t as toDisplayString, q as pushScopeId, s as popScopeId } from "./vendor.js";
 import { f as fullScreen } from "./full-screen.js";
+import { _ as _export_sfc } from "./main.js";
 var login_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-710ad960"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "container" };
 const _hoisted_2 = ["src"];
 const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "login-title" }, "\u8D26\u53F7\u767B\u9646", -1));
 const _hoisted_4 = /* @__PURE__ */ createTextVNode("\u767B\u5F55");
-const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u7279\u6B64\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u4EC5\u4F9B\u5B66\u4E60\u4F7F\u7528\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014\uFF0C\u5982\u7528\u505A\u5546\u4E1A\u7528\u9014\uFF0C\u4E0E\u672C\u4EBA\u65E0\u5173!", -1));
+const _hoisted_5 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u514D\u8D23\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u4EC5\u4F9B\u5B66\u4E60\u4F7F\u7528\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014!", -1));
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "login",
   setup(__props) {
@@ -34,7 +35,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     onMounted(async () => {
       const token = await getLocalstoryToken();
       if (token) {
-        router.push({ name: "home" });
+        router.push({ name: "platform" });
       } else {
         router.push({ path: "/" });
       }

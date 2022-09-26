@@ -2,7 +2,7 @@
   <div class="container">
     <header>
       <div>抢镜小助手</div>
-      <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途，如用做商业用途，与本人无关!</div>
+      <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途!</div>
     </header>
     <el-card>
       <el-row>
@@ -59,7 +59,7 @@
       <el-button type="primary" @click="handlerback">
         <el-icon><Back /></el-icon>
         返回上级
-      </el-button>
+      </el-button> 
       <el-button type="primary" @click="handlerSetting"> 
         <el-icon><Platform /></el-icon>
         窗口模式
@@ -267,7 +267,7 @@ const handlerback = () => {
         font-size: 12px;
         position: absolute;
         bottom: 0;
-        left: 12%;
+        left: 23%;
         color: #fff;
       }
     }
