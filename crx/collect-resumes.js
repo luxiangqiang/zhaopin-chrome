@@ -15,7 +15,7 @@ var __spreadValues = (a, b) => {
   return a;
 };
 import { C as COLLECT_RESUME_COLUMN } from "./contants.js";
-import { f as defineComponent, g as ref, j as onMounted, G as dayjs, H as computed, k as createElementBlock, m as createVNode, w as withCtx, l as createBaseVNode, t as toDisplayString, u as unref, C as withDirectives, d as createBlock, I as ElTable, A as ElMessage, v as ElNotification, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, J as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
+import { f as defineComponent, g as ref, j as onMounted, I as dayjs, J as computed, k as createElementBlock, m as createVNode, w as withCtx, l as createBaseVNode, t as toDisplayString, u as unref, C as withDirectives, d as createBlock, K as ElTable, A as ElMessage, v as ElNotification, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, H as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
 import { c as getLocalstory, d as clearLocalstory, s as setBadgeText, p as postResumeList } from "./index.js";
 import { _ as _export_sfc } from "./main.js";
 var collectResumes_vue_vue_type_style_index_0_scoped_true_lang = "";

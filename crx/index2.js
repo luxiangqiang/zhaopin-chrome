@@ -17,9 +17,9 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-import { f as defineComponent, g as ref, h as reactive, B as watch, j as onMounted, k as createElementBlock, l as createBaseVNode, u as unref, m as createVNode, w as withCtx, C as withDirectives, d as createBlock, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, p as createTextVNode, t as toDisplayString, q as pushScopeId, s as popScopeId, n as useRouter } from "./vendor.js";
+import { f as defineComponent, g as ref, h as reactive, B as watch, j as onMounted, k as createElementBlock, l as createBaseVNode, u as unref, m as createVNode, w as withCtx, C as withDirectives, d as createBlock, n as useRouter, D as useRoute, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, t as toDisplayString, H as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode } from "./vendor.js";
 import { a as getJobs, b as getCompanyList } from "./index.js";
-import { J as JOB_COLUMNS } from "./contants.js";
+import { G as GUOPIN_SCHOOL_RECRUITMENT, a as GUOPIN_SOCIAL_RECRUITMENT, J as JIUYEWANG_URL, b as JOB_COLUMNS } from "./contants.js";
 import { f as fullScreen } from "./full-screen.js";
 import { _ as _export_sfc } from "./main.js";
 var index_vue_vue_type_style_index_0_scoped_true_lang = "";
@@ -35,10 +35,13 @@ const _hoisted_8 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBase
 const _hoisted_9 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "filter-text" }, "\u516C\u53F8\uFF1A", -1));
 const _hoisted_10 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u53D1\u5E03");
 const _hoisted_11 = /* @__PURE__ */ createTextVNode(" \u4E00\u955C\u5230\u5E95 ");
+const _hoisted_12 = /* @__PURE__ */ createTextVNode(" \u4E00\u952E\u53D1\u5E03 ");
+const _hoisted_13 = { key: 0 };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "index",
   setup(__props) {
     const router = useRouter();
+    const route = useRoute();
     const loading = ref(false);
     const tableData = ref([]);
     const totalCount = ref(0);
@@ -86,42 +89,74 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       recruitmentType: ""
     });
     const multipleSelection = ref([]);
-    const SCHOOL_RECRUITMENT = "https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add";
-    const SOCIAL_RECRUITMENT = "https://www.iguopin.com/index.php?m=&c=company&a=jobs_add";
+    const singlePublishJob = ref(() => {
+    });
+    const multiplePublishJob = ref(() => {
+    });
     watch(query, () => {
       getJobData();
     });
     onMounted(() => {
       getJobData();
       getCompanyLists();
+      platformSelect();
     });
+    const handlerSinglePublishJob = (job) => {
+      singlePublishJob.value(job);
+    };
+    const handlerMultiplePublishJob = () => {
+      console.error(multiplePublishJob.value);
+      multiplePublishJob.value();
+    };
+    const platformSelect = () => {
+      const platform = route.query.platfrom ? String(route.query.platfrom) : "";
+      console.error(route, router);
+      switch (platform) {
+        case "guopin":
+          singlePublishJob.value = guopinPulishJob;
+          multiplePublishJob.value = guopinMultiplePulishJob;
+          break;
+        case "24365":
+          singlePublishJob.value = jiuyePublishJob;
+          multiplePublishJob.value = jiuyeMultiplePublishJob;
+          break;
+      }
+    };
     const oneClickCollection = async () => {
       router.push({ name: "collect-resumes" });
     };
-    const publishJob = async (job) => {
+    const guopinPulishJob = async (job) => {
+      await setJobLocalstory("job", "single", job);
       switch (job.recruitmentTypeName) {
         case "\u793E\u62DB":
-          window.open(SOCIAL_RECRUITMENT);
+          window.open(GUOPIN_SOCIAL_RECRUITMENT);
           break;
         case "\u6821\u62DB":
         case "\u5B9E\u4E60":
-          window.open(SCHOOL_RECRUITMENT);
+          window.open(GUOPIN_SCHOOL_RECRUITMENT);
           break;
       }
-      await setJobLocalstory("job", "single", job);
     };
-    const allPublishJob = async () => {
+    const guopinMultiplePulishJob = async () => {
       const isSocial = multipleSelection.value.every((el) => el.recruitmentTypeName === "\u793E\u62DB");
       const isSchool = multipleSelection.value.every((el) => ["\u6821\u62DB", "\u5B9E\u4E60"].includes(el.recruitmentTypeName));
       if (isSocial) {
         await setJobLocalstory("jobs", "multiple", multipleSelection.value);
-        window.open(SOCIAL_RECRUITMENT);
+        window.open(GUOPIN_SOCIAL_RECRUITMENT);
       } else if (isSchool) {
         await setJobLocalstory("jobs", "multiple", multipleSelection.value);
-        window.open(SCHOOL_RECRUITMENT);
+        window.open(GUOPIN_SCHOOL_RECRUITMENT);
       } else {
         alert("\u793E\u62DB\u548C\u6821\u62DB\u4E0D\u80FD\u6DF7\u5408\u6279\u91CF\u53D1\u5E03\uFF5E");
       }
+    };
+    const jiuyePublishJob = async (job) => {
+      await setJobLocalstory("job", "single", job);
+      window.open(JIUYEWANG_URL);
+    };
+    const jiuyeMultiplePublishJob = async () => {
+      await setJobLocalstory("jobs", "multiple", multipleSelection.value);
+      window.open(JIUYEWANG_URL);
     };
     const handleSelectionChange = (val) => {
       multipleSelection.value = val;
@@ -376,7 +411,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   createVNode(_component_el_button, {
                     type: "text",
                     size: "small",
-                    onClick: ($event) => publishJob(scope.row)
+                    onClick: ($event) => handlerSinglePublishJob(scope.row)
                   }, {
                     default: withCtx(() => [
                       _hoisted_10
@@ -419,10 +454,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               disabled: multipleSelection.value.length === 0,
               class: "publish-btn",
               type: "primary",
-              onClick: allPublishJob
+              onClick: handlerMultiplePublishJob
             }, {
               default: withCtx(() => [
-                createTextVNode(" \u4E00\u952E\u53D1\u5E03\u804C\u4F4D(" + toDisplayString(multipleSelection.value.length) + ") ", 1)
+                _hoisted_12,
+                multipleSelection.value.length > 0 ? (openBlock(), createElementBlock("span", _hoisted_13, "(" + toDisplayString(multipleSelection.value.length) + ")", 1)) : createCommentVNode("", true)
               ]),
               _: 1
             }, 8, ["disabled"])
