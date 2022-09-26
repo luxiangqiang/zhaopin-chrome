@@ -41,9 +41,6 @@ function onMessage(){
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('【🚀 发布职位】插件已安装完成～')
   onMessage();
-  chrome.action.onClicked.addListener((tab) => {
-    chrome.tabs.create({url: " https://www.youtube.com "});
-  });
 });
 
 

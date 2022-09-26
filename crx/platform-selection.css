@@ -1,0 +1,65 @@
+
+[data-v-5b05264a] .el-card.is-hover-shadow:focus,
+.el-card.is-hover-shadow[data-v-5b05264a]:hover {
+  background: #b9eaffd9;
+}
+[data-v-5b05264a] .el-divider__text {
+  background-color: #33d2e5b0;
+  color: #fff;
+}
+[data-v-5b05264a] .el-checkbox__label {
+  color: #fff;
+}
+.container[data-v-5b05264a] {
+  position: relative;
+  width: 768px;
+  height: 572px;
+  background-size: cover;
+  background-image: url('./background.png');
+  opacity: 0.9;
+}
+.container header[data-v-5b05264a] {
+  position: relative;
+  display: flex;
+  font-size: 22px;
+  font-weight: 500;
+  padding: 15px 0;
+  color: #fff;
+  justify-content: center;
+}
+.container header div[data-v-5b05264a] {
+  margin-top: 10px;
+}
+.container .divider[data-v-5b05264a] {
+  display: flex;
+  justify-content: center;
+}
+.container .divider .el-divider[data-v-5b05264a] {
+  color: #fff;
+  width: 700px;
+}
+.container .el-row[data-v-5b05264a] {
+  margin-top: 15px;
+  padding: 0 10px;
+  justify-content: space-evenly;
+}
+.container .el-row .el-col[data-v-5b05264a] {
+  margin-bottom: 35px;
+}
+.container .el-card[data-v-5b05264a] {
+  border-radius: 10px;
+}
+.container .content[data-v-5b05264a] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  cursor: pointer;
+}
+.container footer[data-v-5b05264a] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
