@@ -1,3 +1,10 @@
+// 国聘
+export const GUOPIN_SCHOOL_RECRUITMENT = 'https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add'; 
+export const GUOPIN_SOCIAL_RECRUITMENT = 'https://www.iguopin.com/index.php?m=&c=company&a=jobs_add';
+// 24365
+export const JIUYEWANG_URL = "https://job.ncss.cn/corp/jobs/add.html";
+
+
 // 职位列表
 export const JOB_COLUMNS = [
   {

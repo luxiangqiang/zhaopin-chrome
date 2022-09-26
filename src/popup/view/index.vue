@@ -93,7 +93,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" :width="'100px'" class="operate" align="center">
           <template v-slot="scope">
-            <el-button type="text" size="small" @click="publishJob(scope.row)">一键发布</el-button>
+            <el-button type="text" size="small" @click="handlerSinglePublishJob(scope.row)">一键发布</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -114,8 +114,9 @@
         <el-button class="publish-btn" type="primary" @click="oneClickCollection"> 一镜到底 </el-button>
         <el-button 
           :disabled="multipleSelection.length === 0"
-          class="publish-btn" type="primary" @click="allPublishJob">
-          一键发布职位({{ multipleSelection.length }})
+          class="publish-btn" type="primary" @click="handlerMultiplePublishJob">
+          一键发布
+          <span v-if="multipleSelection.length > 0">({{ multipleSelection.length }})</span>
         </el-button>
       </div>
     </footer>
@@ -123,10 +124,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive, Ref, ref, watch } from 'vue';
 import { getJobs, getCompanyList } from '@/axios/apis/index';
-import { JOB_COLUMNS } from './contants';
+import { 
+  JOB_COLUMNS, 
+  GUOPIN_SCHOOL_RECRUITMENT, 
+  GUOPIN_SOCIAL_RECRUITMENT,
+  JIUYEWANG_URL
+} from './contants';
 import { IList } from '@/axios/apis/types';
 import fullScreen from '@/assets/images/full-screen.png';
 
@@ -144,6 +150,7 @@ interface IQuery {
 }
 
 const router = useRouter();
+const route = useRoute();
 const loading = ref<Boolean>(false);
 const tableData: Ref<IList[]> = ref([]);
 const totalCount: Ref<number> = ref(0);
@@ -191,8 +198,9 @@ const query = reactive<IQuery>({
   recruitmentType: ''
 });
 const multipleSelection = ref<IList[]>([]);
-const SCHOOL_RECRUITMENT = 'https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add'; 
-const SOCIAL_RECRUITMENT = 'https://www.iguopin.com/index.php?m=&c=company&a=jobs_add';
+
+const singlePublishJob = ref<Function>(()=>{});
+const multiplePublishJob = ref<Function>(()=>{});
 
 watch(query, () => {
   getJobData();
@@ -201,40 +209,80 @@ watch(query, () => {
 onMounted(() => {
   getJobData();
   getCompanyLists();
+  platformSelect();
 });
+
+// 单个发布职位
+const handlerSinglePublishJob = (job: IList) => {
+  singlePublishJob.value(job);
+}
+
+// 批量发布职位
+const handlerMultiplePublishJob = () => {
+  console.error(multiplePublishJob.value)
+  multiplePublishJob.value();
+}
+
+// 平台判断
+const platformSelect = () => {
+  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+  console.error(route, router)
+  switch(platform){
+    case 'guopin':
+      singlePublishJob.value = guopinPulishJob;
+      multiplePublishJob.value =  guopinMultiplePulishJob;
+    break;
+    case '24365':
+      singlePublishJob.value = jiuyePublishJob;
+      multiplePublishJob.value = jiuyeMultiplePublishJob;
+    break;
+    default:
+      break;
+  }
+}
 
 // 一键统收
 const oneClickCollection = async () => {
   router.push({name: 'collect-resumes'});
 }
 
-// 【单个】一键发布
-const publishJob = async (job: IList) => {
+// 国聘单个发布职位
+const guopinPulishJob = async (job: IList) => {
+  await setJobLocalstory('job','single', job);
   switch(job.recruitmentTypeName){
     case '社招': 
-      window.open(SOCIAL_RECRUITMENT);
+      window.open(GUOPIN_SOCIAL_RECRUITMENT);
     break;
     case '校招':
     case '实习':
-      window.open(SCHOOL_RECRUITMENT);
+      window.open(GUOPIN_SCHOOL_RECRUITMENT);
     break;
   }
-  await setJobLocalstory('job','single', job);
-};
-
-// 【批量】一键发布
-const allPublishJob = async () => {
+}
+// 国聘批量发布职位
+const guopinMultiplePulishJob = async () => {
   const isSocial = multipleSelection.value.every(el=>el.recruitmentTypeName === '社招');
   const isSchool = multipleSelection.value.every(el=>['校招','实习'].includes(el.recruitmentTypeName));
   if(isSocial){
     await setJobLocalstory('jobs','multiple', multipleSelection.value);
-    window.open(SOCIAL_RECRUITMENT);
+    window.open(GUOPIN_SOCIAL_RECRUITMENT);
   }else if(isSchool){
     await setJobLocalstory('jobs','multiple', multipleSelection.value);
-    window.open(SCHOOL_RECRUITMENT);
+    window.open(GUOPIN_SCHOOL_RECRUITMENT);
   }else{
     alert('社招和校招不能混合批量发布～');
   }
+}
+
+// 24365 单个发布职位
+const jiuyePublishJob = async (job: IList) => {
+  await setJobLocalstory('job','single', job);
+  window.open(JIUYEWANG_URL);
+}
+// 24365 批量发布职位
+const jiuyeMultiplePublishJob = async () => {
+  await setJobLocalstory('jobs','multiple', multipleSelection.value);
+  window.open(JIUYEWANG_URL);
 }
 
 const handleSelectionChange = (val: IList[]) => {

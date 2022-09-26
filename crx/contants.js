@@ -1,3 +1,6 @@
+const GUOPIN_SCHOOL_RECRUITMENT = "https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add";
+const GUOPIN_SOCIAL_RECRUITMENT = "https://www.iguopin.com/index.php?m=&c=company&a=jobs_add";
+const JIUYEWANG_URL = "https://job.ncss.cn/corp/jobs/add.html";
 const JOB_COLUMNS = [
   {
     label: "\u516C\u53F8",
@@ -92,4 +95,4 @@ const COLLECT_RESUME_COLUMN = [
     width: 120
   }
 ];
-export { COLLECT_RESUME_COLUMN as C, JOB_COLUMNS as J };
+export { COLLECT_RESUME_COLUMN as C, GUOPIN_SCHOOL_RECRUITMENT as G, JIUYEWANG_URL as J, GUOPIN_SOCIAL_RECRUITMENT as a, JOB_COLUMNS as b };

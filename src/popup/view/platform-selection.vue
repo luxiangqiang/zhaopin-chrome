@@ -8,7 +8,7 @@
     </div>
     <section>
       <el-row :gutter="20">
-        <el-col :span="11" v-for="(item, index) of list" :key="index" @click="handlerSelectPlatfrom">
+        <el-col :span="11" v-for="(item, index) of list" :key="index" @click="handlerSelectPlatform(item)">
           <el-card shadow="hover">
             <div class="content">
               <img :style="{ height: item.height }" :src="item.images" alt="">
@@ -37,44 +37,64 @@
   import { ElMessage } from 'element-plus'
   import { useRouter } from "vue-router";
 
-  const statement = ref<boolean>(false)
-  const list = reactive([
+  interface IPlatform {
+    images: string;
+    title: string;
+    height: string;
+    value: string;
+  }
+
+  const statement = ref<boolean>(false);
+  const list = reactive<IPlatform[]>([
     {
       images: guopin_logo,
       title: '国聘网',
+      value: 'guopin',
       height: '36px'
     },
     {
       images: img_logo,
       title: '24365',
+      value: '24365',
       height: '47px'
     },
     {
       images: boss_logo,
       title: 'Boss直聘',
+      value: 'zhipin',
       height: '28px'
     },
     {
       images: qianchengwuyou_logo,
       title: '前程无忧',
+      value: 'qiancheng',
       height: '44px'
     },
     {
       images: shixiseng_logo,
       title: '实习僧',
+      value: 'shixiseng',
       height: '40px'
     },
     {
       images: nuike_logo,
       title: '牛客网',
+      value: 'nuike',
       height: '32px'
     }
   ]);
   const router = useRouter();
 
-  const handlerSelectPlatfrom = () => {
+  // 选择平台
+  const handlerSelectPlatform = (item: IPlatform) => {
+    console.error(item)
     if(statement.value){
-      router.push({ name: 'home' })
+      router.push({ 
+        name: 'home',
+        query: {
+          platfrom: item.value
+        }
+      })
     }else{
       ElMessage({
         message: '请先阅读免责声明～',
