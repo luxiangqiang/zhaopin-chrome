@@ -1,3 +1,9 @@
+// 国聘
+export const GUOPIN_SCHOOL_RECRUITMENT = 'https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add'; 
+export const GUOPIN_SOCIAL_RECRUITMENT = 'https://www.iguopin.com/index.php?m=&c=company&a=jobs_add';
+// 24365
+export const JIUYEWANG_URL = "https://job.ncss.cn/corp/jobs/add.html";
+
 // 职位列表
 export const JOB_COLUMNS = [
   {
@@ -95,3 +101,12 @@ export const COLLECT_RESUME_COLUMN = [
     width: 120,
   }
 ]
+
+export const PLATFORM_MAP:Record<string, string> = {
+  "guopin":"国聘",
+  "24365":"24365",
+  "zhipin":"Boss直聘",
+  "qiancheng": "前程无忧",
+  "shixiseng": "实习僧",
+  "nuike" : "牛客网"
+}

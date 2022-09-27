@@ -1,7 +1,7 @@
 <template>
   <div class="contianer">
     <header>
-      <div>抢镜小助手</div>
+      <div>抢镜小助手({{platformName}})</div>
        <div class="statement">免责声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途!</div>
       <div class="full-screen" @click="handlerFullScreen">
         <img :src="fullScreen" alt="fullScreen">
@@ -93,9 +93,9 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" :width="'100px'" class="operate" align="center">
           <template v-slot="scope">
-            <el-button type="text" size="small" @click="publishJob(scope.row)">一键发布</el-button>
+            <el-button type="text" size="small" @click="handlerSinglePublishJob(scope.row)">一键发布</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </section>
     <footer>
@@ -111,23 +111,26 @@
         :page-size="pageSize"
       />
       <div>
+        <el-button class="publish-btn" type="primary" @click="handlerSelectPlatform"> 选择平台 </el-button>
         <el-button class="publish-btn" type="primary" @click="oneClickCollection"> 一镜到底 </el-button>
-        <el-button 
-          :disabled="multipleSelection.length === 0"
-          class="publish-btn" type="primary" @click="allPublishJob">
-          一键发布职位({{ multipleSelection.length }})
-        </el-button>
       </div>
     </footer>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from "vue-router";
-import { onMounted, reactive, Ref, ref, watch } from 'vue';
+import { useRouter, useRoute } from "vue-router";
+import { onMounted, reactive, Ref, ref, watch, computed } from 'vue';
 import { getJobs, getCompanyList } from '@/axios/apis/index';
-import { JOB_COLUMNS } from './contants';
+import { 
+  JOB_COLUMNS, 
+  GUOPIN_SCHOOL_RECRUITMENT, 
+  GUOPIN_SOCIAL_RECRUITMENT,
+  JIUYEWANG_URL,
+  PLATFORM_MAP
+} from './contants';
 import { IList } from '@/axios/apis/types';
+import { getLocalstory } from '@/utils/index';
 import fullScreen from '@/assets/images/full-screen.png';
 
 interface IOptions {
@@ -144,6 +147,7 @@ interface IQuery {
 }
 
 const router = useRouter();
+const route = useRoute();
 const loading = ref<Boolean>(false);
 const tableData: Ref<IList[]> = ref([]);
 const totalCount: Ref<number> = ref(0);
@@ -188,53 +192,104 @@ const query = reactive<IQuery>({
   code: '',
   status: '',
   opened: '',
-  recruitmentType: ''
+  recruitmentType: '',
 });
 const multipleSelection = ref<IList[]>([]);
-const SCHOOL_RECRUITMENT = 'https://campus.iguopin.com/index.php?m=&c=company&a=jobs_add'; 
-const SOCIAL_RECRUITMENT = 'https://www.iguopin.com/index.php?m=&c=company&a=jobs_add';
+const singlePublishJob = ref<Function>(()=>{});
+const multiplePublishJob = ref<Function>(()=>{});
+const platformName = ref('');
 
 watch(query, () => {
   getJobData();
 });
 
-onMounted(() => {
+onMounted(async () => {
   getJobData();
   getCompanyLists();
+  platformSelect();
+  const platName = await getLocalstory('platName') as string;
+  platformName.value = PLATFORM_MAP[platName];
 });
+
+const handlerSelectPlatform = () => {
+  router.replace('/platform');
+}
+
+// 单个发布职位
+const handlerSinglePublishJob = (job: IList) => {
+  singlePublishJob.value(job);
+}
+
+// 批量发布职位
+const handlerMultiplePublishJob = () => {
+  multiplePublishJob.value();
+}
+
+// 平台判断
+const platformSelect = () => {
+  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+  switch(platform){
+    case 'guopin':
+      singlePublishJob.value = guopinPulishJob;
+      multiplePublishJob.value =  guopinMultiplePulishJob;
+    break;
+    case '24365':
+      singlePublishJob.value = jiuyePublishJob;
+      multiplePublishJob.value = jiuyeMultiplePublishJob;
+    break;
+    default:
+      break;
+  }
+}
 
 // 一键统收
 const oneClickCollection = async () => {
-  router.push({name: 'collect-resumes'});
+  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+  router.push({
+    name: 'collect-resumes',
+    query:{
+      platfrom: platform
+    }
+  });
 }
 
-// 【单个】一键发布
-const publishJob = async (job: IList) => {
+// 国聘单个发布职位
+const guopinPulishJob = async (job: IList) => {
+  await setJobLocalstory('job','single', job);
   switch(job.recruitmentTypeName){
     case '社招': 
-      window.open(SOCIAL_RECRUITMENT);
+      window.open(GUOPIN_SOCIAL_RECRUITMENT);
     break;
     case '校招':
     case '实习':
-      window.open(SCHOOL_RECRUITMENT);
+      window.open(GUOPIN_SCHOOL_RECRUITMENT);
     break;
   }
-  await setJobLocalstory('job','single', job);
-};
-
-// 【批量】一键发布
-const allPublishJob = async () => {
+}
+// 国聘批量发布职位
+const guopinMultiplePulishJob = async () => {
   const isSocial = multipleSelection.value.every(el=>el.recruitmentTypeName === '社招');
   const isSchool = multipleSelection.value.every(el=>['校招','实习'].includes(el.recruitmentTypeName));
   if(isSocial){
     await setJobLocalstory('jobs','multiple', multipleSelection.value);
-    window.open(SOCIAL_RECRUITMENT);
+    window.open(GUOPIN_SOCIAL_RECRUITMENT);
   }else if(isSchool){
     await setJobLocalstory('jobs','multiple', multipleSelection.value);
-    window.open(SCHOOL_RECRUITMENT);
+    window.open(GUOPIN_SCHOOL_RECRUITMENT);
   }else{
     alert('社招和校招不能混合批量发布～');
   }
+};
+
+// 24365 单个发布职位
+const jiuyePublishJob = async (job: IList) => {
+  await setJobLocalstory('job','single', job);
+  window.open(JIUYEWANG_URL);
+}
+// 24365 批量发布职位
+const jiuyeMultiplePublishJob = async () => {
+  await setJobLocalstory('jobs','multiple', multipleSelection.value);
+  window.open(JIUYEWANG_URL);
 }
 
 const handleSelectionChange = (val: IList[]) => {
@@ -243,28 +298,28 @@ const handleSelectionChange = (val: IList[]) => {
 
 // 保存数据
 const setJobLocalstory = (key: string, type: string, data: IList | IList[]) => {
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     try {
       chrome.storage.local.set(
-        { 
-          [key]: data, 
-          'type': type, 
-          'multipleIndex': 0, 
-          'count': Array.isArray(data) ? data.length : 0
-        }, 
+        {
+          [key]: data,
+          type: type,
+          multipleIndex: 0,
+          count: Array.isArray(data) ? data.length : 0,
+        },
         () => {
-          var error = chrome.runtime.lastError;  
-          if (error) {  
+          var error = chrome.runtime.lastError;
+          if (error) {
             reject(error);
-          } 
+          }
           resolve(1);
           console.log('😄 Save Data Success～');
-        }
+        },
       );
     } catch (error) {
       reject(error);
     }
-  })
+  });
 };
 
 // 获取职位管理数据
@@ -290,7 +345,7 @@ const getJobData = async () => {
       ...el,
       companyName: el.company.name,
       name: el.publishedBy.name,
-      hiringManager: el.company.followerName
+      hiringManager: el.company.followerName,
     }));
     totalCount.value = data.totalCount;
   } catch (error) {
@@ -327,6 +382,7 @@ const getCompanyLists = async () => {
   }
 };
 
+
 const handleSizeChange = (value: number) => {
   pageSize.value = value;
   getJobData();
@@ -336,6 +392,20 @@ const handleCurrentChange = (value: number) => {
   pageNo.value = value;
   getJobData();
 };
+
+// 【单个】一键发布
+// const publishJob = async (job: IList) => {
+//   switch (job.recruitmentTypeName) {
+//     case '社招':
+//       window.open(GUOPIN_SOCIAL_RECRUITMENT);
+//       break;
+//     case '校招':
+//     case '实习':
+//       window.open(GUOPIN_SCHOOL_RECRUITMENT);
+//       break;
+//   }
+//   await setJobLocalstory('job', 'single', job);
+// };
 </script>
 
 <style lang="less" scoped>

@@ -7444,6 +7444,9 @@ function extractChangingRecords(to, from) {
 function useRouter() {
   return inject(routerKey);
 }
+function useRoute() {
+  return inject(routeLocationKey);
+}
 var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
 var freeGlobal$1 = freeGlobal;
 var freeSelf = typeof self == "object" && self && self.Object === Object && self;
@@ -60881,4 +60884,4 @@ Store.prototype._withCommit = function _withCommit(fn2) {
   this._committing = committing;
 };
 Object.defineProperties(Store.prototype, prototypeAccessors);
-export { ElMessage as A, watch as B, withDirectives as C, resolveDirective as D, ElementPlusIconsVue as E, Fragment as F, dayjs as G, computed as H, ElTable as I, createCommentVNode as J, createRouter as a, createStore as b, createWebHashHistory as c, createBlock as d, createApp as e, defineComponent as f, ref as g, reactive as h, installer as i, onMounted as j, createElementBlock as k, createBaseVNode as l, createVNode as m, useRouter as n, openBlock as o, createTextVNode as p, pushScopeId as q, resolveComponent as r, popScopeId as s, toDisplayString as t, unref as u, ElNotification as v, withCtx as w, renderList as x, normalizeStyle as y, zhCn as z };
+export { ElMessage as A, watch as B, withDirectives as C, useRoute as D, ElementPlusIconsVue as E, Fragment as F, resolveDirective as G, dayjs as H, computed as I, ElTable as J, createCommentVNode as K, createRouter as a, createStore as b, createWebHashHistory as c, createBlock as d, createApp as e, defineComponent as f, ref as g, reactive as h, installer as i, onMounted as j, createElementBlock as k, createBaseVNode as l, createVNode as m, useRouter as n, openBlock as o, createTextVNode as p, pushScopeId as q, resolveComponent as r, popScopeId as s, toDisplayString as t, unref as u, ElNotification as v, withCtx as w, renderList as x, normalizeStyle as y, zhCn as z };
