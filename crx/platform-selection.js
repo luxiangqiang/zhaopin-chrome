@@ -1,4 +1,5 @@
 import { f as defineComponent, g as ref, h as reactive, k as createElementBlock, l as createBaseVNode, m as createVNode, w as withCtx, r as resolveComponent, o as openBlock, F as Fragment, x as renderList, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, d as createBlock, y as normalizeStyle, A as ElMessage } from "./vendor.js";
+import { s as saveLocalStory } from "./index2.js";
 import { _ as _export_sfc } from "./main.js";
 var guopin_logo = "./guopin_logo.png";
 var img_logo = "./24365_logo.png";
@@ -25,38 +26,50 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       {
         images: guopin_logo,
         title: "\u56FD\u8058\u7F51",
+        value: "guopin",
         height: "36px"
       },
       {
         images: img_logo,
         title: "24365",
+        value: "24365",
         height: "47px"
       },
       {
         images: boss_logo,
         title: "Boss\u76F4\u8058",
+        value: "zhipin",
         height: "28px"
       },
       {
         images: qianchengwuyou_logo,
         title: "\u524D\u7A0B\u65E0\u5FE7",
+        value: "qiancheng",
         height: "44px"
       },
       {
         images: shixiseng_logo,
         title: "\u5B9E\u4E60\u50E7",
+        value: "shixiseng",
         height: "40px"
       },
       {
         images: nuike_logo,
         title: "\u725B\u5BA2\u7F51",
+        value: "nuike",
         height: "32px"
       }
     ]);
     const router = useRouter();
-    const handlerSelectPlatfrom = () => {
+    const handlerSelectPlatform = async (item) => {
       if (statement.value) {
-        router.push({ name: "home" });
+        await saveLocalStory("platName", item.value);
+        router.push({
+          name: "home",
+          query: {
+            platfrom: item.value
+          }
+        });
       } else {
         ElMessage({
           message: "\u8BF7\u5148\u9605\u8BFB\u514D\u8D23\u58F0\u660E\uFF5E",
@@ -94,7 +107,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 return openBlock(), createBlock(_component_el_col, {
                   span: 11,
                   key: index,
-                  onClick: handlerSelectPlatfrom
+                  onClick: ($event) => handlerSelectPlatform(item)
                 }, {
                   default: withCtx(() => [
                     createVNode(_component_el_card, { shadow: "hover" }, {
@@ -111,7 +124,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     }, 1024)
                   ]),
                   _: 2
-                }, 1024);
+                }, 1032, ["onClick"]);
               }), 128))
             ]),
             _: 1

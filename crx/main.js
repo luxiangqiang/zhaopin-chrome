@@ -78,22 +78,22 @@ const routes = [
   {
     path: "/",
     name: "login",
-    component: () => __vitePreload(() => import("./login.js"), true ? ["login.js","login.css","index.js","vendor.js","full-screen.js"] : void 0)
+    component: () => __vitePreload(() => import("./login.js"), true ? ["login.js","login.css","index.js","index2.js","vendor.js","full-screen.js"] : void 0)
   },
   {
     path: "/platform",
     name: "platform",
-    component: () => __vitePreload(() => import("./platform-selection.js"), true ? ["platform-selection.js","platform-selection.css","vendor.js"] : void 0)
+    component: () => __vitePreload(() => import("./platform-selection.js"), true ? ["platform-selection.js","platform-selection.css","vendor.js","index2.js"] : void 0)
   },
   {
     path: "/home",
     name: "home",
-    component: () => __vitePreload(() => import("./index2.js"), true ? ["index2.js","index.css","vendor.js","index.js","contants.js","full-screen.js"] : void 0)
+    component: () => __vitePreload(() => import("./index3.js"), true ? ["index3.js","index.css","vendor.js","index.js","index2.js","contants.js","full-screen.js"] : void 0)
   },
   {
     path: "/collect-resumes",
     name: "collect-resumes",
-    component: () => __vitePreload(() => import("./collect-resumes.js"), true ? ["collect-resumes.js","collect-resumes.css","contants.js","vendor.js","index.js"] : void 0)
+    component: () => __vitePreload(() => import("./collect-resumes.js"), true ? ["collect-resumes.js","collect-resumes.css","contants.js","vendor.js","index.js","index2.js"] : void 0)
   }
 ];
 const options = {

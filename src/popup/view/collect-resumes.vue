@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header>
-      <div>抢镜小助手</div>
+      <div>抢镜小助手({{ platformName }})</div>
       <div class="statement">特此声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途!</div>
     </header>
     <el-card>
@@ -87,23 +87,26 @@
 
 <script lang="ts" setup>
 import { onMounted, Ref, ref, computed } from 'vue';
-import { COLLECT_RESUME_COLUMN } from './contants';
-import { useRouter } from "vue-router";
+import { COLLECT_RESUME_COLUMN, PLATFORM_MAP } from './contants';
+import { useRouter, useRoute } from "vue-router";
 import dayjs from 'dayjs';
 import { ElNotification, ElTable } from 'element-plus'
 import { postResumeList } from '@/axios/apis';
 import { IResume } from '@/axios/apis/types';
 import { ElMessage } from 'element-plus'
-import { getLocalstory, clearLocalstory, setBadgeText } from '@/utils'
+import { getLocalstory, clearLocalstory, setBadgeText, saveLocalStory } from '@/utils'
 
 const router = useRouter();
+const route = useRoute();
+const channel = ref<string>('');
 const timeRange = ref<Date[] | any>([]);
 const loading = ref<Boolean>(false);
 const typeCheckList = ref<string[]>(['社招']);
 const tableData: Ref<any[]> = ref([]);
 const resumeList: Ref<IResume[]> = ref([]);
 const multipleSelection = ref<any[]>([]);
-const multipleTableRef = ref<InstanceType<typeof ElTable>>()
+const multipleTableRef = ref<InstanceType<typeof ElTable>>();
+const platformName = ref("");
 
 onMounted(async () => {
   const dayAfter = dayjs().add(1, 'day').format('YYYY-MM-DD');
@@ -115,8 +118,22 @@ onMounted(async () => {
   tableData.value = resumeList.value.map((el: IResume) =>({
     subject: el.subject,
     ...el.form.basic,
+    title: el.subject,
     ...el.form.forwards[0]
   }))
+
+  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+  switch(platform){
+    case 'guopin': 
+      channel.value = 'GUOPIN';
+      break;
+    case '24365':
+      channel.value = 'C_24365';
+      break;
+  }
+
+  const platName = await getLocalstory('platName') as string;
+  platformName.value = PLATFORM_MAP[platName];
 })
 
 const resumeCount = computed(() => tableData.value.length)
@@ -175,19 +192,35 @@ const handlerSingleImport = async (row: any) => {
 
 // 一键统收
 const handlerCollect = () => {
+  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+  if(timeRange.value.length < 2){
+    ElNotification({
+      title: '提示',
+      message: '请选择完整时间段！',
+      type: 'warning',
+    })
+    return;
+  }
+
+  switch(platform){
+    case 'guopin': 
+      channel.value = 'GUOPIN';
+      guopinCollect();
+      break;
+    case '24365':
+    channel.value = 'C_24365';
+      newCareerCollect();
+      break;
+  }
+}
+
+ // 国聘统收
+const guopinCollect = () => {
   // 判断是否有选项
   if(typeCheckList.value.length === 0){
     ElNotification({
       title: '提示',
       message: '请勾选招聘类型！',
-      type: 'warning',
-    })
-    return;
-  }
-  if(timeRange.value.length < 2){
-    ElNotification({
-      title: '提示',
-      message: '请选择完整时间段！',
       type: 'warning',
     })
     return;
@@ -209,6 +242,19 @@ const handlerCollect = () => {
   }
 }
 
+// 24365 统收
+const newCareerCollect = () => {
+  // 清理上一段收集的简历
+  clearLocalstory('resumes');
+  chrome.runtime.sendMessage({
+    channel: 'CLEAR_RESUME_LIST'
+  })
+
+  saveLocalStory('timeRange', timeRange.value)
+  // 感兴趣
+  window.open('https://job.ncss.cn/corp/candidate.html?checkOut');
+}
+
 // 一键清理
 const handlerCleart = () => {
   clearLocalstory('resumes');
@@ -227,7 +273,7 @@ const handlerImport = async () => {
     const ids = multipleSelection.value.map(el=>el.subject);
     const data = resumeList.value.filter(el => ids.includes(el.subject));
     const { success } = await postResumeList({
-      channel: "GUOPIN",
+      channel: channel.value,
       items: data
     });
     if(success){

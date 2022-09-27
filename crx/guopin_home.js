@@ -259,18 +259,6 @@ const clearJobLocalstory = (type) => {
     }
   });
 };
-const saveJobLocalStory = (key, value) => {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.set({ [key]: value }, function() {
-        console.log("\u{1F604} [guopin_home.js]: Save Data Success\uFF5E");
-        resolve(1);
-      });
-    } catch (error) {
-      reject();
-    }
-  });
-};
 const setWorkExperience = (experienceFrom) => {
   $.each($(".J_listitme"), (index, el) => {
     if (experienceFrom.indexOf("\u5E74") !== -1) {
@@ -399,28 +387,13 @@ const singleJobPublish = async () => {
   const formate = formateData(data);
   console.table(formate);
   await autoSetSchoolJob(formate);
-  $("#J_release").trigger("click");
   await clearJobLocalstory("job");
-};
-const multipleJobPublish = async () => {
-  const index = await getJobLocalstory("multipleIndex");
-  const count = await getJobLocalstory("count");
-  const jobs = await getJobLocalstory("jobs");
-  if (index < count) {
-    const formate = formateData(jobs[index]);
-    await autoSetSchoolJob(formate);
-    $("#J_release").trigger("click");
-    await saveJobLocalStory("multipleIndex", index + 1);
-  }
 };
 async function init() {
   const type = await getJobLocalstory("type");
   switch (type) {
     case "single":
       singleJobPublish();
-      break;
-    case "multiple":
-      multipleJobPublish();
       break;
   }
 }

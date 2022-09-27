@@ -232,7 +232,7 @@ function init() {
   const data = getResumeData();
   chrome.runtime.sendMessage({
     channel: "RESUME_DATA",
-    message: data
+    message: [data]
   });
   setTimeout(() => {
     window.close();

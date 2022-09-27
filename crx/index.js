@@ -1,3 +1,4 @@
+import { g as getLocalstoryToken } from "./index2.js";
 import { v as ElNotification } from "./vendor.js";
 var axios$3 = { exports: {} };
 var bind$2 = function bind(fn, thisArg) {
@@ -1220,46 +1221,6 @@ axios$3.exports.default = axios$2;
 var axios$1 = axios$3.exports;
 const BASE_URL = "https://a.reta-inc.com";
 const DINGDING_URL = "https://oapi.dingtalk.com/robot/send?access_token=4b5c35cb0da73bff59ae79cfeffcaa24093bd4713b48f23ab0a48d9435c4b318";
-const getLocalstoryToken = async () => {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.get("token", (result) => {
-        resolve(result["token"]);
-        console.log("\u{1F604} Get Token Success\uFF5E");
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-const getLocalstory = (type) => {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.get(type, (result) => {
-        console.log(`\u2705 Get ${type} Success\uFF5E`, result[type]);
-        resolve(result[type]);
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-};
-const clearLocalstory = (type) => {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.remove(type, () => {
-        console.log(`\u{1F9F9} Clear ${type} Success\uFF5E`);
-      });
-      resolve(1);
-    } catch (error) {
-      reject();
-    }
-  });
-};
-const setBadgeText = (text = "0", color = "#74b9ff") => {
-  chrome.action.setBadgeText({ text });
-  chrome.action.setBadgeBackgroundColor({ color });
-};
 const defaultHeaders = {
   platform: "A_WEB_PC"
 };
@@ -1331,4 +1292,4 @@ async function getCompanyList(params) {
 async function postResumeList(params) {
   return await axios.post("/admin/v1/resume/unify-collect", params);
 }
-export { getJobs as a, getCompanyList as b, getLocalstory as c, clearLocalstory as d, getLocalstoryToken as g, login as l, postResumeList as p, setBadgeText as s };
+export { getCompanyList as a, getJobs as g, login as l, postResumeList as p };
