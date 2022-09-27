@@ -49,7 +49,7 @@
 import { reactive, ref, onMounted } from 'vue';
 import { login } from '@/axios/apis/index';
 import { useRouter } from "vue-router";
-import { getLocalstoryToken } from '@/utils/index';
+import { getLocalstoryToken, getLocalstory } from '@/utils/index';
 import type { FormInstance, FormRules } from 'element-plus';
 import fullScreen from '@/assets/images/full-screen.png';
 
@@ -77,7 +77,12 @@ const rules = reactive<FormRules>({
 onMounted(async () => {
   const token = await getLocalstoryToken();
   if(token){
-    router.push({ name: "platform" });
+    const platName = await getLocalstory('platName') as string;
+    if(platName && platName !== ''){
+      router.push({ name: "home" });
+    }else{
+      router.push({ name: "platform" });
+    }
   }else{
     router.push({ path: "/" });
   }

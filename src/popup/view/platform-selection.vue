@@ -36,6 +36,7 @@
   import nuike_logo from '@/assets/images/nuike_logo.png'
   import { ElMessage } from 'element-plus'
   import { useRouter } from "vue-router";
+  import { saveLocalStory } from '@/utils/index';
 
   interface IPlatform {
     images: string;
@@ -86,9 +87,9 @@
   const router = useRouter();
 
   // 选择平台
-  const handlerSelectPlatform = (item: IPlatform) => {
-    console.error(item)
+  const handlerSelectPlatform = async (item: IPlatform) => {
     if(statement.value){
+      await saveLocalStory('platName', item.value);
       router.push({ 
         name: 'home',
         query: {

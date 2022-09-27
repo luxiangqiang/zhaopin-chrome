@@ -1,5 +1,6 @@
-import { g as getLocalstoryToken, l as login$1 } from "./index.js";
+import { l as login$1 } from "./index.js";
 import { f as defineComponent, g as ref, h as reactive, j as onMounted, k as createElementBlock, l as createBaseVNode, u as unref, m as createVNode, w as withCtx, n as useRouter, r as resolveComponent, o as openBlock, p as createTextVNode, t as toDisplayString, q as pushScopeId, s as popScopeId } from "./vendor.js";
+import { g as getLocalstoryToken, a as getLocalstory } from "./index2.js";
 import { f as fullScreen } from "./full-screen.js";
 import { _ as _export_sfc } from "./main.js";
 var login_vue_vue_type_style_index_0_scoped_true_lang = "";
@@ -35,7 +36,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     onMounted(async () => {
       const token = await getLocalstoryToken();
       if (token) {
-        router.push({ name: "platform" });
+        const platName = await getLocalstory("platName");
+        if (platName && platName !== "") {
+          router.push({ name: "home" });
+        } else {
+          router.push({ name: "platform" });
+        }
       } else {
         router.push({ path: "/" });
       }

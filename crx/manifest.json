@@ -98,6 +98,13 @@
       ],
       "js": ["new_career_collect.js"],
       "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://job.ncss.cn/corp/candidate.html?checkOut"
+      ],
+      "js": ["new_career_checkout.js"],
+      "run_at": "document_idle"
     }
   ],
   "externally_connectable": {

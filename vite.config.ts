@@ -36,6 +36,7 @@ export default defineConfig(({ command, mode }) => {
           new_career_home: resolve(__dirname, 'src/modules/24365/new_career_home.ts'),
           new_career_publish: resolve(__dirname, 'src/modules/24365/new_career_publish.ts'),
           new_career_collect: resolve(__dirname, 'src/modules/24365/new_career_collect.ts'),
+          new_career_checkout: resolve(__dirname, 'src/modules/24365/new_career_checkout.ts'),
           jquery: resolve(__dirname, 'src/utils/jquery.js'),
         },
         output: {

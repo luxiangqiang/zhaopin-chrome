@@ -1,7 +1,7 @@
 <template>
   <div class="contianer">
     <header>
-      <div>抢镜小助手</div>
+      <div>抢镜小助手({{platformName}})</div>
        <div class="statement">免责声明：本产品仅为辅助工具，仅供学习使用，禁止用于商业用途!</div>
       <div class="full-screen" @click="handlerFullScreen">
         <img :src="fullScreen" alt="fullScreen">
@@ -111,13 +111,8 @@
         :page-size="pageSize"
       />
       <div>
+        <el-button class="publish-btn" type="primary" @click="handlerSelectPlatform"> 选择平台 </el-button>
         <el-button class="publish-btn" type="primary" @click="oneClickCollection"> 一镜到底 </el-button>
-        <!-- <el-button 
-          :disabled="multipleSelection.length === 0"
-          class="publish-btn" type="primary" @click="handlerMultiplePublishJob">
-          一键发布
-          <span v-if="multipleSelection.length > 0">({{ multipleSelection.length }})</span>
-        </el-button> -->
       </div>
     </footer>
   </div>
@@ -125,15 +120,17 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from "vue-router";
-import { onMounted, reactive, Ref, ref, watch } from 'vue';
+import { onMounted, reactive, Ref, ref, watch, computed } from 'vue';
 import { getJobs, getCompanyList } from '@/axios/apis/index';
 import { 
   JOB_COLUMNS, 
   GUOPIN_SCHOOL_RECRUITMENT, 
   GUOPIN_SOCIAL_RECRUITMENT,
-  JIUYEWANG_URL
+  JIUYEWANG_URL,
+  PLATFORM_MAP
 } from './contants';
 import { IList } from '@/axios/apis/types';
+import { getLocalstory } from '@/utils/index';
 import fullScreen from '@/assets/images/full-screen.png';
 
 interface IOptions {
@@ -198,19 +195,25 @@ const query = reactive<IQuery>({
   recruitmentType: '',
 });
 const multipleSelection = ref<IList[]>([]);
-
 const singlePublishJob = ref<Function>(()=>{});
 const multiplePublishJob = ref<Function>(()=>{});
+const platformName = ref('');
 
 watch(query, () => {
   getJobData();
 });
 
-onMounted(() => {
+onMounted(async () => {
   getJobData();
   getCompanyLists();
   platformSelect();
+  const platName = await getLocalstory('platName') as string;
+  platformName.value = PLATFORM_MAP[platName];
 });
+
+const handlerSelectPlatform = () => {
+  router.replace('/platform');
+}
 
 // 单个发布职位
 const handlerSinglePublishJob = (job: IList) => {
@@ -241,7 +244,13 @@ const platformSelect = () => {
 
 // 一键统收
 const oneClickCollection = async () => {
-  router.push({name: 'collect-resumes'});
+  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+  router.push({
+    name: 'collect-resumes',
+    query:{
+      platfrom: platform
+    }
+  });
 }
 
 // 国聘单个发布职位

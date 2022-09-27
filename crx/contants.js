@@ -95,4 +95,12 @@ const COLLECT_RESUME_COLUMN = [
     width: 120
   }
 ];
-export { COLLECT_RESUME_COLUMN as C, GUOPIN_SCHOOL_RECRUITMENT as G, JIUYEWANG_URL as J, GUOPIN_SOCIAL_RECRUITMENT as a, JOB_COLUMNS as b };
+const PLATFORM_MAP = {
+  "guopin": "\u56FD\u8058",
+  "24365": "24365",
+  "zhipin": "Boss\u76F4\u8058",
+  "qiancheng": "\u524D\u7A0B\u65E0\u5FE7",
+  "shixiseng": "\u5B9E\u4E60\u50E7",
+  "nuike": "\u725B\u5BA2\u7F51"
+};
+export { COLLECT_RESUME_COLUMN as C, GUOPIN_SCHOOL_RECRUITMENT as G, JIUYEWANG_URL as J, PLATFORM_MAP as P, GUOPIN_SOCIAL_RECRUITMENT as a, JOB_COLUMNS as b };
