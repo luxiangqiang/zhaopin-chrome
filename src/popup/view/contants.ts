@@ -101,3 +101,12 @@ export const COLLECT_RESUME_COLUMN = [
     width: 120,
   }
 ]
+
+export const PLATFORM_MAP:Record<string, string> = {
+  "guopin":"国聘",
+  "24365":"24365",
+  "zhipin":"Boss直聘",
+  "qiancheng": "前程无忧",
+  "shixiseng": "实习僧",
+  "nuike" : "牛客网"
+}

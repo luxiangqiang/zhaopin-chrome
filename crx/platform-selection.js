@@ -1,4 +1,5 @@
 import { f as defineComponent, g as ref, h as reactive, k as createElementBlock, l as createBaseVNode, m as createVNode, w as withCtx, r as resolveComponent, o as openBlock, F as Fragment, x as renderList, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, d as createBlock, y as normalizeStyle, A as ElMessage } from "./vendor.js";
+import { s as saveLocalStory } from "./index2.js";
 import { _ as _export_sfc } from "./main.js";
 var guopin_logo = "./guopin_logo.png";
 var img_logo = "./24365_logo.png";
@@ -60,9 +61,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }
     ]);
     const router = useRouter();
-    const handlerSelectPlatform = (item) => {
-      console.error(item);
+    const handlerSelectPlatform = async (item) => {
       if (statement.value) {
+        await saveLocalStory("platName", item.value);
         router.push({
           name: "home",
           query: {

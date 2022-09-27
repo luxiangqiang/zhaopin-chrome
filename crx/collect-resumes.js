@@ -1,4 +1,6 @@
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
@@ -14,17 +16,16 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
-import { C as COLLECT_RESUME_COLUMN } from "./contants.js";
-import { f as defineComponent, g as ref, j as onMounted, H as dayjs, I as computed, k as createElementBlock, m as createVNode, w as withCtx, l as createBaseVNode, t as toDisplayString, u as unref, C as withDirectives, d as createBlock, J as ElTable, A as ElMessage, v as ElNotification, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, K as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
-import { c as getLocalstory, d as clearLocalstory, s as setBadgeText, p as postResumeList } from "./index.js";
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+import { P as PLATFORM_MAP, C as COLLECT_RESUME_COLUMN } from "./contants.js";
+import { f as defineComponent, g as ref, j as onMounted, H as dayjs, I as computed, k as createElementBlock, l as createBaseVNode, t as toDisplayString, m as createVNode, w as withCtx, u as unref, C as withDirectives, d as createBlock, J as ElTable, D as useRoute, A as ElMessage, v as ElNotification, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, K as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
+import { p as postResumeList } from "./index.js";
+import { a as getLocalstory, c as clearLocalstory, s as saveLocalStory, b as setBadgeText } from "./index2.js";
 import { _ as _export_sfc } from "./main.js";
 var collectResumes_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-413caf2c"), n = n(), popScopeId(), n);
 const _hoisted_1 = { class: "container" };
-const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("header", null, [
-  /* @__PURE__ */ createBaseVNode("div", null, "\u62A2\u955C\u5C0F\u52A9\u624B"),
-  /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u7279\u6B64\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u4EC5\u4F9B\u5B66\u4E60\u4F7F\u7528\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014!")
-], -1));
+const _hoisted_2 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("div", { class: "statement" }, "\u7279\u6B64\u58F0\u660E\uFF1A\u672C\u4EA7\u54C1\u4EC5\u4E3A\u8F85\u52A9\u5DE5\u5177\uFF0C\u4EC5\u4F9B\u5B66\u4E60\u4F7F\u7528\uFF0C\u7981\u6B62\u7528\u4E8E\u5546\u4E1A\u7528\u9014!", -1));
 const _hoisted_3 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", null, "\u9009\u62E9\u65F6\u95F4\u6BB5\uFF1A", -1));
 const _hoisted_4 = { class: "resume-count" };
 const _hoisted_5 = /* @__PURE__ */ createTextVNode("\u4E00\u952E\u5165\u5E93");
@@ -39,6 +40,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "collect-resumes",
   setup(__props) {
     const router = useRouter();
+    const route = useRoute();
+    const channel = ref("");
     const timeRange = ref([]);
     const loading = ref(false);
     const typeCheckList = ref(["\u793E\u62DB"]);
@@ -46,15 +49,29 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const resumeList = ref([]);
     const multipleSelection = ref([]);
     const multipleTableRef = ref();
+    const platformName = ref("");
     onMounted(async () => {
       const dayAfter = dayjs().add(1, "day").format("YYYY-MM-DD");
       const dayBefore = dayjs().subtract(1, "day").format("YYYY-MM-DD");
       timeRange.value = [dayBefore, dayAfter];
       const resumes = await getLocalstory("resumes");
       resumeList.value = resumes || [];
-      tableData.value = resumeList.value.map((el) => __spreadValues(__spreadValues({
+      tableData.value = resumeList.value.map((el) => __spreadValues(__spreadProps(__spreadValues({
         subject: el.subject
-      }, el.form.basic), el.form.forwards[0]));
+      }, el.form.basic), {
+        title: el.subject
+      }), el.form.forwards[0]));
+      const platform = route.query.platfrom ? String(route.query.platfrom) : "";
+      switch (platform) {
+        case "guopin":
+          channel.value = "GUOPIN";
+          break;
+        case "24365":
+          channel.value = "C_24365";
+          break;
+      }
+      const platName = await getLocalstory("platName");
+      platformName.value = PLATFORM_MAP[platName];
     });
     const resumeCount = computed(() => tableData.value.length);
     const handlerRefresh = async () => {
@@ -100,18 +117,31 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }
     };
     const handlerCollect = () => {
-      if (typeCheckList.value.length === 0) {
-        ElNotification({
-          title: "\u63D0\u793A",
-          message: "\u8BF7\u52FE\u9009\u62DB\u8058\u7C7B\u578B\uFF01",
-          type: "warning"
-        });
-        return;
-      }
+      const platform = route.query.platfrom ? String(route.query.platfrom) : "";
       if (timeRange.value.length < 2) {
         ElNotification({
           title: "\u63D0\u793A",
           message: "\u8BF7\u9009\u62E9\u5B8C\u6574\u65F6\u95F4\u6BB5\uFF01",
+          type: "warning"
+        });
+        return;
+      }
+      switch (platform) {
+        case "guopin":
+          channel.value = "GUOPIN";
+          guopinCollect();
+          break;
+        case "24365":
+          channel.value = "C_24365";
+          newCareerCollect();
+          break;
+      }
+    };
+    const guopinCollect = () => {
+      if (typeCheckList.value.length === 0) {
+        ElNotification({
+          title: "\u63D0\u793A",
+          message: "\u8BF7\u52FE\u9009\u62DB\u8058\u7C7B\u578B\uFF01",
           type: "warning"
         });
         return;
@@ -129,6 +159,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         window.open(url);
       }
     };
+    const newCareerCollect = () => {
+      clearLocalstory("resumes");
+      chrome.runtime.sendMessage({
+        channel: "CLEAR_RESUME_LIST"
+      });
+      saveLocalStory("timeRange", timeRange.value);
+      window.open("https://job.ncss.cn/corp/candidate.html?checkOut");
+    };
     const handlerCleart = () => {
       clearLocalstory("resumes");
       tableData.value = [];
@@ -144,7 +182,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         const ids = multipleSelection.value.map((el) => el.subject);
         const data = resumeList.value.filter((el) => ids.includes(el.subject));
         const { success } = await postResumeList({
-          channel: "GUOPIN",
+          channel: channel.value,
           items: data
         });
         if (success) {
@@ -180,7 +218,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       const _component_Promotion = resolveComponent("Promotion");
       const _directive_loading = resolveDirective("loading");
       return openBlock(), createElementBlock("div", _hoisted_1, [
-        _hoisted_2,
+        createBaseVNode("header", null, [
+          createBaseVNode("div", null, "\u62A2\u955C\u5C0F\u52A9\u624B(" + toDisplayString(platformName.value) + ")", 1),
+          _hoisted_2
+        ]),
         createVNode(_component_el_card, null, {
           default: withCtx(() => [
             createVNode(_component_el_row, null, {
