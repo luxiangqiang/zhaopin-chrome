@@ -34,7 +34,8 @@
       "matches": [
         "https://campus.iguopin.com/***", 
         "https://www.iguopin.com/***",
-        "https://job.ncss.cn/***"
+        "https://job.ncss.cn/***",
+        "https://nowpick.nowcoder.com/***"
       ],
       "js": ["jquery.js"],
       "run_at": "document_idle"
@@ -85,13 +86,7 @@
       "js": ["new_career_home.js"],
       "run_at": "document_idle"
     },
-    {
-      "matches":[
-        "https://job.ncss.cn/corp/jobs/add_success.html"
-      ],
-      "js": ["new_career_publish.js"],
-      "run_at": "document_idle"
-    },
+   
     {
       "matches":[
         "https://job.ncss.cn/corp/candidate.html?communicate"
@@ -104,6 +99,13 @@
         "https://job.ncss.cn/corp/candidate.html?checkOut"
       ],
       "js": ["new_career_checkout.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://nowpick.nowcoder.com/w/hrconsole/job-publish***"
+      ],
+      "js": ["publish_school_job.js"],
       "run_at": "document_idle"
     }
   ],

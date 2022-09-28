@@ -122,8 +122,10 @@ onMounted(async () => {
     ...el.form.forwards[0]
   }))
 
-  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
-  switch(platform){
+  const platName = await getLocalstory('platName') as string;
+  platformName.value = PLATFORM_MAP[platName];
+
+  switch(platName){
     case 'guopin': 
       channel.value = 'GUOPIN';
       break;
@@ -131,9 +133,6 @@ onMounted(async () => {
       channel.value = 'C_24365';
       break;
   }
-
-  const platName = await getLocalstory('platName') as string;
-  platformName.value = PLATFORM_MAP[platName];
 })
 
 const resumeCount = computed(() => tableData.value.length)
@@ -191,8 +190,8 @@ const handlerSingleImport = async (row: any) => {
 }
 
 // 一键统收
-const handlerCollect = () => {
-  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+const handlerCollect = async () => {
+  const platform = await getLocalstory('platName') as string;
   if(timeRange.value.length < 2){
     ElNotification({
       title: '提示',
@@ -201,7 +200,7 @@ const handlerCollect = () => {
     })
     return;
   }
-
+  console.error(platform)
   switch(platform){
     case 'guopin': 
       channel.value = 'GUOPIN';

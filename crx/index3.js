@@ -17,9 +17,9 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-import { f as defineComponent, g as ref, h as reactive, B as watch, j as onMounted, k as createElementBlock, l as createBaseVNode, t as toDisplayString, u as unref, m as createVNode, w as withCtx, C as withDirectives, d as createBlock, D as useRoute, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
+import { f as defineComponent, g as ref, h as reactive, B as watch, j as onMounted, k as createElementBlock, l as createBaseVNode, t as toDisplayString, u as unref, m as createVNode, w as withCtx, C as withDirectives, d as createBlock, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, G as useRoute } from "./vendor.js";
 import { g as getJobs, a as getCompanyList } from "./index.js";
-import { P as PLATFORM_MAP, G as GUOPIN_SCHOOL_RECRUITMENT, a as GUOPIN_SOCIAL_RECRUITMENT, J as JIUYEWANG_URL, b as JOB_COLUMNS } from "./contants.js";
+import { P as PLATFORM_MAP, G as GUOPIN_SCHOOL_RECRUITMENT, a as GUOPIN_SOCIAL_RECRUITMENT, J as JIUYEWANG_URL, N as NUIKE_URL, b as JOB_COLUMNS } from "./contants.js";
 import { a as getLocalstory } from "./index2.js";
 import { f as fullScreen } from "./full-screen.js";
 import { _ as _export_sfc } from "./main.js";
@@ -110,8 +110,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const handlerSinglePublishJob = (job) => {
       singlePublishJob.value(job);
     };
-    const platformSelect = () => {
-      const platform = route.query.platfrom ? String(route.query.platfrom) : "";
+    const platformSelect = async () => {
+      const platform = await getLocalstory("platName");
       switch (platform) {
         case "guopin":
           singlePublishJob.value = guopinPulishJob;
@@ -119,8 +119,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           break;
         case "24365":
           singlePublishJob.value = jiuyePublishJob;
-          multiplePublishJob.value = jiuyeMultiplePublishJob;
           break;
+        case "nuike":
+          singlePublishJob.value = nuikePublishJob;
       }
     };
     const oneClickCollection = async () => {
@@ -161,9 +162,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       await setJobLocalstory("job", "single", job);
       window.open(JIUYEWANG_URL);
     };
-    const jiuyeMultiplePublishJob = async () => {
-      await setJobLocalstory("jobs", "multiple", multipleSelection.value);
-      window.open(JIUYEWANG_URL);
+    const nuikePublishJob = async (job) => {
+      await setJobLocalstory("job", "single", job);
+      window.open(NUIKE_URL);
     };
     const handleSelectionChange = (val) => {
       multipleSelection.value = val;
@@ -396,10 +397,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             onSelectionChange: handleSelectionChange
           }, {
             default: withCtx(() => [
-              createVNode(_component_el_table_column, {
-                type: "selection",
-                width: "55"
-              }),
               (openBlock(true), createElementBlock(Fragment, null, renderList(unref(JOB_COLUMNS), (item) => {
                 return openBlock(), createBlock(_component_el_table_column, {
                   prop: item.prop,
