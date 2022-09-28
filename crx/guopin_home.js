@@ -383,9 +383,7 @@ async function autoSetSchoolJob(data) {
 }
 const singleJobPublish = async () => {
   const data = await getJobLocalstory("job");
-  console.log(data);
   const formate = formateData(data);
-  console.table(formate);
   await autoSetSchoolJob(formate);
   await clearJobLocalstory("job");
 };
