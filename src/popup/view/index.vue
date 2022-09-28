@@ -83,7 +83,6 @@
         height="332"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" />
         <el-table-column
           v-for="item of JOB_COLUMNS"
           :prop="item.prop"
@@ -127,7 +126,8 @@ import {
   GUOPIN_SCHOOL_RECRUITMENT, 
   GUOPIN_SOCIAL_RECRUITMENT,
   JIUYEWANG_URL,
-  PLATFORM_MAP
+  PLATFORM_MAP,
+  NUIKE_URL
 } from './contants';
 import { IList } from '@/axios/apis/types';
 import { getLocalstory } from '@/utils/index';
@@ -226,8 +226,8 @@ const handlerMultiplePublishJob = () => {
 }
 
 // 平台判断
-const platformSelect = () => {
-  const platform = route.query.platfrom ? String(route.query.platfrom) : '';
+const platformSelect = async () => {
+  const platform = await getLocalstory('platName') as string;
   switch(platform){
     case 'guopin':
       singlePublishJob.value = guopinPulishJob;
@@ -235,8 +235,10 @@ const platformSelect = () => {
     break;
     case '24365':
       singlePublishJob.value = jiuyePublishJob;
-      multiplePublishJob.value = jiuyeMultiplePublishJob;
+      // multiplePublishJob.value = jiuyeMultiplePublishJob;
     break;
+    case 'nuike':
+      singlePublishJob.value = nuikePublishJob;
     default:
       break;
   }
@@ -287,9 +289,15 @@ const jiuyePublishJob = async (job: IList) => {
   window.open(JIUYEWANG_URL);
 }
 // 24365 批量发布职位
-const jiuyeMultiplePublishJob = async () => {
-  await setJobLocalstory('jobs','multiple', multipleSelection.value);
-  window.open(JIUYEWANG_URL);
+// const jiuyeMultiplePublishJob = async () => {
+//   await setJobLocalstory('jobs','multiple', multipleSelection.value);
+//   window.open(JIUYEWANG_URL);
+// }
+
+// 牛客单个发职位
+const nuikePublishJob = async (job: IList) => {
+  await setJobLocalstory('job','single', job);
+  window.open(NUIKE_URL);
 }
 
 const handleSelectionChange = (val: IList[]) => {
