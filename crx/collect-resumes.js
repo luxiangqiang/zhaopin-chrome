@@ -18,7 +18,7 @@ var __spreadValues = (a, b) => {
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 import { P as PLATFORM_MAP, C as COLLECT_RESUME_COLUMN } from "./contants.js";
-import { f as defineComponent, g as ref, j as onMounted, H as dayjs, I as computed, k as createElementBlock, l as createBaseVNode, t as toDisplayString, m as createVNode, w as withCtx, u as unref, C as withDirectives, d as createBlock, J as ElTable, D as useRoute, A as ElMessage, v as ElNotification, r as resolveComponent, G as resolveDirective, o as openBlock, F as Fragment, x as renderList, K as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter } from "./vendor.js";
+import { f as defineComponent, g as ref, j as onMounted, H as dayjs, I as computed, k as createElementBlock, l as createBaseVNode, t as toDisplayString, m as createVNode, w as withCtx, u as unref, C as withDirectives, d as createBlock, J as ElTable, A as ElMessage, v as ElNotification, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, K as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, G as useRoute } from "./vendor.js";
 import { p as postResumeList } from "./index.js";
 import { a as getLocalstory, c as clearLocalstory, s as saveLocalStory, b as setBadgeText } from "./index2.js";
 import { _ as _export_sfc } from "./main.js";
@@ -40,7 +40,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "collect-resumes",
   setup(__props) {
     const router = useRouter();
-    const route = useRoute();
+    useRoute();
     const channel = ref("");
     const timeRange = ref([]);
     const loading = ref(false);
@@ -61,8 +61,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }, el.form.basic), {
         title: el.subject
       }), el.form.forwards[0]));
-      const platform = route.query.platfrom ? String(route.query.platfrom) : "";
-      switch (platform) {
+      const platName = await getLocalstory("platName");
+      platformName.value = PLATFORM_MAP[platName];
+      switch (platName) {
         case "guopin":
           channel.value = "GUOPIN";
           break;
@@ -70,8 +71,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           channel.value = "C_24365";
           break;
       }
-      const platName = await getLocalstory("platName");
-      platformName.value = PLATFORM_MAP[platName];
     });
     const resumeCount = computed(() => tableData.value.length);
     const handlerRefresh = async () => {
@@ -116,8 +115,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         console.error("\u{1F645} \u4E00\u952E\u5165\u5E93:", error);
       }
     };
-    const handlerCollect = () => {
-      const platform = route.query.platfrom ? String(route.query.platfrom) : "";
+    const handlerCollect = async () => {
+      const platform = await getLocalstory("platName");
       if (timeRange.value.length < 2) {
         ElNotification({
           title: "\u63D0\u793A",
@@ -126,6 +125,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         });
         return;
       }
+      console.error(platform);
       switch (platform) {
         case "guopin":
           channel.value = "GUOPIN";

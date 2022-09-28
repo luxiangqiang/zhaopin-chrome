@@ -475,10 +475,8 @@ async function autoSetSchoolJob(data: IFormat){
 // 单个职位发布
 const singleJobPublish = async () => {
   const data = await getJobLocalstory('job') as IList;
-  console.log(data)
   // 转换数据格式
   const formate = formateData(data) as IFormat;
-  console.table(formate);
   // 自动设置校招职位
   await autoSetSchoolJob(formate);
   // 发布
