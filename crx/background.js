@@ -1,4 +1,4 @@
-const resumeList = [];
+let resumeList = [];
 const saveResumesLocalStory = (key, value) => {
   return new Promise((resolve, reject) => {
     try {
@@ -16,7 +16,12 @@ function onMessage() {
     switch (req.channel) {
       case "RESUME_DATA":
         resumeList.push(...req.message);
-        console.error(resumeList);
+        saveResumesLocalStory("resumes", resumeList);
+        chrome.action.setBadgeText({ text: String(resumeList.length) });
+        chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
+        break;
+      case "RESUME_DATA_ZHAO":
+        resumeList = req.message;
         saveResumesLocalStory("resumes", resumeList);
         chrome.action.setBadgeText({ text: String(resumeList.length) });
         chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
