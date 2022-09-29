@@ -37,6 +37,7 @@ export default defineConfig(({ command, mode }) => {
           new_career_collect: resolve(__dirname, 'src/modules/24365/new_career_collect.ts'),
           new_career_checkout: resolve(__dirname, 'src/modules/24365/new_career_checkout.ts'),
           publish_school_job: resolve(__dirname, 'src/modules/nuike/publish_school_job.ts'),
+          nuike_collect_resumes: resolve(__dirname, 'src/modules/nuike/nuike_collect_resumes.ts'),
           jquery: resolve(__dirname, 'src/utils/jquery.js'),
         },
         output: {
