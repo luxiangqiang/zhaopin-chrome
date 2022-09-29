@@ -1,15 +1,15 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "manifest_version": 3,
   "name": "zhaopin-chrome",
-  "description": "招聘一键发布职位",
+  "description": "一镜到底",
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
   "action": {
     "default_icon": "logo2.png",
-    "default_title": "一键发布职位",
+    "default_title": "一镜到底",
     "default_popup": "popup.html"
   },
   "icons": {
@@ -106,6 +106,13 @@
         "https://nowpick.nowcoder.com/w/hrconsole/job-publish***"
       ],
       "js": ["publish_school_job.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://nowpick.nowcoder.com/w/hrconsole/resume-manage***"
+      ],
+      "js": ["nuike_collect_resumes.js"],
       "run_at": "document_idle"
     }
   ],

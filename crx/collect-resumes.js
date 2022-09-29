@@ -1,6 +1,4 @@
 var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;
-var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
@@ -16,11 +14,10 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
-var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 import { P as PLATFORM_MAP, C as COLLECT_RESUME_COLUMN } from "./contants.js";
-import { f as defineComponent, g as ref, j as onMounted, H as dayjs, I as computed, k as createElementBlock, l as createBaseVNode, t as toDisplayString, m as createVNode, w as withCtx, u as unref, C as withDirectives, d as createBlock, J as ElTable, A as ElMessage, v as ElNotification, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, K as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, G as useRoute } from "./vendor.js";
+import { f as defineComponent, g as ref, j as onMounted, H as dayjs, I as computed, A as ElMessage, k as createElementBlock, l as createBaseVNode, t as toDisplayString, m as createVNode, w as withCtx, u as unref, C as withDirectives, d as createBlock, J as ElTable, v as ElNotification, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, K as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, G as useRoute } from "./vendor.js";
 import { p as postResumeList } from "./index.js";
-import { a as getLocalstory, c as clearLocalstory, s as saveLocalStory, b as setBadgeText } from "./index2.js";
+import { a as getLocalstory, s as saveLocalStory, c as clearLocalstory, b as setBadgeText } from "./index2.js";
 import { _ as _export_sfc } from "./main.js";
 var collectResumes_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-413caf2c"), n = n(), popScopeId(), n);
@@ -54,13 +51,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       const dayAfter = dayjs().add(1, "day").format("YYYY-MM-DD");
       const dayBefore = dayjs().subtract(1, "day").format("YYYY-MM-DD");
       timeRange.value = [dayBefore, dayAfter];
-      const resumes = await getLocalstory("resumes");
-      resumeList.value = resumes || [];
-      tableData.value = resumeList.value.map((el) => __spreadValues(__spreadProps(__spreadValues({
-        subject: el.subject
-      }, el.form.basic), {
-        title: el.subject
-      }), el.form.forwards[0]));
+      handlerRefresh();
       const platName = await getLocalstory("platName");
       platformName.value = PLATFORM_MAP[platName];
       switch (platName) {
@@ -82,7 +73,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }, el.form.basic), el.form.forwards[0]));
       loading.value = false;
       ElMessage({
-        message: "\u5237\u65B0\u6210\u529F\uFF5E",
+        message: "\u6570\u636E\u5DF2\u66F4\u65B0\uFF5E",
         type: "success"
       });
     };
@@ -126,6 +117,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         return;
       }
       console.error(platform);
+      saveLocalStory("timeRange", timeRange.value);
       switch (platform) {
         case "guopin":
           channel.value = "GUOPIN";
@@ -134,6 +126,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         case "24365":
           channel.value = "C_24365";
           newCareerCollect();
+          break;
+        case "nuike":
+          nuikeColleact();
           break;
       }
     };
@@ -164,8 +159,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       chrome.runtime.sendMessage({
         channel: "CLEAR_RESUME_LIST"
       });
-      saveLocalStory("timeRange", timeRange.value);
       window.open("https://job.ncss.cn/corp/candidate.html?checkOut");
+    };
+    const nuikeColleact = () => {
+      window.open("https://nowpick.nowcoder.com/w/hrconsole/resume-manage");
     };
     const handlerCleart = () => {
       clearLocalstory("resumes");

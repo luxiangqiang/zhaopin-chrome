@@ -113,14 +113,7 @@ onMounted(async () => {
   const dayBefore = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
   timeRange.value = [dayBefore, dayAfter];
 
-  const resumes = await getLocalstory('resumes') as IResume[];
-  resumeList.value = resumes || [];
-  tableData.value = resumeList.value.map((el: IResume) =>({
-    subject: el.subject,
-    ...el.form.basic,
-    title: el.subject,
-    ...el.form.forwards[0]
-  }))
+  handlerRefresh();
 
   const platName = await getLocalstory('platName') as string;
   platformName.value = PLATFORM_MAP[platName];
@@ -149,7 +142,7 @@ const handlerRefresh = async () => {
   }))
   loading.value = false;
   ElMessage({
-    message: '刷新成功～',
+    message: '数据已更新～',
     type: 'success',
   })
 }
@@ -201,14 +194,19 @@ const handlerCollect = async () => {
     return;
   }
   console.error(platform)
+  // 存储统收时间
+  saveLocalStory('timeRange', timeRange.value)
   switch(platform){
     case 'guopin': 
       channel.value = 'GUOPIN';
       guopinCollect();
       break;
     case '24365':
-    channel.value = 'C_24365';
+      channel.value = 'C_24365';
       newCareerCollect();
+      break;
+    case 'nuike':
+      nuikeColleact()
       break;
   }
 }
@@ -224,6 +222,7 @@ const guopinCollect = () => {
     })
     return;
   }
+  
 
   // 清理上一段收集的简历
   clearLocalstory('resumes');
@@ -249,9 +248,13 @@ const newCareerCollect = () => {
     channel: 'CLEAR_RESUME_LIST'
   })
 
-  saveLocalStory('timeRange', timeRange.value)
   // 感兴趣
   window.open('https://job.ncss.cn/corp/candidate.html?checkOut');
+}
+
+// 牛客统收
+const nuikeColleact = () => {
+  window.open('https://nowpick.nowcoder.com/w/hrconsole/resume-manage');
 }
 
 // 一键清理
