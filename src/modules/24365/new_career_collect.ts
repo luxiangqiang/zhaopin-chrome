@@ -174,6 +174,7 @@ function getResumeData(){
 
 const list:any = []
 
+
 // 递归翻页
 async function deepTurnPages(){
   const timeRage:string[] = await getLocalstory('timeRange') as string[];
@@ -184,6 +185,7 @@ async function deepTurnPages(){
       for await (let ele of document.querySelectorAll('.canditateList')){
         const applyTime = $(ele).find('.applyTime').text();
         if(isDuringDate(timeRage[0], timeRage[1], applyTime)){
+          console.error(applyTime)
           await new Promise((resolve, reject) => {
             $(ele).find('.studentname')[0].click();
             setTimeout(()=>{
@@ -198,19 +200,20 @@ async function deepTurnPages(){
         }
       }
       if(!flag){
-        const nextEle = getxPath('//*[@id="page"]/a[5]') as HTMLElement;
-        if(nextEle){
-          nextEle.click();
-          deepTurnPages()
-        }
+        $.each($('.next'), async (index, ele) => {
+          if($(ele).text() === ">"){
+            ele.click();
+            await deepTurnPages()
+          }
+        })
       }
-      console.log(list);
-      chrome.runtime.sendMessage({
-        channel: 'RESUME_DATA',
-        message: list
-      })
     }
-  }, 1000)
+    console.log(list);
+    chrome.runtime.sendMessage({
+      channel: 'RESUME_DATA_ZHAO',
+      message: list
+    })
+  }, 2000)
 }
 
 async function init(){
