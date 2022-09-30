@@ -42,10 +42,22 @@ function onMessage(){
     sendResponse('background 已接收～');
   })
 }
+// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+// if(tab.ur‘≥–0 9=b.id, popup: "/popup.html" })
+    // let url = chrome.runtime.getURL("popup.html");
+    // chrome.windows.create({ 
+    //   url: url,
+    //   width: 768,
+    //   height: 685,
+    //   left: 500,
+    // });
+  // }
+// })
 
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('【🚀 发布职位】插件已安装完成～')
+ 
   onMessage();
 });
 
