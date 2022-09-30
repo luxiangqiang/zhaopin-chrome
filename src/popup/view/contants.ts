@@ -5,6 +5,9 @@ export const GUOPIN_SOCIAL_RECRUITMENT = 'https://www.iguopin.com/index.php?m=&c
 export const JIUYEWANG_URL = "https://job.ncss.cn/corp/jobs/add.html";
 // 牛客
 export const NUIKE_URL = "https://nowpick.nowcoder.com/w/hrconsole/job-publish";
+// 实习僧
+export const SHIXISENG_PRACTICE_URL = "https://hr.shixiseng.com/job-management/internship/publish-job";
+export const SHIXISENG_SCHOOL_URL = "https://hr.shixiseng.com/job-management/campus-recruitment/publish-job";
 
 // 职位列表
 export const JOB_COLUMNS = [

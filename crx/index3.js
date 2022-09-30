@@ -19,7 +19,7 @@ var __spreadValues = (a, b) => {
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 import { f as defineComponent, g as ref, h as reactive, B as watch, j as onMounted, k as createElementBlock, l as createBaseVNode, t as toDisplayString, u as unref, m as createVNode, w as withCtx, C as withDirectives, d as createBlock, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, G as useRoute } from "./vendor.js";
 import { g as getJobs, a as getCompanyList } from "./index.js";
-import { P as PLATFORM_MAP, G as GUOPIN_SCHOOL_RECRUITMENT, a as GUOPIN_SOCIAL_RECRUITMENT, J as JIUYEWANG_URL, N as NUIKE_URL, b as JOB_COLUMNS } from "./contants.js";
+import { P as PLATFORM_MAP, G as GUOPIN_SCHOOL_RECRUITMENT, a as GUOPIN_SOCIAL_RECRUITMENT, J as JIUYEWANG_URL, N as NUIKE_URL, S as SHIXISENG_PRACTICE_URL, b as JOB_COLUMNS } from "./contants.js";
 import { a as getLocalstory } from "./index2.js";
 import { f as fullScreen } from "./full-screen.js";
 import { _ as _export_sfc } from "./main.js";
@@ -91,7 +91,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const multipleSelection = ref([]);
     const singlePublishJob = ref(() => {
     });
-    const multiplePublishJob = ref(() => {
+    ref(() => {
     });
     const platformName = ref("");
     watch(query, () => {
@@ -115,13 +115,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       switch (platform) {
         case "guopin":
           singlePublishJob.value = guopinPulishJob;
-          multiplePublishJob.value = guopinMultiplePulishJob;
           break;
         case "24365":
           singlePublishJob.value = jiuyePublishJob;
           break;
         case "nuike":
           singlePublishJob.value = nuikePublishJob;
+          break;
+        case "shixiseng":
+          singlePublishJob.value = shixisengPublishJob;
       }
     };
     const oneClickCollection = async () => {
@@ -145,19 +147,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           break;
       }
     };
-    const guopinMultiplePulishJob = async () => {
-      const isSocial = multipleSelection.value.every((el) => el.recruitmentTypeName === "\u793E\u62DB");
-      const isSchool = multipleSelection.value.every((el) => ["\u6821\u62DB", "\u5B9E\u4E60"].includes(el.recruitmentTypeName));
-      if (isSocial) {
-        await setJobLocalstory("jobs", "multiple", multipleSelection.value);
-        window.open(GUOPIN_SOCIAL_RECRUITMENT);
-      } else if (isSchool) {
-        await setJobLocalstory("jobs", "multiple", multipleSelection.value);
-        window.open(GUOPIN_SCHOOL_RECRUITMENT);
-      } else {
-        alert("\u793E\u62DB\u548C\u6821\u62DB\u4E0D\u80FD\u6DF7\u5408\u6279\u91CF\u53D1\u5E03\uFF5E");
-      }
-    };
     const jiuyePublishJob = async (job) => {
       await setJobLocalstory("job", "single", job);
       window.open(JIUYEWANG_URL);
@@ -165,6 +154,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const nuikePublishJob = async (job) => {
       await setJobLocalstory("job", "single", job);
       window.open(NUIKE_URL);
+    };
+    const shixisengPublishJob = async (job) => {
+      await setJobLocalstory("job", "single", job);
+      window.open(SHIXISENG_PRACTICE_URL);
     };
     const handleSelectionChange = (val) => {
       multipleSelection.value = val;

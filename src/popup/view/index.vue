@@ -127,7 +127,8 @@ import {
   GUOPIN_SOCIAL_RECRUITMENT,
   JIUYEWANG_URL,
   PLATFORM_MAP,
-  NUIKE_URL
+  NUIKE_URL,
+SHIXISENG_PRACTICE_URL
 } from './contants';
 import { IList } from '@/axios/apis/types';
 import { getLocalstory } from '@/utils/index';
@@ -231,7 +232,7 @@ const platformSelect = async () => {
   switch(platform){
     case 'guopin':
       singlePublishJob.value = guopinPulishJob;
-      multiplePublishJob.value =  guopinMultiplePulishJob;
+      // multiplePublishJob.value =  guopinMultiplePulishJob;
     break;
     case '24365':
       singlePublishJob.value = jiuyePublishJob;
@@ -239,6 +240,9 @@ const platformSelect = async () => {
     break;
     case 'nuike':
       singlePublishJob.value = nuikePublishJob;
+      break;
+    case 'shixiseng':
+      singlePublishJob.value = shixisengPublishJob;
     default:
       break;
   }
@@ -269,35 +273,36 @@ const guopinPulishJob = async (job: IList) => {
   }
 }
 // 国聘批量发布职位
-const guopinMultiplePulishJob = async () => {
-  const isSocial = multipleSelection.value.every(el=>el.recruitmentTypeName === '社招');
-  const isSchool = multipleSelection.value.every(el=>['校招','实习'].includes(el.recruitmentTypeName));
-  if(isSocial){
-    await setJobLocalstory('jobs','multiple', multipleSelection.value);
-    window.open(GUOPIN_SOCIAL_RECRUITMENT);
-  }else if(isSchool){
-    await setJobLocalstory('jobs','multiple', multipleSelection.value);
-    window.open(GUOPIN_SCHOOL_RECRUITMENT);
-  }else{
-    alert('社招和校招不能混合批量发布～');
-  }
-};
+// const guopinMultiplePulishJob = async () => {
+//   const isSocial = multipleSelection.value.every(el=>el.recruitmentTypeName === '社招');
+//   const isSchool = multipleSelection.value.every(el=>['校招','实习'].includes(el.recruitmentTypeName));
+//   if(isSocial){
+//     await setJobLocalstory('jobs','multiple', multipleSelection.value);
+//     window.open(GUOPIN_SOCIAL_RECRUITMENT);
+//   }else if(isSchool){
+//     await setJobLocalstory('jobs','multiple', multipleSelection.value);
+//     window.open(GUOPIN_SCHOOL_RECRUITMENT);
+//   }else{
+//     alert('社招和校招不能混合批量发布～');
+//   }
+// };
 
 // 24365 单个发布职位
 const jiuyePublishJob = async (job: IList) => {
   await setJobLocalstory('job','single', job);
   window.open(JIUYEWANG_URL);
 }
-// 24365 批量发布职位
-// const jiuyeMultiplePublishJob = async () => {
-//   await setJobLocalstory('jobs','multiple', multipleSelection.value);
-//   window.open(JIUYEWANG_URL);
-// }
 
 // 牛客单个发职位
 const nuikePublishJob = async (job: IList) => {
   await setJobLocalstory('job','single', job);
   window.open(NUIKE_URL);
+}
+
+// 实习僧发送职位
+const shixisengPublishJob = async (job: IList) => {
+  await setJobLocalstory('job', 'single', job);
+  window.open(SHIXISENG_PRACTICE_URL);
 }
 
 const handleSelectionChange = (val: IList[]) => {
