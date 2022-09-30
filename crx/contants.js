@@ -2,6 +2,7 @@ const GUOPIN_SCHOOL_RECRUITMENT = "https://campus.iguopin.com/index.php?m=&c=com
 const GUOPIN_SOCIAL_RECRUITMENT = "https://www.iguopin.com/index.php?m=&c=company&a=jobs_add";
 const JIUYEWANG_URL = "https://job.ncss.cn/corp/jobs/add.html";
 const NUIKE_URL = "https://nowpick.nowcoder.com/w/hrconsole/job-publish";
+const SHIXISENG_PRACTICE_URL = "https://hr.shixiseng.com/job-management/internship/publish-job";
 const JOB_COLUMNS = [
   {
     label: "\u516C\u53F8",
@@ -104,4 +105,4 @@ const PLATFORM_MAP = {
   "shixiseng": "\u5B9E\u4E60\u50E7",
   "nuike": "\u725B\u5BA2\u7F51"
 };
-export { COLLECT_RESUME_COLUMN as C, GUOPIN_SCHOOL_RECRUITMENT as G, JIUYEWANG_URL as J, NUIKE_URL as N, PLATFORM_MAP as P, GUOPIN_SOCIAL_RECRUITMENT as a, JOB_COLUMNS as b };
+export { COLLECT_RESUME_COLUMN as C, GUOPIN_SCHOOL_RECRUITMENT as G, JIUYEWANG_URL as J, NUIKE_URL as N, PLATFORM_MAP as P, SHIXISENG_PRACTICE_URL as S, GUOPIN_SOCIAL_RECRUITMENT as a, JOB_COLUMNS as b };
