@@ -128,7 +128,8 @@ import {
   JIUYEWANG_URL,
   PLATFORM_MAP,
   NUIKE_URL,
-SHIXISENG_PRACTICE_URL
+SHIXISENG_PRACTICE_URL,
+SHIXISENG_SCHOOL_URL
 } from './contants';
 import { IList } from '@/axios/apis/types';
 import { getLocalstory } from '@/utils/index';
@@ -302,7 +303,14 @@ const nuikePublishJob = async (job: IList) => {
 // 实习僧发送职位
 const shixisengPublishJob = async (job: IList) => {
   await setJobLocalstory('job', 'single', job);
-  window.open(SHIXISENG_PRACTICE_URL);
+  switch(job.recruitmentTypeName){
+    case '校招': 
+      window.open(SHIXISENG_SCHOOL_URL);
+    break;
+    case '实习':
+      window.open(SHIXISENG_PRACTICE_URL);
+    break;
+  }
 }
 
 const handleSelectionChange = (val: IList[]) => {
