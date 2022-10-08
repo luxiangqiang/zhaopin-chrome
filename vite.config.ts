@@ -38,6 +38,7 @@ export default defineConfig(({ command, mode }) => {
           new_career_checkout: resolve(__dirname, 'src/modules/24365/new_career_checkout.ts'),
           publish_school_job: resolve(__dirname, 'src/modules/nuike/publish_school_job.ts'),
           nuike_collect_resumes: resolve(__dirname, 'src/modules/nuike/nuike_collect_resumes.ts'),
+          shixiseng_publish_practice_job: resolve(__dirname, 'src/modules/shixiseng/shixiseng_publish_practice_job.ts'),
           shixiseng_publish_school_job: resolve(__dirname, 'src/modules/shixiseng/shixiseng_publish_school_job.ts'),
           jquery: resolve(__dirname, 'src/utils/jquery.js'),
         },
