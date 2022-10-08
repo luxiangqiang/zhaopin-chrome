@@ -119,6 +119,21 @@ const JOB_CATEGORIES_MAP = {
   "\u623F\u5730\u4EA7\u4EA4\u6613": ["", "\u623F\u5730\u4EA7\u9500\u552E/\u62DB\u5546", "\u623F\u5730\u4EA7\u9500\u552E/\u62DB\u5546"],
   "\u5EFA\u7B51/\u5BA4\u5185\u8BBE\u8BA1": ["\u8BBE\u8BA1/\u4F20\u5A92", "\u975E\u89C6\u89C9\u8BBE\u8BA1", "\u5BA4\u5185\u8BBE\u8BA1"]
 };
+function formateData(job) {
+  return {
+    title: `${job.title}(${job.code})`,
+    code: job.code,
+    salaryFrom: job.salaryFrom,
+    salaryTo: job.salaryTo,
+    amount: 5,
+    salmonths: job.salaryTimes + "\u4E2A\u6708",
+    description: job.description,
+    category: JOB_CATEGORIES_MAP[job.secondCategory.name],
+    education: EDUCATION_MAP[job.educationFrom],
+    specialized: ["\u5176\u4ED6", "\u4E0D\u9650"],
+    experienceFrom: job.experienceFrom
+  };
+}
 const getxPath = (xpath) => {
   var result = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
   const dom = result.iterateNext();
@@ -140,31 +155,16 @@ const getJobs = (type) => {
     }
   });
 };
-function formateData(job) {
-  return {
-    title: `${job.title}(${job.code})`,
-    code: job.code,
-    salaryFrom: job.salaryFrom,
-    salaryTo: job.salaryTo,
-    amount: 5,
-    salmonths: job.salaryTimes + "\u4E2A\u6708",
-    description: job.description,
-    category: JOB_CATEGORIES_MAP[job.secondCategory.name],
-    education: EDUCATION_MAP[job.educationFrom],
-    specialized: ["\u5176\u4ED6", "\u4E0D\u9650"],
-    experienceFrom: job.experienceFrom
-  };
-}
 function autoSetJob(data) {
   const timeId = setInterval(() => {
-    const titleELe = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div[1]/form/div[1]/div/div/div/div/div/input');
+    const titleELe = getxPath('//*[@id="app"]/div[1]/div/div[3]/div/div[1]/form/div[1]/div/div/div/div/div/input');
     if (titleELe) {
       clearInterval(timeId);
       if (titleELe) {
         $(titleELe).val(data.title);
         titleELe.dispatchEvent(new CustomEvent("input"));
       }
-      const categoryEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div[1]/form/div[2]/div/div/div/input');
+      const categoryEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div/div[1]/form/div[2]/div/div/div/input');
       categoryEle && $(categoryEle).trigger("click");
       setTimeout(async () => {
         $.each($(".fist-item"), (index, ele) => {
@@ -198,7 +198,7 @@ function autoSetJob(data) {
           $(ele).trigger("click");
         }
       });
-      const jobDescEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div[1]/form/div[4]/div/div/div/textarea');
+      const jobDescEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div/div[1]/form/div[4]/div/div/div/textarea');
       if (jobDescEle) {
         $(jobDescEle).val(data.description);
         jobDescEle.dispatchEvent(new CustomEvent("input"));
@@ -235,20 +235,10 @@ function autoSetJob(data) {
 }
 const singleJobPublish = async () => {
   const job = await getJobs("job");
-  console.error(job);
   const formate = formateData(job);
   autoSetJob(formate);
 };
-function init() {
-  const timeId = setInterval(() => {
-    const skipEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div/p/a/span');
-    if (skipEle) {
-      clearInterval(timeId);
-      $(skipEle).trigger("click");
-      setTimeout(() => {
-        singleJobPublish();
-      }, 1e3);
-    }
-  }, 1e3);
+async function init() {
+  singleJobPublish();
 }
 init();

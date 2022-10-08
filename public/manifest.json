@@ -120,6 +120,13 @@
       "matches":[
         "https://hr.shixiseng.com/job-management/internship/publish-job"
       ],
+      "js": ["shixiseng_publish_practice_job.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://hr.shixiseng.com/job-management/campus-recruitment/publish-job"
+      ],
       "js": ["shixiseng_publish_school_job.js"],
       "run_at": "document_idle"
     }

@@ -125,6 +125,26 @@ const JOB_CATEGORIES_MAP:Record<string, string[]> = {
   "房地产交易":["","房地产销售/招商", "房地产销售/招商"],
   "建筑/室内设计":["设计/传媒","非视觉设计", "室内设计"],
 }
+
+// 格式化数据
+function formateData(job: IList){
+  return {
+    title: `${job.title}(${job.code})`, // 职位名
+    code: job.code, // 职位编号
+    // type: JOB_TYPE_MAP[job.recruitmentTypeName], // 招聘类型
+    salaryFrom: job.salaryFrom, // 最低薪资
+    salaryTo: job.salaryTo, // 最高薪资
+    amount: 5, // 在招人数
+    salmonths: job.salaryTimes + '个月', // 薪资月数
+    description: job.description, // 职位描述
+    category: JOB_CATEGORIES_MAP[job.secondCategory.name], // 职位类别
+    // city: Object.keys(CITY_MAP).includes(city) ? CITY_MAP[city] : ['其他地区', '全国'], // 工作地区
+    education: EDUCATION_MAP[job.educationFrom], // 学历
+    specialized: ['其他', '不限'], // 专业
+    experienceFrom: job.experienceFrom, // 工作年限
+  }
+}
+
 /**
  * 功能：通过 xPath 获取 dom 元素
  * @param xpath 
@@ -154,30 +174,11 @@ const getJobs = (type: string) => {
   })
 }
 
-// 格式化数据
-function formateData(job: IList){
-  return {
-    title: `${job.title}(${job.code})`, // 职位名
-    code: job.code, // 职位编号
-    // type: JOB_TYPE_MAP[job.recruitmentTypeName], // 招聘类型
-    salaryFrom: job.salaryFrom, // 最低薪资
-    salaryTo: job.salaryTo, // 最高薪资
-    amount: 5, // 在招人数
-    salmonths: job.salaryTimes + '个月', // 薪资月数
-    description: job.description, // 职位描述
-    category: JOB_CATEGORIES_MAP[job.secondCategory.name], // 职位类别
-    // city: Object.keys(CITY_MAP).includes(city) ? CITY_MAP[city] : ['其他地区', '全国'], // 工作地区
-    education: EDUCATION_MAP[job.educationFrom], // 学历
-    specialized: ['其他', '不限'], // 专业
-    experienceFrom: job.experienceFrom, // 工作年限
-  }
-}
-
 // 自动匹配职位
 function autoSetJob(data: IFormat){
   const timeId = setInterval(() => {
     // 职位名称
-    const titleELe = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div[1]/form/div[1]/div/div/div/div/div/input')
+    const titleELe = getxPath('//*[@id="app"]/div[1]/div/div[3]/div/div[1]/form/div[1]/div/div/div/div/div/input')
     if(titleELe){
       clearInterval(timeId);
       if(titleELe){
@@ -186,7 +187,7 @@ function autoSetJob(data: IFormat){
       }
 
       // 职位类别
-      const categoryEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div[1]/form/div[2]/div/div/div/input');
+      const categoryEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div/div[1]/form/div[2]/div/div/div/input');
       categoryEle && $(categoryEle).trigger('click')
       setTimeout(async () => {
         $.each($('.fist-item'), (index, ele) => {
@@ -224,7 +225,7 @@ function autoSetJob(data: IFormat){
       })
 
       // 设置岗位
-      const jobDescEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div[1]/form/div[4]/div/div/div/textarea');
+      const jobDescEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div/div[1]/form/div[4]/div/div/div/textarea');
       if(jobDescEle){
         $(jobDescEle).val(data.description);
         jobDescEle.dispatchEvent(new CustomEvent('input'))
@@ -273,22 +274,12 @@ function autoSetJob(data: IFormat){
 
 const singleJobPublish = async () => {
   const job = await getJobs('job') as IList;
-  console.error(job)
   const formate = formateData(job) as any;
   autoSetJob(formate);
 }
 
-function init(){
-  const timeId = setInterval(()=>{
-    const skipEle = getxPath('//*[@id="app"]/div[1]/div/div[3]/div[2]/div/p/a/span');
-    if(skipEle){
-      clearInterval(timeId)
-      $(skipEle).trigger('click')
-      setTimeout(()=>{
-        singleJobPublish()
-      }, 1000)
-    }
-  }, 1000)
+async function init(){
+  singleJobPublish();
 }
 
 init();
