@@ -130,7 +130,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         case "nuike":
           nuikeColleact();
           break;
+        case "shixiseng":
+          shixisengCollect();
+          break;
       }
+    };
+    const shixisengCollect = () => {
+      const url = `https://hr.shixiseng.com/resume/new`;
+      window.open(url);
     };
     const guopinCollect = () => {
       if (typeCheckList.value.length === 0) {

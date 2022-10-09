@@ -208,7 +208,17 @@ const handlerCollect = async () => {
     case 'nuike':
       nuikeColleact()
       break;
+    case 'shixiseng':
+      shixisengCollect();
+      break;
   }
+}
+
+// 实习僧统收
+const shixisengCollect = () => {
+  // 实习
+  const url = `https://hr.shixiseng.com/resume/new`;
+  window.open(url);
 }
 
  // 国聘统收
@@ -222,7 +232,6 @@ const guopinCollect = () => {
     })
     return;
   }
-  
 
   // 清理上一段收集的简历
   clearLocalstory('resumes');

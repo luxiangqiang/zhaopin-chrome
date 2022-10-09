@@ -60,18 +60,6 @@
       height: '47px'
     },
     {
-      images: boss_logo,
-      title: 'Boss直聘',
-      value: 'zhipin',
-      height: '28px'
-    },
-    {
-      images: qianchengwuyou_logo,
-      title: '前程无忧',
-      value: 'qiancheng',
-      height: '44px'
-    },
-    {
       images: shixiseng_logo,
       title: '实习僧',
       value: 'shixiseng',
@@ -82,6 +70,18 @@
       title: '牛客网',
       value: 'nuike',
       height: '32px'
+    },
+    {
+      images: boss_logo,
+      title: 'Boss直聘',
+      value: 'zhipin',
+      height: '28px'
+    },
+    {
+      images: qianchengwuyou_logo,
+      title: '前程无忧',
+      value: 'qiancheng',
+      height: '44px'
     }
   ]);
   const router = useRouter();
