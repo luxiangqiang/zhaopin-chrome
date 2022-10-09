@@ -40,6 +40,7 @@ export default defineConfig(({ command, mode }) => {
           nuike_collect_resumes: resolve(__dirname, 'src/modules/nuike/nuike_collect_resumes.ts'),
           shixiseng_publish_practice_job: resolve(__dirname, 'src/modules/shixiseng/shixiseng_publish_practice_job.ts'),
           shixiseng_publish_school_job: resolve(__dirname, 'src/modules/shixiseng/shixiseng_publish_school_job.ts'),
+          shixiseng_collect_resumes: resolve(__dirname, 'src/modules/shixiseng/shixiseng_collect_resumes.ts'),
           jquery: resolve(__dirname, 'src/utils/jquery.js'),
         },
         output: {
