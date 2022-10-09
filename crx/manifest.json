@@ -129,6 +129,13 @@
       ],
       "js": ["shixiseng_publish_school_job.js"],
       "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "https://hr.shixiseng.com/resume/new"
+      ],
+      "js": ["shixiseng_collect_resumes.js"],
+      "run_at": "document_idle"
     }
   ],
   "externally_connectable": {

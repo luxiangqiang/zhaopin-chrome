@@ -85,21 +85,6 @@ function formatNumber(salary: string) {
   }
 }
 
-// 时间格式设置
-function getNowDate(date: Date) { 
-  let year = date.getFullYear() // 年
-  let month = String(date.getMonth() + 1); // 月
-  let day = String(date.getDate()); // 日
-  // 给一位数的数据前面加 “0”
-  if (Number(month) >= 1 && Number(month) <= 9) {
-    month = "0" + month;
-  }
-  if (Number(day) >= 0 && Number(day) <= 9) {
-    day = "0" + day;
-  }
-  return year + "-" + month + "-" + day + " " + '00:00';
-}
-
 async function autoSetSchoolJob(formate: IFormat){
   console.log(formate.type)
   switch(formate.type){
