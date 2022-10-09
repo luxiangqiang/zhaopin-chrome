@@ -36,18 +36,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         height: "47px"
       },
       {
-        images: boss_logo,
-        title: "Boss\u76F4\u8058",
-        value: "zhipin",
-        height: "28px"
-      },
-      {
-        images: qianchengwuyou_logo,
-        title: "\u524D\u7A0B\u65E0\u5FE7",
-        value: "qiancheng",
-        height: "44px"
-      },
-      {
         images: shixiseng_logo,
         title: "\u5B9E\u4E60\u50E7",
         value: "shixiseng",
@@ -58,6 +46,18 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         title: "\u725B\u5BA2\u7F51",
         value: "nuike",
         height: "32px"
+      },
+      {
+        images: boss_logo,
+        title: "Boss\u76F4\u8058",
+        value: "zhipin",
+        height: "28px"
+      },
+      {
+        images: qianchengwuyou_logo,
+        title: "\u524D\u7A0B\u65E0\u5FE7",
+        value: "qiancheng",
+        height: "44px"
       }
     ]);
     const router = useRouter();
