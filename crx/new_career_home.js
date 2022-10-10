@@ -229,6 +229,14 @@ async function autoSetJob(data) {
       $(el).attr("selected", "true");
     }
   });
+  $(".select2-search__field").trigger("click");
+  setTimeout(() => {
+    $.each($(".select2-results__option"), (index, el) => {
+      if ($(el).text() === data.category) {
+        $(el).trigger("mouseup");
+      }
+    });
+  }, 5e3);
   $('input[name="lowMonthPay"]').val(data.salaryFrom);
   $('input[name="highMonthPay"]').val(data.salaryTo);
   $("#autobtn").trigger("click");

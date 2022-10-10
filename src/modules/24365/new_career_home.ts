@@ -253,14 +253,15 @@ async function autoSetJob(data: IFormat){
     }
   })
 
-
   // 选择职位类别
-  // $('.select2-search__field').trigger('click');
-  // $.each($('.select2-results__option'), (index, el) => {
-  //   if($(el).text() === data.category){
-  //     $(el).trigger('click');
-  //   }
-  // })
+  $('.select2-search__field').trigger('click');
+  setTimeout(()=>{
+    $.each($('.select2-results__option'), (index, el) => {
+      if($(el).text() === data.category){
+        $(el).trigger('mouseup');
+      }
+    })
+  }, 5000)
 
   // 薪资选择
   $('input[name="lowMonthPay"]').val(data.salaryFrom);

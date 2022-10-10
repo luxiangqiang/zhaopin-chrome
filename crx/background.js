@@ -13,24 +13,26 @@ const saveResumesLocalStory = (key, value) => {
 };
 function onMessage() {
   chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
-    switch (req.channel) {
-      case "RESUME_DATA":
-        resumeList.push(...req.message);
-        saveResumesLocalStory("resumes", resumeList);
-        chrome.action.setBadgeText({ text: String(resumeList.length) });
-        chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
-        break;
-      case "RESUME_DATA_ZHAO":
-        resumeList = req.message;
-        saveResumesLocalStory("resumes", resumeList);
-        chrome.action.setBadgeText({ text: String(resumeList.length) });
-        chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
-        break;
-      case "CLEAR_RESUME_LIST":
-        resumeList.length = 0;
-        break;
-    }
-    sendResponse("background \u5DF2\u63A5\u6536\uFF5E");
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      switch (req.channel) {
+        case "RESUME_DATA":
+          resumeList.push(...req.message);
+          saveResumesLocalStory("resumes", resumeList);
+          chrome.action.setBadgeText({ text: String(resumeList.length) });
+          chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
+          break;
+        case "RESUME_DATA_ZHAO":
+          resumeList = req.message;
+          saveResumesLocalStory("resumes", resumeList);
+          chrome.action.setBadgeText({ text: String(resumeList.length) });
+          chrome.action.setBadgeBackgroundColor({ color: "#74b9ff" });
+          break;
+        case "CLEAR_RESUME_LIST":
+          resumeList.length = 0;
+          break;
+      }
+      sendResponse("background \u5DF2\u63A5\u6536\uFF5E");
+    });
   });
 }
 chrome.runtime.onInstalled.addListener(async () => {
