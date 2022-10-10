@@ -1,5 +1,3 @@
-import { id } from "element-plus/es/locale";
-
 /**
  * 功能：通过 xPath 获取 dom 元素
  * @param xpath 

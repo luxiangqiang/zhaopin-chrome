@@ -19,27 +19,29 @@ const saveResumesLocalStory = (key, value) => {
 
 function onMessage(){
   chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
-    switch(req.channel){
-      case "RESUME_DATA":
-        resumeList.push(...req.message);
-        saveResumesLocalStory('resumes', resumeList)
-        chrome.action.setBadgeText({text: String(resumeList.length) });
-        chrome.action.setBadgeBackgroundColor({color: '#74b9ff'})
-        break;
-      case "RESUME_DATA_ZHAO":
-        resumeList = req.message
-        saveResumesLocalStory('resumes', resumeList)
-        chrome.action.setBadgeText({text: String(resumeList.length) });
-        chrome.action.setBadgeBackgroundColor({color: '#74b9ff'})
-        break;
-      // case "NOTIFICATION":
-        // sendMessage(`### 国聘职位助手 \n\n > 导入结果： **${ req.result }** \n\n > 导入时间： **${ req.time }** \n\n  > 成功数量: **${ req.index }** 条 \n\n > 失败数量: **${ req.count - req.index }** 条 \n\n 失败原因：**${ req.reason || '暂无'}** @13779930651`)
-        // break;
-      case "CLEAR_RESUME_LIST":
-        resumeList.length = 0;
-        break;
-    }
-    sendResponse('background 已接收～');
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+      switch(req.channel){
+        case "RESUME_DATA":
+          resumeList.push(...req.message);
+          saveResumesLocalStory('resumes', resumeList)
+          chrome.action.setBadgeText({text: String(resumeList.length) });
+          chrome.action.setBadgeBackgroundColor({color: '#74b9ff'})
+          break;
+        case "RESUME_DATA_ZHAO":
+          resumeList = req.message
+          saveResumesLocalStory('resumes', resumeList)
+          chrome.action.setBadgeText({text: String(resumeList.length) });
+          chrome.action.setBadgeBackgroundColor({color: '#74b9ff'})
+          break;
+        // case "NOTIFICATION":
+          // sendMessage(`### 国聘职位助手 \n\n > 导入结果： **${ req.result }** \n\n > 导入时间： **${ req.time }** \n\n  > 成功数量: **${ req.index }** 条 \n\n > 失败数量: **${ req.count - req.index }** 条 \n\n 失败原因：**${ req.reason || '暂无'}** @13779930651`)
+          // break;
+        case "CLEAR_RESUME_LIST":
+          resumeList.length = 0;
+          break;
+      }
+      sendResponse('background 已接收～');
+    })
   })
 }
 // chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
