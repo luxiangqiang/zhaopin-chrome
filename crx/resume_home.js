@@ -228,12 +228,35 @@ function getResumeData() {
     }
   };
 }
-function init() {
-  const data = getResumeData();
-  chrome.runtime.sendMessage({
-    channel: "RESUME_DATA",
-    message: [data]
+const getLocalstory = (type) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.get(type, (result) => {
+        console.log(`\u2705 Get ${type} Success\uFF5E`, result[type]);
+        resolve(result[type]);
+      });
+    } catch (error) {
+      reject(error);
+    }
   });
+};
+const saveResumesLocalStory = (key, value) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.set({ [key]: value }, function() {
+        console.log("\u2705 [resume_home.js]: Save Resumes Success\uFF5E");
+        resolve(1);
+      });
+    } catch (error) {
+      reject();
+    }
+  });
+};
+async function init() {
+  const data = getResumeData();
+  const list = await getLocalstory("resumes") || [];
+  list.push(data);
+  await saveResumesLocalStory("resumes", list);
   setTimeout(() => {
     window.close();
   }, 500);
