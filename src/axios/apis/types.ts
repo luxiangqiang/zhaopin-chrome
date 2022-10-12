@@ -240,9 +240,6 @@ export interface IList {
 }
 
 
-
-
-
 /**
 * 优势
 */
@@ -293,7 +290,7 @@ export interface IBasic {
   /**
    * 性别
    */
-  sex: number;
+  sex: string;
   /**
    * 行业
    */
@@ -397,7 +394,7 @@ export interface IProjects {
   /**
    * 开始时间
    */
-  start: number;
+  start: string;
   /**
    * 详细描述
    */
@@ -500,35 +497,35 @@ export interface ResumeFormDTO {
   /**
    * 优势
    */
-  advantage: IAdvantage;
+  advantage: Partial<IAdvantage>;
   /**
    * 基础
    */
-  basic: IBasic;
+  basic: Partial<IBasic>;
   /**
    * 证书
    */
-  certificates: ICertificates[];
+  certificates: Partial<ICertificates>[];
   /**
    * 教育
    */
-  edus: IEdus[];
+  edus: Partial<IEdus>[];
   /**
    * 意向
    */
-  forwards: IForwards[];
+  forwards: Partial<IForwards>[];
   /**
    * 项目
    */
-  projects: IProjects[];
+  projects: Partial<IProjects>[];
   /**
    * 培训
    */
-  trainings: ITrainings[];
+  trainings: Partial<ITrainings>[];
   /**
    * 工作
    */
-  works: IWorks[];
+  works: Partial<IWorks>[];
 }
 
 
@@ -536,7 +533,7 @@ export interface IResume {
   /**
    * 简历表单
    */
-  form: ResumeFormDTO;
+  form: Partial<ResumeFormDTO>;
   /**
    * 主题
    */

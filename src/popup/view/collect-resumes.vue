@@ -137,8 +137,12 @@ const handlerRefresh = async () => {
   resumeList.value = resumes || [];
   tableData.value = resumeList.value.map((el: IResume) =>({
     subject: el.subject,
-    ...el.form.basic,
-    ...el.form.forwards[0]
+    name: el?.form?.basic?.name,
+    mobile: el?.form?.basic?.mobile,
+    sex:  el?.form?.basic?.sex,
+    title: el?.form?.forwards?.[0]?.title ||  el.subject,
+    location: el?.form?.forwards?.[0]?.location || '',
+    email: el?.form?.basic?.email,
   }))
   loading.value = false;
   ElMessage({
@@ -193,7 +197,6 @@ const handlerCollect = async () => {
     })
     return;
   }
-  console.error(platform)
   // 存储统收时间
   saveLocalStory('timeRange', timeRange.value)
   switch(platform){
@@ -235,9 +238,9 @@ const guopinCollect = () => {
 
   // 清理上一段收集的简历
   clearLocalstory('resumes');
-  chrome.runtime.sendMessage({
-    channel: 'CLEAR_RESUME_LIST'
-  })
+  // chrome.runtime.sendMessage({
+  //   channel: 'CLEAR_RESUME_LIST'
+  // })
 
   if(typeCheckList.value.includes('社招')){
     const url = `https://www.iguopin.com/index.php?m=Home&c=Company&a=jobs_apply&is_reply=0&company_name=&company_uid=&dept_id=&department_id=&jobs_id=&audit=&nature=&is_confirm=&sex=&age=&political=&education_cn=&experience=&householdaddress_cn=&householdaddress=&address_cn=&address=&current_district_cn=&current_district=&apply_addtime=${ timeRange.value[0] }+%2C+${ timeRange.value[1] }&fullname=&speciality=&telephone=&school=&personal_look=&source=&edu1_level=&edu2_level=&major_category_cn=&major_category=&birthdate=&detail=&resume_tag=-1`;
@@ -253,9 +256,9 @@ const guopinCollect = () => {
 const newCareerCollect = () => {
   // 清理上一段收集的简历
   clearLocalstory('resumes');
-  chrome.runtime.sendMessage({
-    channel: 'CLEAR_RESUME_LIST'
-  })
+  // chrome.runtime.sendMessage({
+  //   channel: 'CLEAR_RESUME_LIST'
+  // })
 
   // 感兴趣
   window.open('https://job.ncss.cn/corp/candidate.html?checkOut');
@@ -270,7 +273,7 @@ const nuikeColleact = () => {
 const handlerCleart = () => {
   clearLocalstory('resumes');
   tableData.value = []
-  setBadgeText()
+  // setBadgeText()
   ElMessage({
     message: '清理成功～',
     type: 'success',

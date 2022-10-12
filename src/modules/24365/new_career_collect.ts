@@ -1,3 +1,4 @@
+import { IResume } from '../../axios/apis/types';
 function isDuringDate(beginDateStr: string, endDateStr: string, curDateStr: string) {
   var curDate = new Date(curDateStr),
       beginDate = new Date(beginDateStr),
@@ -137,7 +138,7 @@ function getAdvantage(){
 }
 
 // 获取信息
-function getResumeData(){
+function getResumeData(): Partial<IResume>{
   const subject = $('#target').text();
   const nameEle = getxPath('//*[@id="bacic"]/div/h1')
   const sexEle = getxPath('//*[@id="bacic"]/div/p[1]/span[1]/span')
@@ -172,13 +173,26 @@ function getResumeData(){
   }
 }
 
-const list:any = []
+const list:Partial<IResume>[] = [];
 
+// 保存数据
+const saveResumesLocalStory = (key: string, value: any) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.set({ [key]:  value}, function () {
+        console.log('✅ [resume_home.js]: Save Resumes Success～');
+        resolve(1);
+      });
+    } catch (error) {
+      reject();
+    }
+  })
+}
 
 // 递归翻页
 async function deepTurnPages(){
   const timeRage:string[] = await getLocalstory('timeRange') as string[];
-  const timeId = setInterval(async ()=>{
+  const timeId = setInterval(async () => {
     if($('.canditateList').length > 0){
       clearInterval(timeId);
       let flag = false;
@@ -208,11 +222,13 @@ async function deepTurnPages(){
         })
       }
     }
-    console.log(list);
-    chrome.runtime.sendMessage({
-      channel: 'RESUME_DATA_ZHAO',
-      message: list
-    })
+    const resume =  await getLocalstory('resumes') as Partial<IResume>[] || [];
+    resume.push(...list);
+    await saveResumesLocalStory('resumes', resume)
+    // chrome.runtime.sendMessage({
+    //   channel: 'RESUME_DATA_ZHAO',
+    //   message: list
+    // })
   }, 2000)
 }
 

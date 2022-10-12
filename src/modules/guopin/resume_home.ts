@@ -1,3 +1,5 @@
+import { IResume } from "@/axios/apis/types";
+
 /**
  * 功能：通过 xPath 获取 dom 元素
  * @param xpath 
@@ -228,7 +230,7 @@ function getCertificates(){
 }
 
 // 获取简历数据
-function getResumeData(){
+function getResumeData() : Partial<IResume>{
   const subject = getxPathEle('/html/body/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]');
   const nameEle = getxPathEle('/html/body/div[1]/div[1]/div[3]/div[2]/div[1]')
   const sexEle = getxPathEle('/html/body/div[1]/div[1]/div[3]/div[2]/div[2]')
@@ -297,12 +299,49 @@ function getResumeData(){
   };
 }
 
-function init(){
-  const data = getResumeData();
-  chrome.runtime.sendMessage({
-    channel: 'RESUME_DATA',
-    message: [data]
+
+/**
+ * 功能：获取缓存数据
+ * @param type 
+ * @returns 
+ */
+ export const getLocalstory  = (type: string) => {
+  return new Promise((resolve, reject)=>{
+    try {
+      chrome.storage.local.get(type, (result) => {
+        console.log(`✅ Get ${ type } Success～`, result[type])
+        resolve(result[type]);
+      });
+    } catch (error) {
+      reject(error);
+    }
   })
+}
+
+// 保存数据
+const saveResumesLocalStory = (key: string, value: any) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.set({ [key]:  value}, function () {
+        console.log('✅ [resume_home.js]: Save Resumes Success～');
+        resolve(1);
+      });
+    } catch (error) {
+      reject();
+    }
+  })
+}
+
+async function init(){
+  const data = getResumeData();
+  const list =  await getLocalstory('resumes') as Partial<IResume>[] || [];
+  list.push(data);
+  await saveResumesLocalStory('resumes', list)
+  // list.push(data);
+  // chrome.runtime.sendMessage({
+  //   channel: 'RESUME_DATA',
+  //   message: [data]
+  // })
   setTimeout(()=>{
     window.close()
   }, 500)

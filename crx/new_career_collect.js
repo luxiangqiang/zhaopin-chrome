@@ -129,6 +129,18 @@ function getResumeData() {
   };
 }
 const list = [];
+const saveResumesLocalStory = (key, value) => {
+  return new Promise((resolve, reject) => {
+    try {
+      chrome.storage.local.set({ [key]: value }, function() {
+        console.log("\u2705 [resume_home.js]: Save Resumes Success\uFF5E");
+        resolve(1);
+      });
+    } catch (error) {
+      reject();
+    }
+  });
+};
 async function deepTurnPages() {
   const timeRage = await getLocalstory("timeRange");
   const timeId = setInterval(async () => {
@@ -161,11 +173,9 @@ async function deepTurnPages() {
         });
       }
     }
-    console.log(list);
-    chrome.runtime.sendMessage({
-      channel: "RESUME_DATA_ZHAO",
-      message: list
-    });
+    const resume = await getLocalstory("resumes") || [];
+    resume.push(...list);
+    await saveResumesLocalStory("resumes", resume);
   }, 2e3);
 }
 async function init() {

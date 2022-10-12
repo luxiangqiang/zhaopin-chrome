@@ -27,7 +27,8 @@
     "notifications",
     "declarativeContent",
     "scripting",
-    "background"
+    "background",
+    "alarms"
   ],
   "content_scripts": [  
     {
