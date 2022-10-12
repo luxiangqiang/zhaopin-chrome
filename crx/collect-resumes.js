@@ -1,23 +1,7 @@
-var __defProp = Object.defineProperty;
-var __getOwnPropSymbols = Object.getOwnPropertySymbols;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __propIsEnum = Object.prototype.propertyIsEnumerable;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __spreadValues = (a, b) => {
-  for (var prop in b || (b = {}))
-    if (__hasOwnProp.call(b, prop))
-      __defNormalProp(a, prop, b[prop]);
-  if (__getOwnPropSymbols)
-    for (var prop of __getOwnPropSymbols(b)) {
-      if (__propIsEnum.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    }
-  return a;
-};
 import { P as PLATFORM_MAP, C as COLLECT_RESUME_COLUMN } from "./contants.js";
 import { f as defineComponent, g as ref, j as onMounted, H as dayjs, I as computed, A as ElMessage, k as createElementBlock, l as createBaseVNode, t as toDisplayString, m as createVNode, w as withCtx, u as unref, C as withDirectives, d as createBlock, J as ElTable, v as ElNotification, r as resolveComponent, D as resolveDirective, o as openBlock, F as Fragment, x as renderList, K as createCommentVNode, q as pushScopeId, s as popScopeId, p as createTextVNode, n as useRouter, G as useRoute } from "./vendor.js";
 import { p as postResumeList } from "./index.js";
-import { a as getLocalstory, s as saveLocalStory, c as clearLocalstory, b as setBadgeText } from "./index2.js";
+import { a as getLocalstory, s as saveLocalStory, c as clearLocalstory } from "./index2.js";
 import { _ as _export_sfc } from "./main.js";
 var collectResumes_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-413caf2c"), n = n(), popScopeId(), n);
@@ -68,9 +52,18 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       loading.value = true;
       const resumes = await getLocalstory("resumes");
       resumeList.value = resumes || [];
-      tableData.value = resumeList.value.map((el) => __spreadValues(__spreadValues({
-        subject: el.subject
-      }, el.form.basic), el.form.forwards[0]));
+      tableData.value = resumeList.value.map((el) => {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n;
+        return {
+          subject: el.subject,
+          name: (_b = (_a = el == null ? void 0 : el.form) == null ? void 0 : _a.basic) == null ? void 0 : _b.name,
+          mobile: (_d = (_c = el == null ? void 0 : el.form) == null ? void 0 : _c.basic) == null ? void 0 : _d.mobile,
+          sex: (_f = (_e = el == null ? void 0 : el.form) == null ? void 0 : _e.basic) == null ? void 0 : _f.sex,
+          title: ((_i = (_h = (_g = el == null ? void 0 : el.form) == null ? void 0 : _g.forwards) == null ? void 0 : _h[0]) == null ? void 0 : _i.title) || el.subject,
+          location: ((_l = (_k = (_j = el == null ? void 0 : el.form) == null ? void 0 : _j.forwards) == null ? void 0 : _k[0]) == null ? void 0 : _l.location) || "",
+          email: (_n = (_m = el == null ? void 0 : el.form) == null ? void 0 : _m.basic) == null ? void 0 : _n.email
+        };
+      });
       loading.value = false;
       ElMessage({
         message: "\u6570\u636E\u5DF2\u66F4\u65B0\uFF5E",
@@ -116,7 +109,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         });
         return;
       }
-      console.error(platform);
       saveLocalStory("timeRange", timeRange.value);
       switch (platform) {
         case "guopin":
@@ -149,9 +141,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         return;
       }
       clearLocalstory("resumes");
-      chrome.runtime.sendMessage({
-        channel: "CLEAR_RESUME_LIST"
-      });
       if (typeCheckList.value.includes("\u793E\u62DB")) {
         const url = `https://www.iguopin.com/index.php?m=Home&c=Company&a=jobs_apply&is_reply=0&company_name=&company_uid=&dept_id=&department_id=&jobs_id=&audit=&nature=&is_confirm=&sex=&age=&political=&education_cn=&experience=&householdaddress_cn=&householdaddress=&address_cn=&address=&current_district_cn=&current_district=&apply_addtime=${timeRange.value[0]}+%2C+${timeRange.value[1]}&fullname=&speciality=&telephone=&school=&personal_look=&source=&edu1_level=&edu2_level=&major_category_cn=&major_category=&birthdate=&detail=&resume_tag=-1`;
         window.open(url);
@@ -163,9 +152,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     };
     const newCareerCollect = () => {
       clearLocalstory("resumes");
-      chrome.runtime.sendMessage({
-        channel: "CLEAR_RESUME_LIST"
-      });
       window.open("https://job.ncss.cn/corp/candidate.html?checkOut");
     };
     const nuikeColleact = () => {
@@ -174,7 +160,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const handlerCleart = () => {
       clearLocalstory("resumes");
       tableData.value = [];
-      setBadgeText();
       ElMessage({
         message: "\u6E05\u7406\u6210\u529F\uFF5E",
         type: "success"
