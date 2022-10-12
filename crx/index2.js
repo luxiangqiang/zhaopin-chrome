@@ -46,8 +46,4 @@ const clearLocalstory = (type) => {
     }
   });
 };
-const setBadgeText = (text = "0", color = "#74b9ff") => {
-  chrome.action.setBadgeText({ text });
-  chrome.action.setBadgeBackgroundColor({ color });
-};
-export { getLocalstory as a, setBadgeText as b, clearLocalstory as c, getLocalstoryToken as g, saveLocalStory as s };
+export { getLocalstory as a, clearLocalstory as c, getLocalstoryToken as g, saveLocalStory as s };
